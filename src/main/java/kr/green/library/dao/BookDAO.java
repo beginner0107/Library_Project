@@ -24,4 +24,9 @@ public interface BookDAO {
 	void updateBookCount(String isbn);
 	// 도서 반납 -> 수량 +1
 	void updateReturnCount(String isbn);
+	
+	// 한 페이지 얻기
+	List<BookVO> selectNewBook(HashMap<String, String> map);
+	// 신규 도서 개수 세기
+	int selectNewCount();
 }

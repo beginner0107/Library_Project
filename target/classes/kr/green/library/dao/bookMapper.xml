@@ -68,5 +68,28 @@
 	<update id="updateReturnCount"  parameterType="String">
 		UPDATE book SET count = count+1 WHERE isbn = #{isbn}
 	</update>
-
+	<!-- 1페이지 얻기 -->
+ 	<select id="selectNewBook" parameterType="hashmap" resultType="BookVO">
+ 		select 
+ 			*
+ 		from
+	 		(select 
+	 			rownum rnum, R.*
+	 		from
+	 			(select * from book where regdate >= SYSDATE-30
+	 			 order by regdate desc) R
+	 		where
+	 			<![CDATA[
+	 				rownum <= #{endNo}
+	 			]]>
+			) Q
+		where
+ 			<![CDATA[
+ 			rnum >= #{startNo}
+ 			]]>
+ 	</select>
+ 	<!-- 신규도서 개수 얻기 -->
+	<select id="selectNewCount" resultType="int">
+ 		select count(*) from book where regdate >= SYSDATE-30
+ 	</select>
 </mapper>

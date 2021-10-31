@@ -99,7 +99,6 @@ public class MainController {
 		model.addAttribute("cv", commVO);
 		model.addAttribute("user", getPrincipal());
 		log.info("pv : {}", pv.toString());
-		model.addAttribute("user", getPrincipal());
 		return "book_detail";
 	}
 	@PostMapping(value = "/test")
@@ -135,6 +134,34 @@ public class MainController {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	// 신간 도서 리스트
+	@RequestMapping("/newBook")
+	public String newBook(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
+			@ModelAttribute CommVO commVO) {
+		model.addAttribute("user", getPrincipal());
+		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+		if (flashMap != null) {
+			params = (Map<String, String>) flashMap.get("map");
+			commVO.setP(Integer.parseInt(params.get("p")));
+			commVO.setS(Integer.parseInt(params.get("s")));
+			commVO.setB(Integer.parseInt(params.get("b")));
+		}
+		PagingVO<BookVO> pv = bookService.selectNewBook(commVO);
+		model.addAttribute("pv", pv);
+		model.addAttribute("cv", commVO);
+		model.addAttribute("user", getPrincipal());
+		return "newBook";
+	}
+	
+	@RequestMapping("/library_Introduce")
+	public String library_introduece() {
+		return "library_Introduce";
+	}
+	@RequestMapping("/notice")
+	public String notice() {
+		return "notice";
 	}
 	
 	// 인증 정보를 얻어내는 method

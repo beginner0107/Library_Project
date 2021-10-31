@@ -107,7 +107,7 @@ function goList(){
 }
 </script>
 <style type="text/css">
-table#main_content{width: 80%; margin: auto;}
+	table#main_content{width: 80%; margin: auto;}
 	th {border: 1px solid gray; background-color: #e3f2fd;padding: 5px; text-align: center;}
 	td {border: 1px solid gray; padding: 5px;}
 	td.title {border:none; padding: 5px; text-align: center; font-size: 18pt; }
@@ -120,7 +120,7 @@ table#main_content{width: 80%; margin: auto;}
 <body>
 	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
 	<%-- ${cv } --%>
-	<form action="${pageContext.request.contextPath}/board/insertOk" method="post" enctype="multipart/form-data" onsubmit="return formCheck();" >
+	<form action="${pageContext.request.contextPath}/board/fboard_insertOk" method="post" enctype="multipart/form-data" onsubmit="return formCheck();" >
 		<table id="main_content">
 			<tr>
 				<td colspan="4" class="title" >
@@ -134,7 +134,7 @@ table#main_content{width: 80%; margin: auto;}
 			<tr>
 				<th class = "title2">제목</th>
 				<td colspan="3"> 
-					<input type="text" id="free_board_title" name="free_board_title" size="200" />
+					<input type="text" id="free_board_title" name="free_board_title" size="135" />
 				</td>
 			</tr>
 			<tr>

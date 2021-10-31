@@ -14,14 +14,19 @@
 <script   src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
 <!-- Bootstrap icons-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
 <!-- Google fonts-->
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<!-- 다운로드 아이콘 -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
 <script type="text/javascript">
@@ -30,7 +35,7 @@
    });
 </script>
 <style type="text/css">
-	table#content{width: 90%; margin: auto;}
+	table#content{width: 80%; margin: auto;}
 	th {border: 1px solid gray; background-color: #e3f2fd;padding: 5px; text-align: center;}
 	td {border: 1px solid gray; padding: 5px;}
 	td.title {border:none; padding: 5px; text-align: center; font-size: 18pt;}
@@ -40,14 +45,13 @@
 </head>
 <body>
 <c:import url = "/WEB-INF/views/include/top_menu.jsp"/>	
-<div>
-${pv }
+<!-- ${pv } -->
 <table id="content">
 		<tr>
-			<td colspan="5" class="title">자유 게시판 - 목록보기</td>
+			<td colspan="4" class="title">자유 게시판 - 목록보기</td>
 		</tr>
 		<tr>
-			<td colspan="5" class="info">
+			<td colspan="4" class="info">
 				${pv.pageInfo }
 				<script type="text/javascript">
 					$(function(){
@@ -67,7 +71,6 @@ ${pv }
 			</td>
 		</tr>
 		<tr style="text-align: center">
-			<th>No</th>
 			<th width="60%">제목</th>
 			<th>작성자</th>
 			<th>작성일</th>
@@ -75,15 +78,14 @@ ${pv }
 		</tr>
 		<c:if test="${pv.totalCount==0 }">
 			<tr>
-				<td colspan="5" class="info2">등록된 글이 없습니다.</td>
+				<td colspan="4" class="info2">등록된 글이 없습니다.</td>
 			</tr>
 		</c:if>
 		<c:if test="${not empty pv.list }">
 			<c:forEach var="vo" items="${pv.list }" varStatus="vs">
 				<tr align="center">
-					<td>${vo.free_board_id}</td>
 					<td align="left" >
-						<a href="#" onclick='SendPost("${pageContext.request.contextPath }/board/view",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize },"idx":${vo.free_board_id },"m":"view","h":"true"},"post")'><c:out value="${vo.free_board_title }"></c:out></a>
+						<a href="#" onclick='SendPost("${pageContext.request.contextPath }/board/fboard_view",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize },"idx":${vo.free_board_id },"m":"view","h":"true"},"post")'><c:out value="${vo.free_board_title }"></c:out></a>
 					</td>
 					<td>
 						<c:out value="${vo.userid}"></c:out>
@@ -111,14 +113,32 @@ ${pv }
 				</td>
 			</tr>
 		</c:if>
+		<c:if test="${user != 'anonymousUser' }">
 		<tr>
 			<td class="info" colspan="5">
 				<button type="button" class="btn btn-outline-success btn-sm" 
-			        onclick='SendPost("${pageContext.request.contextPath }/board/insertForm",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize }},"post")'>글쓰기</button>
+			        onclick='SendPost("${pageContext.request.contextPath }/board/fboard_insertForm",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize }},"post")'>글쓰기</button>
 			</td>
 		</tr>
+		</c:if>
 	</table>	
-</div>
+	<!-- 검색 영역 -->
+ 	<!-- 검색 영역 -->
+    <div class="search_wrap" style="text-align: center;">
+    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/member_list" method="post">
+    	<div class="search_input">
+	   	  	<select name = "type">
+	    		<option value = "">--</option>
+	    		<option value = "I">아이디</option>
+	    		<option value = "N">이름</option>
+	    		<option value = "E">이메일</option>
+	    		<option value = "R">등급</option>
+	    	</select>
+         <input type="text" name="keyword" id = "keyword"/>
+         <button style="background-color: #0d6efd; color: white; border-radius: 5px; font-size: 10pt">검 색</button>                				
+   		</div>
+    	</form>
+    </div>
 <c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
 </body>
 </html>

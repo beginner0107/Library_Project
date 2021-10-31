@@ -19,10 +19,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import kr.green.library.service.BookService;
 import kr.green.library.service.MemberService;
 import kr.green.library.service.RentService;
+import kr.green.library.service.RequestService;
 import kr.green.library.vo.BookReplyVO;
 import kr.green.library.vo.BookVO;
 import kr.green.library.vo.MemberVO;
 import kr.green.library.vo.RentVO;
+import kr.green.library.vo.RequestVO;
 import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/member")
@@ -38,6 +40,9 @@ public class MemberController {
 	
 	@Autowired
 	RentService rentService;
+	
+	@Autowired
+	RequestService requestService;
 	
 	@GetMapping("modify")
 	public String modify(Model model, MemberVO memberVO) {
@@ -153,6 +158,27 @@ public class MemberController {
 		rentService.updateExtensionCount(rentVO);
 		return "redirect:/member/mypage";
 	}
+	@RequestMapping(value = "/hopeBook")
+	public String hopeBoard(Model model) {
+		model.addAttribute("user", getPrincipal());
+		return "member/hopeBook";
+	}
+	
+	
+	@PostMapping("requestOk")
+	public String requestOk(RequestVO requestVO) {
+		log.info("requestOk호출 : {}",requestVO);
+		requestService.insert(requestVO);
+		return "redirect:/member/requestSuccess";
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "requestSuccess", produces = "text/html; charset=utf8")
+	public String requestSuccess() {
+		String requestSuccess = "<script>alert('희망 도서 등록되었습니다.'); location.href='hopeBook'</script>";
+		return requestSuccess;
+	}
+	
 	
 	// 인증 정보를 얻어내는 method
 		private String getPrincipal() {

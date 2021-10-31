@@ -35,16 +35,16 @@
  	<!-- 4. 저장하기 -->
  	<insert id="insert" parameterType="freeBoardVO">
  		insert into	free_board 
- 			(free_board_id, userid, free_board_title, free_board_content, free_board_view, regdate) 
+ 			(free_board_id, userid, free_board_title, free_board_content, free_board_regdate) 
  		values 
- 			(free_board_id_seq.nextval, #{userid}, #{free_board_title}, #{free_board_content}, #{free_board_view}, SYSDATE)
+ 			(free_board_id_seq.nextval, #{userid}, #{free_board_title}, #{free_board_content}, SYSDATE)
  	</insert>
  	<!-- 5. 수정하기 -->
  	<update id="update" parameterType="freeBoardVO">
  		update 
  			free_board 
  		set
- 			free_board_title=#{title}, free_board_content=#{free_board_content},regdate=SYSDATE
+ 			free_board_title=#{free_board_title}, free_board_content=#{free_board_content},free_board_regdate=SYSDATE
  		where
  			free_board_id = #{free_board_id}
  	</update>

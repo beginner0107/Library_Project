@@ -58,10 +58,10 @@
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 	<c:if test="${user != 'anonymousUser' }">
-	                  <a class="dropdown-item" href="/member/member_hope">희망 도서 신청</a>
+	                  <a class="dropdown-item" href="${pageContext.request.contextPath }/member/hopeBook">희망 도서 신청</a>
                 	</c:if>
                 	<c:if test="${user == 'anonymousUser' }">
-                      <a class="dropdown-item disabled" href="/member/member_hope">희망 도서 신청</a>
+                      <a class="dropdown-item disabled">희망 도서 신청</a>
                 	</c:if>
                     <a class="dropdown-item" href="/board/unified_search">독서 게시판</a>
                     <a class="dropdown-item" href="${pageContext.request.contextPath }/board/freeBoard">자유 게시판</a>
@@ -75,7 +75,7 @@
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" href="/good/unified_search">사서 추천 도서</a>
-                    <a class="dropdown-item" href="/book/new_unified_search">신간 도서</a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath }/newBook">신간 도서</a>
                 </div>
             </div>
 
@@ -84,8 +84,8 @@
                     도서관 정보
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="/library_introduce">도서관 소개</a>
-                    <a class="dropdown-item" href="/notice/unified_search">공지 사항</a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/library_Introduce">도서관 소개</a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath }/notice">공지 사항</a>
                 </div>
             </div>
         </div>

@@ -14,9 +14,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class RequestVO {
 	private int request_id;
-	private String userid;
 	private String request_isbn;
 	private String request_title;
-	private Date regdate;
-	private String author;
+	private Date request_regdate;
+	private String request_link;
 }

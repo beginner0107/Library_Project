@@ -34,5 +34,7 @@ public interface BookService {
 	void updateBookCount(String isbn);
 	// 도서 반납 -> 수량 +1;
 	void updateReturnCount(String isbn);
+	// 신규 도서 목록 보기
+	PagingVO<BookVO> selectNewBook(CommVO commVO);
 	
 }

@@ -157,6 +157,34 @@ public class BookServiceImpl implements BookService {
 		bookDAO.updateReturnCount(isbn);
 	}
 
+	@Override
+	public PagingVO<BookVO> selectNewBook(CommVO commVO) {
+		log.info("{}의 selectList 호출 : {}", this.getClass().getName(), commVO);
+		PagingVO<BookVO>pagingVO = null;
+		try {
+			// 전체 개수 구하기
+			int totalCount = bookDAO.selectNewCount();
+			// 페이지 계산
+			pagingVO = new PagingVO<>(commVO.getCurrentPage(), commVO.getPageSize(), commVO.getBlockSize(), totalCount);
+			// 글을 읽어오기
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("startNo", pagingVO.getStartNo()+"");
+			map.put("endNo", pagingVO.getEndNo()+"");
+			List<BookVO> list = bookDAO.selectList(map);
+			if(list!=null) {
+				for(BookVO b : list) {
+					b.setImageList(bookImageDAO.selectImage(b.getIsbn()));
+				}
+			}
+			// 완성된 리스트를 페이징 객체에 넣는다.
+			pagingVO.setList(list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return pagingVO;
+	}
+
 	
 
 	

@@ -16,12 +16,6 @@
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
-<script>
-	if(window.history.replaceState){
-		window.history.replaceState(null, null, window.location.href);
-	}
-
-</script>
 <style type="text/css">
 	#result_card img{
 		max-width: 100%;
