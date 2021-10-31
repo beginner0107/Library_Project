@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.green.library.dao.MemberDAO">
+	
+	<!-- 저장하기 : 회원 가입 -->
+	<insert id="insert" parameterType="MemberVO">
+		insert into member
+		(userid,username,password,email,phone, uuid ,enabled,regdate, rank, nomal_return, rent_available)
+		values
+		(#{userid}, #{username}, #{password}, #{email}, #{phone}, #{uuid},0,SYSDATE, 0, 0, 3)
+	</insert>
+	
+	<!-- 아이디로 찾기 -->
+	<select id="selectByUserid" parameterType="string" resultType="MemberVO">
+		select * from member where userid=#{userid}
+	</select>
+	
+	<!-- 이메일로 찾기 -->
+	<select id="selectByEmail" parameterType="string" resultType="MemberVO">
+		select * from member where email=#{email}
+	</select>
+	
+	<!-- 아이디, 이메일로 찾기 -->
+	<select id="selectByEmailUserid" parameterType="hashmap" resultType="MemberVO">
+		select * from member where userid=#{userid} and email=#{email}
+	</select>
+	
+	<!-- 비밀번호 변경하기 -->
+	<update id="updatePassword" parameterType="hashmap">
+		update member set password = #{password} where userid=#{userid} and email=#{email}
+	</update>
+	
+	<!-- 사용여부 변경하기 -->
+	<update id="updateEnabled" parameterType="hashmap">
+		update member set enabled = #{enabled} where userid=#{userid}	
+	</update>
+	
+	<!-- 동일한 아이디 개수세기 : 아이디 중복 확인 -->
+	<select id="selectCountByUserid" parameterType="string" resultType="int">
+		select count(*) from member where userid=#{userid}
+	</select>
+	
+	<!-- 수정하기 : 회원 정보 수정 --> <!-- 이메일과 핸드폰 번호 -->
+	<update id="update"  parameterType="hashmap">
+		update 
+			member 
+		set
+			email = #{email },
+			phone = #{phone }
+		where
+			userid=#{userid}
+	</update>
+	
+	<!-- 삭제하기 : 회원 탈퇴 -->
+	<delete id="delete" parameterType="String">
+		delete from member where userid=#{userid}
+	</delete>
+	
+	<!-- 1페이지 얻기 -->
+ 	<select id="selectList" parameterType="hashmap" resultType="MemberVO">
+ 		select 
+ 			*
+ 		from
+	 		(select 
+	 			rownum rnum, R.*
+	 		from
+	 			(select * from member
+	 			<if test = 'type == "I"'>
+	 				where (userid like '%'||#{keyword}||'%')
+	 			</if>
+	 			<if test = 'type == "N"'>
+	 				where (username like '%'||#{keyword}||'%')
+	 			</if>
+	 			<if test = 'type == "E"'>
+	 				where (email like '%'||#{keyword}||'%')
+	 			</if>
+	 			<if test = 'type == "R"'>
+	 				where (rank like '%'||#{keyword}||'%')
+	 			</if>
+	 			 order by regdate desc) R
+	 		where
+	 			<![CDATA[
+	 				rownum <= #{endNo}
+	 			]]>
+			) Q
+		where
+ 			<![CDATA[
+ 			rnum >= #{startNo}
+ 			]]>
+ 	</select>
+	<!-- 전체 개수 얻기 -->
+	<select id="selectCount" parameterType="hashmap" resultType="int">
+ 		select count(*) from member 
+ 		<if test = "type == 'I'.toString()">
+	 		 where (userid like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = "type == 'N'.toString()">
+	 		 where (username like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = "type == 'E'.toString()">
+	 		 where (email like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = "type == 'R'.toString()">
+	 		 where (rank like '%'||#{keyword}||'%')
+	 	</if>
+ 	</select>
+	<!-- 블랙리스트 1페이지 얻기 -->
+ 	<select id="selectBlackList" parameterType="hashmap" resultType="MemberVO">
+ 		select 
+ 			*
+ 		from
+	 		(select 
+	 			rownum rnum, R.*
+	 		from
+	 			(select * from member where rank = -1
+	 			 <if test = 'type == "I"'>
+	 			 	and userid = #{keyword}
+		 		 </if>
+		 		 <if test = 'type == "N"'>
+		 		 	and username = #{keyword}
+		 		 </if>
+		 		 <if test = 'type == "E"'>
+		 		 	and email = #{keyword}
+		 		 </if>
+		 			 order by regdate desc) R
+	 		where
+	 			<![CDATA[
+	 				rownum <= #{endNo}
+	 			]]>
+			) Q
+		where
+ 			<![CDATA[
+ 			rnum >= #{startNo}
+ 			]]>
+ 	</select>
+	<!-- 전체 개수 얻기 -->
+	<select id="selectBlackCount" parameterType="hashmap" resultType="int">
+ 		select count(*) from member where rank = -1
+ 		<if test = "type == 'I'.toString()">
+ 			and userid = #{keyword}
+	 	</if>
+	 	<if test = "type == 'N'.toString()">
+	 		and username = #{keyword}
+	 	</if>
+	 	<if test = "type == 'E'.toString()">
+	 		and email = #{keyword}
+	 	</if>
+ 	</select>
+ 	
+ 	<!-- 수정하기 : 회원 정보 수정 --> <!-- 이메일과 핸드폰 번호 -->
+	<update id="changeRank"  parameterType="hashmap">
+		update 
+			member 
+		set
+			rank = #{rank}, rent_available = 0
+		where
+			userid=#{userid}
+	</update>
+ 	<!-- 수정하기 : 대여하면 대여가능 횟수 -1, 일반회원 3, 블랙 0, vip 5권 대여 가능-->
+	<update id="updateRentAvailable"  parameterType="hashmap">
+		update 
+			member 
+		set
+			rent_available = rent_available-1
+		where
+			userid=#{userid}
+	</update>
+ 	<!-- 수정하기 : 반납하면 대여가능 횟수 +1, 일반회원 3, 블랙 0, vip 5권 대여 가능-->
+	<update id="updateIncreaseRent"  parameterType="hashmap">
+		update 
+			member 
+		set
+			rent_available = rent_available+1, NOMAL_RETURN = nomal_return+1
+		where
+			userid=#{userid}
+	</update>
+	<!-- 수정하기 : 정상적으로 반납한 횟수가 10회시 자동으로 등급 +1 (나중에 작업할 것 : 연체 횟수가 3회가 넘으면 랭크가 -1이므로 등급 변동 X) -->
+	<!-- 수정하기 : 대여하면 대여가능 횟수 -1, 일반회원 3, 블랙 0, vip 5권 대여 가능-->
+	<update id="updateRankDown"  parameterType="String">
+	<![CDATA[
+	UPDATE MEMBER SET RANK = -1, rent_available = 0  WHERE USERID = #{userid}
+	]]>
+	</update>
+	<!-- 수정하기 : 반납할 때 정상적으로 10번 반납한 경우 (랭크 +1, rent_available +7 (총 10권을 빌릴 수 있게) 
+	+ 블랙리스트면 수정 하지 않는다.(rank = -1이면) -->
+	<update id="updateRankUp"  parameterType="String">
+	<![CDATA[
+	UPDATE MEMBER SET RANK = 1, rent_available = rent_available+7  WHERE USERID = #{userid}
+	]]>
+	</update>
+</mapper>
