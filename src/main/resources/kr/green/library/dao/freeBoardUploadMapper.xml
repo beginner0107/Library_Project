@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.green.library.dao.FreeBoardUploadDAO">
+ 	<!-- id: 메서드명 , parameterType : 인수, resultType : 리턴값 -->
+  	<!-- 1. 첨부파일 저장 -->
+  	<insert id="insert" parameterType="freeBoardUploadVO">
+  		insert into free_board_upload 
+  			(fboard_upload_id, free_board_id, oriname, savename) 
+  		values 
+  			(fboard_upload_id_seq.nextval,#{free_board_id}, #{oriname},#{savename})
+  	</insert>
+  	<!-- 2. 수정시 첨부파일 저장 : 이때는 원본글의 ref가 별도로 존재한다. -->
+  	<insert id="updateInsert" parameterType="freeBoardUploadVO">
+  		insert into free_board_upload 
+  			(fboard_upload_id, free_board_id, oriname, savename) 
+  		values 
+  			(fboard_upload_id_seq.nextval,#{free_board_id}, #{saveName},#{oriName})
+  	</insert>
+  	<!-- 3. 첨부파일 삭제 -->
+  	<delete id="deleteByUploadId" parameterType="int">
+  		delete from free_board_upload where fboard_upload_id=#{fboard_upload_id}
+  	</delete> 
+  	<!-- 4. 원본글의 첨부파일 모두 읽기 -->
+  	<select id="selectList" parameterType="int" resultType="freeBoardUploadVO">
+  		select * from free_board_upload where free_board_id=#{free_board_id}
+  	</select>
+  	<!-- 5. 원본글의 첨부파일 모두 삭제하기 -->
+  	<delete id="deleteByFboardId" parameterType="int">
+  		delete from free_board_upload where free_board_id=#{free_board_id}
+  	</delete> 
+  	<!-- 6. 글 1개 가져오기 -->
+  	<select id="selectByFboardId" parameterType="int" resultType="freeBoardUploadVO">
+  		select * from free_board_upload where fboard_upload_id=#{fboard_upload_id}
+  	</select> 
+</mapper>
