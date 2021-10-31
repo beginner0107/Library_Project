@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.green.library.dao.BookReplyDAO">
+	<!-- 저장하기 : 댓글 등록 -->
+	<insert id="insertBookReply" parameterType="BookReplyVO">
+		insert into book_reply
+		(breply_id,isbn,userid,regdate,content, modified_date)
+		values
+		(BREPLY_ID_SEQ.nextval, #{isbn}, #{userid}, sysdate, #{content}, sysdate)
+	</insert>
+	<!-- 1페이지 얻기 -->
+ 	<select id="selectReplyList" parameterType="hashmap" resultType="BookReplyVO">
+ 		select 
+ 			*
+ 		from
+	 		(select 
+	 			rownum rnum, R.*
+	 		from
+	 			(select * from book_reply where isbn = #{isbn}
+	 			 order by regdate desc) R
+	 		where
+	 			<![CDATA[
+	 				rownum <= #{endNo}
+	 			]]>
+			) Q
+		where
+ 			<![CDATA[
+ 			rnum >= #{startNo}
+ 			]]>
+ 	</select>
+ 	
+ 	<!-- 전체 개수 얻기 -->
+	<select id="selectCount" parameterType="String" resultType="int">
+ 		select count(*) from book_reply where isbn = #{isbn}  
+ 	</select>
+</mapper>
