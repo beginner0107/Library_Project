@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class MemberAuthVO {
-	private int idx;
+	private int auth_id;
 	private String userid;
 	private String role;
 }
