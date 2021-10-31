@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.green.library.dao.BookDAO">
+	
+	<!-- 저장하기 : 책 등록 -->
+	<insert id="insert" parameterType="BookVO">
+		insert into book
+		(isbn,title,author,publisher,genre, content,count, regdate, modified_date)
+		values
+		(#{isbn}, #{title}, #{author}, #{publisher}, #{genre}, #{content}, #{count}, sysdate, sysdate)
+	</insert>
+	
+	<!-- 1페이지 얻기 -->
+ 	<select id="selectList" parameterType="hashmap" resultType="BookVO">
+ 		select 
+ 			*
+ 		from
+	 		(select 
+	 			rownum rnum, R.*
+	 		from
+	 			(select * from book
+	 			 order by regdate desc) R
+	 		where
+	 			<![CDATA[
+	 				rownum <= #{endNo}
+	 			]]>
+			) Q
+		where
+ 			<![CDATA[
+ 			rnum >= #{startNo}
+ 			]]>
+ 	</select>
+	<!-- 전체 개수 얻기 -->
+	<select id="selectCount" resultType="int">
+ 		select count(*) from book 
+ 	</select>
+ 	<!-- isbn으로 찾기 -->
+	<select id="selectByIsbn" parameterType="string" resultType="BookVO">
+		select * from book where isbn=#{isbn}
+	</select>
+	
+ 	<!-- isbn으로 찾기 -->
+	<select id="selectByIsbnTitle" parameterType="hashmap" resultType="BookVO">
+		select * from book where isbn=#{isbn} and title = #{title}
+	</select>
+	
+	<!-- 삭제하기 : 도서 삭제 -->
+	<delete id="deleteBook" parameterType="String">
+		delete from book where isbn=#{isbn}
+	</delete>
+	
+	<!-- 수정하기 : 도서 정보 수정 --> 
+	<update id="updateBookInfo"  parameterType="hashmap">
+		update 
+			book 
+		set
+			genre = #{genre}, title = #{title}, author = #{author}, publisher = #{publisher}, count = #{count}, content = #{content}, modified_date = sysdate
+		where
+			isbn=#{isbn}
+	</update>
+	<!-- 도서 대여 했을 시에 수량 갱신 -->
+	<!-- 수정하기 : 도서 정보 수정 수량 감소 --> 
+	<update id="updateBookCount"  parameterType="String">
+		UPDATE book SET count = count-1 WHERE isbn = #{isbn}
+	</update>
+	<update id="updateReturnCount"  parameterType="String">
+		UPDATE book SET count = count+1 WHERE isbn = #{isbn}
+	</update>
+
+</mapper>
