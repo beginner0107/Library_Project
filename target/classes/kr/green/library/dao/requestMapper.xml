@@ -7,4 +7,27 @@
 	<insert id="insert" parameterType="RequestVO">
 		insert into request (request_id, request_isbn, request_title, request_regdate, request_link) values (request_id_seq.nextval,#{request_isbn}, #{request_title}, sysdate, #{request_link})
 	</insert>
+	<!-- 희망도서 목록의 개수 -->
+ 	<select id="selectRequestCount" resultType="int">
+ 		select count(*) from request
+ 	</select>
+ 	<!-- 3. 1페이지 얻기 -->
+ 	<select id="selectRequestList" parameterType="hashmap" resultType="RequestVO">
+ 		select 
+ 			*
+ 		from
+	 		(select 
+	 			rownum rnum, R.*
+	 		from
+	 			(select * from request order by request_id desc) R
+	 		where
+	 			<![CDATA[
+	 				rownum <= #{endNo}
+	 			]]>
+			) Q
+		where
+ 			<![CDATA[
+ 			rnum >= #{startNo}
+ 			]]>
+ 	</select>
 </mapper>

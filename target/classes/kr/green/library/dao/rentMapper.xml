@@ -33,4 +33,32 @@
   	<select id="selectReturnAvailable" parameterType="hashmap" resultType="int">
   		SELECT COUNT(*) RETURN_DATE  FROM rent WHERE isbn = #{isbn} AND userid = #{userid} AND RETURN_DATE IS NULL 
   	</select>
+  	<!-- 연체 도서 목록 보기 -->
+ 	<select id="selectOverdueBookList" parameterType="hashmap" resultType="RentVO">
+ 		select 
+ 			*
+ 		from
+	 		(select 
+	 			rownum rnum, R.*
+	 		from
+	 		<![CDATA[
+	 			(SELECT * FROM rent WHERE RETURN_DUE_DATE < SYSDATE AND RETURN_DATE IS NULL
+	 			 order by rent_id desc) R
+	 		]]>
+	 		where
+	 			<![CDATA[
+	 				rownum <= #{endNo}
+	 			]]>
+			) Q
+		where
+ 			<![CDATA[
+ 			rnum >= #{startNo}
+ 			]]>
+ 	</select>
+ 	<!-- 전체 회원의 연체 도서 목록 개수 -->
+ 	<select id="selectOverdueBookCount" resultType="int">
+ 	<![CDATA[
+ 		SELECT count(*) FROM rent WHERE RETURN_DUE_DATE < SYSDATE AND RETURN_DATE IS NULL
+ 	]]>
+ 	</select>
 </mapper>
