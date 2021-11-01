@@ -8,14 +8,12 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Library</title>
-	 <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
+	 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
+    <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <style type="text/css">
 	#result_card img{
 		max-width: 100%;
@@ -89,7 +87,7 @@
                                 삭제</a></li>
                         <li class="breadcrumb-item"><a href="${pageContext.request.contextPath }/admin/book_update">도서
                                 수정</a></li>
-                        <li class="breadcrumb-item"><a href="/admin/book/overdue">연체
+                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath }/admin/rent_overdue">연체
 								도서</a></li>
                     </ol>
 
@@ -372,24 +370,14 @@
                 </div>
 			
             </main>
+            </div>
+            </div>
            	<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp" />
-
- 
 			<!-- Bootstrap core JS-->
-			<script
-				src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 			<!-- Core theme JS-->
 			<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
-
-
-			<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"
-				crossorigin="anonymous"></script>
-			<script src="${pageContext.request.contextPath }/resources/js/dataTables.js"></script>
-
 				
-				
-        </div>
-    </div>
 </body>
 
 </html>
