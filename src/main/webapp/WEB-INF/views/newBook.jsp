@@ -80,7 +80,7 @@
 </head>
 <body>
 	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
-		<table class="table" style="width: 90%;">
+		<table class="table" style="width: 80%;">
 			<tr>
 				<td colspan="8" class="title"><b>신규 도서 목록</b></td>
 			</tr>
