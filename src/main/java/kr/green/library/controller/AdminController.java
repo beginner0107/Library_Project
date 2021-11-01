@@ -21,22 +21,30 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import kr.green.library.service.BookService;
+import kr.green.library.service.FreeBoardService;
+import kr.green.library.service.GoodService;
 import kr.green.library.service.MemberService;
+import kr.green.library.service.RentService;
+import kr.green.library.service.RequestService;
 import kr.green.library.vo.BookImageVO;
 import kr.green.library.vo.BookVO;
 import kr.green.library.vo.CommVO;
+import kr.green.library.vo.FreeBoardVO;
+import kr.green.library.vo.GoodVO;
 import kr.green.library.vo.MemberVO;
 import kr.green.library.vo.PagingVO;
+import kr.green.library.vo.RentVO;
+import kr.green.library.vo.RequestVO;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 
@@ -51,7 +59,18 @@ public class AdminController {
 	@Autowired
 	private BookService bookService;
 
+	@Autowired
+	private GoodService goodService;
+	
+	@Autowired
+	private RentService rentService;
 
+	@Autowired
+	private RequestService requestService;
+	
+	@Autowired
+	private FreeBoardService freeBoardService;
+	
 	@RequestMapping(value = "/admin")
 	public String postAdmin(Model model) {
 		model.addAttribute("msg", "관리자 전용 페이지 입니다.");
@@ -77,7 +96,7 @@ public class AdminController {
 		return "admin/member_list";
 	}
 
-	@RequestMapping(value = "/member_good_list", method = RequestMethod.POST)
+	@RequestMapping(value = "/member_hope_list")
 	public String member_good_list(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
 		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -89,13 +108,13 @@ public class AdminController {
 			commVO.setKeyword(params.get("keyword"));
 			commVO.setType(params.get("type"));
 		}
-		PagingVO<MemberVO> pv = memberService.selectList(commVO);
+		PagingVO<RequestVO> pv = requestService.selectRequestList(commVO);
 		model.addAttribute("pv", pv);
 		model.addAttribute("cv", commVO);
-		return "admin/member_good_list";
+		return "admin/member_hope_list";
 	}
 
-	@RequestMapping(value = "/member_black_list", method = RequestMethod.POST)
+	@RequestMapping(value = "/member_black_list")
 	public String member_black_list(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
 		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -239,6 +258,98 @@ public class AdminController {
 			bookService.deleteBook(isbn);
 		}
 		return "redirect:/admin/book_delete";
+	}
+	// 사서 추천 도서
+	@RequestMapping(value = "/good_add")
+	public String good_add(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
+			@ModelAttribute CommVO commVO) {
+		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+		if (flashMap != null) {
+			params = (Map<String, String>) flashMap.get("map");
+			commVO.setP(Integer.parseInt(params.get("p")));
+			commVO.setS(Integer.parseInt(params.get("s")));
+			commVO.setB(Integer.parseInt(params.get("b")));
+		}
+		PagingVO<BookVO> pv = bookService.selectList(commVO);
+		model.addAttribute("pv", pv);
+		model.addAttribute("cv", commVO);
+		model.addAttribute("user", getPrincipal());
+		return "admin/good_add";
+	}
+	// 사서 추천 도서
+	@RequestMapping(value = "/good_delete")
+	public String good_delete(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
+			@ModelAttribute CommVO commVO) {
+		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+		if (flashMap != null) {
+			params = (Map<String, String>) flashMap.get("map");
+			commVO.setP(Integer.parseInt(params.get("p")));
+			commVO.setS(Integer.parseInt(params.get("s")));
+			commVO.setB(Integer.parseInt(params.get("b")));
+		}
+		PagingVO<GoodVO> pv = goodService.selectList(commVO);
+		model.addAttribute("pv", pv);
+		model.addAttribute("cv", commVO);
+		model.addAttribute("user", getPrincipal());
+		return "admin/good_delete";
+	}
+	
+	@PostMapping("goodDeleteOk")
+	public String goodDeleteOk(GoodVO goodVO) {
+		int existence = goodService.selectByGoodIdTitle(goodVO);
+		if(existence==0) {
+			return "redirect:/admin/good_deleteFail";
+		}
+		goodService.delete(goodVO);
+		return "redirect:/admin/good_delete";
+	}
+	@RequestMapping(value = "/good_deleteFail", produces = "text/html; charset=utf8")
+	@ResponseBody
+	public String good_deleteFail() {
+		String good_deleteFail = "<script>alert('NO와 제목을 잘못 입력하셨습니다.'); location.href='good_delete'</script>";
+		return good_deleteFail;
+	}
+	
+	@PostMapping("goodAddOk")
+	public String goodAddOk(GoodVO goodVO) {
+		goodService.insert(goodVO);
+		return "redirect:/admin/good_add";
+	}
+	
+	// 연체 도서 리스트
+	@RequestMapping(value = "/rent_overdue")
+	public String rent_overdue(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
+			@ModelAttribute CommVO commVO) {
+		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+		if (flashMap != null) {
+			params = (Map<String, String>) flashMap.get("map");
+			commVO.setP(Integer.parseInt(params.get("p")));
+			commVO.setS(Integer.parseInt(params.get("s")));
+			commVO.setB(Integer.parseInt(params.get("b")));
+		}
+		PagingVO<RentVO> pv = rentService.selectOverdueBookList(commVO);
+		model.addAttribute("pv", pv);
+		model.addAttribute("cv", commVO);
+		model.addAttribute("user", getPrincipal());
+		return "admin/rent_overdue";
+	}
+	
+	// 자유게시판 부적절한 게시물 올린 회원 글 비공개 처리
+	@RequestMapping(value = "/freeBoard_update")
+	public String freeBoard_update(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
+			@ModelAttribute CommVO commVO) {
+		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+		if (flashMap != null) {
+			params = (Map<String, String>) flashMap.get("map");
+			commVO.setP(Integer.parseInt(params.get("p")));
+			commVO.setS(Integer.parseInt(params.get("s")));
+			commVO.setB(Integer.parseInt(params.get("b")));
+		}
+		PagingVO<FreeBoardVO> pv = freeBoardService.selectList(commVO);
+		model.addAttribute("pv", pv);
+		model.addAttribute("cv", commVO);
+		model.addAttribute("user", getPrincipal());
+		return "admin/freeBoard_update";
 	}
 	
 	/* 첨부 파일 업로드 */
