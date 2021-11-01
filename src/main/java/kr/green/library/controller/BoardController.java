@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -63,6 +64,12 @@ public class BoardController {
 	// 자유게시판 InsertForm 글쓰기
 	@RequestMapping(value = "/fboard_insertForm")
 	public String insertForm(@ModelAttribute CommVO commVO, Model model) {
+		if(getPrincipal().equals("anonymousUser")) {
+			model.addAttribute("cv", commVO);
+			PagingVO<FreeBoardVO> pv = freeBoardService.selectList(commVO);
+			model.addAttribute("pv", pv);
+			return "redirect:/board/freeBoard";
+		}
 		model.addAttribute("cv", commVO);
 		return "board/fboard_insertForm";
 	}
@@ -148,8 +155,12 @@ public class BoardController {
 		}
 
 		FreeBoardVO freeBoardVO = freeBoardService.selectByBoardId(commVO.getIdx());
+		if(freeBoardVO.getUserid().equals(getPrincipal())) {
+			model.addAttribute("prohibition", "prohibition");
+		}
 		model.addAttribute("fv", freeBoardVO);
 		model.addAttribute("cv", commVO);
+		model.addAttribute("user", getPrincipal());
 		return "board/fboard_view";
 	}
 	
@@ -196,6 +207,7 @@ public class BoardController {
 				String saveName = UUID.randomUUID() + "_" + file.getOriginalFilename();
 				File target = new File(realPath, saveName);
 				FileCopyUtils.copy(file.getBytes(), target);
+				log.info("request.getContextPath : {}", request.getContextPath());
 				filePath = request.getContextPath() + "\\contentfile\\" + saveName;
 			} catch (IOException e) {
 				e.printStackTrace();
