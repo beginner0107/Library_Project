@@ -35,23 +35,69 @@
    });
 </script>
 <style type="text/css">
-	table#content{width: 80%; margin: auto;}
-	th {border: 1px solid gray; background-color: #e3f2fd;padding: 5px; text-align: center;}
-	td {border: 1px solid gray; padding: 5px;}
-	td.title {border:none; padding: 5px; text-align: center; font-size: 18pt;}
-	td.info {border:none; padding: 5px; text-align: right; }
-	td.info2 {border: 1px solid gray; padding: 5px; text-align: center; }
+		#result_card img{
+		max-width: 100%;
+	    height: auto;
+	    display: block;
+	    padding: 5px;
+	    margin-top: 10px;
+	    margin: auto;	
+	}
+	#result_card {
+		position: relative;
+	}
+	.imgDeleteBtn{
+	    position: absolute;
+	    top: 0;
+	    right: 5%;
+	    background-color: #ef7d7d;
+	    color: wheat;
+	    font-weight: 900;
+	    width: 30px;
+	    height: 30px;
+	    border-radius: 50%;
+	    line-height: 26px;
+	    text-align: center;
+	    border: none;
+	    display: block;
+	    cursor: pointer;	
+	}
+	.table {
+      border-collapse: collapse;
+      border-top: 3px solid #168;
+      width: 90%; 
+      margin: auto;
+    }  
+	.table th {
+      color: #168;
+      background: #f0f6f9;
+      text-align: center;
+    }
+    .table th, .table td {
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+    .table th:first-child, .table td:first-child {
+      border-left: 0;
+    }
+    .table th:last-child, .table td:last-child {
+      border-right: 0;
+    }
+    .table tr td:first-child{
+      text-align: center;
+    }
+	body{font-family: 맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;}
 </style>
 </head>
 <body>
 <c:import url = "/WEB-INF/views/include/top_menu.jsp"/>	
 <!-- ${pv } -->
-<table id="content">
+<table class="table" style="width: 80%;">
 		<tr>
 			<td colspan="4" class="title">자유 게시판 - 목록보기</td>
 		</tr>
 		<tr>
-			<td colspan="4" class="info">
+			<td colspan="4" class="info" style="text-align: right;">
 				${pv.pageInfo }
 				<script type="text/javascript">
 					$(function(){
@@ -71,7 +117,7 @@
 			</td>
 		</tr>
 		<tr style="text-align: center">
-			<th width="60%">제목</th>
+			<th width="40%">제목</th>
 			<th>작성자</th>
 			<th>작성일</th>
 			<th>첨부파일</th>
@@ -107,20 +153,20 @@
 					</td>
 				</tr>		
 			</c:forEach>
-			<tr>
-				<td style="border: none;text-align: center;" colspan="5">
-					${pv.pageList }
-				</td>
-			</tr>
 		</c:if>
 		<c:if test="${user != 'anonymousUser' }">
 		<tr>
-			<td class="info" colspan="5">
+			<td class="info" colspan="5" style="text-align: right; border-top:none;">
 				<button type="button" class="btn btn-outline-success btn-sm" 
 			        onclick='SendPost("${pageContext.request.contextPath }/board/fboard_insertForm",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize }},"post")'>글쓰기</button>
 			</td>
 		</tr>
 		</c:if>
+		<tr>
+			<td style="border: none;text-align: center;" colspan="5">
+				${pv.pageList }
+			</td>
+		</tr>
 	</table>	
 	<!-- 검색 영역 -->
  	<!-- 검색 영역 -->
