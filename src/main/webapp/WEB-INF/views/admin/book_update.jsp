@@ -95,7 +95,7 @@
                                 삭제</a></li>
                         <li class="breadcrumb-item active">도서
                                 수정</li>
-                        <li class="breadcrumb-item"><a href="/admin/book/overdue">연체
+                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath }/admin/rent_overdue">연체
 								도서</a></li>
                     </ol>
                 	</div>
@@ -386,7 +386,9 @@
                
 			</c:if>
             </main>
-           	<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp" />
+		</div>
+		</div>
+          <c:import url="/WEB-INF/views/include/admin_bottom_info.jsp"/>
 	<script type="text/javascript">
 	$(function() {
 	let isbn = '<c:out value="${bvo.isbn}"/>';
