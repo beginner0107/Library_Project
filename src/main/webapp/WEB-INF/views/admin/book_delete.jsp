@@ -97,13 +97,13 @@
                                 삭제</li>
                         <li class="breadcrumb-item"><a href="${pageContext.request.contextPath }/admin/book_update">도서
                                 수정</a></li>
-                        <li class="breadcrumb-item"><a href="/admin/book/overdue">연체
+                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath }/admin/rent_overdue">연체
 								도서</a></li>
                     </ol>
 
                                       
                     <div class="card mb-4">
-                        <div class="card-body">현재 추가 하고자 하는 도서가 존재하는지 미리 확인하세요!</div>
+                        <div class="card-body">현재 삭제 하고자 하는 도서가 존재하는지 미리 확인하세요!</div>
                     	</div>
                 	</div>
 		<table class="table" style="width: 90%;">
@@ -228,24 +228,15 @@
 				</div>
 			
             </main>
+             </div>
+  		  </div>
            	<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp" />
-
- 
 			<!-- Bootstrap core JS-->
-			<script
-				src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 			<!-- Core theme JS-->
 			<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
-
-
-			<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"
-				crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
 			<script src="${pageContext.request.contextPath }/resources/js/dataTables.js"></script>
-
-				
-				
-        </div>
-    </div>
 </body>
 
 </html>
