@@ -22,6 +22,60 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
+<style type="text/css">
+	#result_card img{
+		max-width: 100%;
+	    height: auto;
+	    display: block;
+	    padding: 5px;
+	    margin-top: 10px;
+	    margin: auto;	
+	}
+	#result_card {
+		position: relative;
+	}
+	.imgDeleteBtn{
+	    position: absolute;
+	    top: 0;
+	    right: 5%;
+	    background-color: #ef7d7d;
+	    color: wheat;
+	    font-weight: 900;
+	    width: 30px;
+	    height: 30px;
+	    border-radius: 50%;
+	    line-height: 26px;
+	    text-align: center;
+	    border: none;
+	    display: block;
+	    cursor: pointer;	
+	}
+	.table {
+      border-collapse: collapse;
+      border-top: 3px solid #168;
+      width: 90%; 
+      margin: auto;
+    }  
+	.table th {
+      color: #168;
+      background: #f0f6f9;
+      text-align: center;
+    }
+    .table th, .table td {
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+    .table th:first-child, .table td:first-child {
+      border-left: 0;
+    }
+    .table th:last-child, .table td:last-child {
+      border-right: 0;
+    }
+    .table tr td:first-child{
+      text-align: center;
+    }
+	body{font-family: 맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;}
+</style>
 </head>
 <body>
 	<!-- Navigation-->
@@ -29,14 +83,14 @@
 	
 		<!-- Page Content-->
 	<div class="container px-4 px-lg-5">
-		<table class="table" style="width: 90%;">
+		<table class="table" style="width: 80%; text-align: center;" >
 			<tr>
 				<td colspan="8" class="title"><b>자료 검색</b></td>
 			</tr>
 			<tr>
 				<td colspan="8" class="info" style="text-align: right;"><c:out value="${pv.getPageInfo() }"></c:out></td>
 			</tr>
-			<tr>
+			<tr >
 				<th>ISBN</th>
 				<th>제목</th>
 				<th>작가</th>
