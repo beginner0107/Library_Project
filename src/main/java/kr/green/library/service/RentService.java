@@ -2,6 +2,8 @@ package kr.green.library.service;
 
 import java.util.List;
 
+import kr.green.library.vo.CommVO;
+import kr.green.library.vo.PagingVO;
 import kr.green.library.vo.RentVO;
 
 public interface RentService {
@@ -19,4 +21,6 @@ public interface RentService {
 	void updateExtensionCount(RentVO rentVO);
 	
 	int selectReturnAvailable(RentVO rentVO);
+	
+	PagingVO<RentVO> selectOverdueBookList(CommVO commVO);
 }
