@@ -20,4 +20,8 @@ public interface RentDAO {
 	void updateExtensionCount(RentVO rentVO);
 	
 	int selectReturnAvailable(HashMap<String, String>map);
+	// 연체 도서 목록 보기
+	List<RentVO>selectOverdueBookList(HashMap<String, String>map);
+	// 연체 도서 목록 개수
+	int selectOverdueBookCount();
 }
