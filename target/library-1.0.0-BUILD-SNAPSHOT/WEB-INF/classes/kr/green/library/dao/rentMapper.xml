@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.green.library.dao.RentDAO">
+	<!-- 대여 기능 구현 -->
+	<insert id="insert" parameterType="RentVO">
+		insert into rent (rent_id, isbn, title, userid, rent_date) values (RENT_ID_SEQ.nextval,#{isbn}, #{title}, #{userid}, sysdate)
+	</insert>
+	<!-- isbn과 아이디로 대여한 도서 찾기(중복된 도서 대여 불가, 확인) -->
+	<select id="rentAvailable" parameterType="hashmap" resultType="RentVO">
+		select * from rent where isbn=#{isbn} and userid = #{userid} AND return_date IS NULL 
+	</select>
+	<!-- 회원이 빌린 책들의 목록 -->
+	<select id="rentListByUserid" parameterType="String" resultType="RentVO">
+		select * from rent where userid = #{userid}
+	</select>
+	<!-- 반납 날짜를 등록한다. -->
+	<update id="updateReturnDate" parameterType="hashmap" >
+		UPDATE rent SET RETURN_DATE = sysdate WHERE rent_id = (SELECT rent_id FROM rent WHERE isbn = #{isbn} AND RETURN_DATE IS NULL and userid = #{userid})
+	</update>
+	<!-- 연체한 도서의 개수 카운트(빌릴 때 연체한 도서의 개수가 3이 넘으면 빌려지지 않는다) -->
+	<select id="selectOverdueBook" parameterType="String" resultType="int">
+	<![CDATA[
+		SELECT (SELECT count(*) FROM RENT r WHERE userid = #{userid} AND RETURN_DUE_DATE <RETURN_DATE) + (SELECT count(*) FROM rent WHERE userid = #{userid} AND  SYSDATE >RETURN_DUE_DATE AND RETURN_DATE IS NULL) FROM DUAL 
+	]]>
+	</select>
+	<!-- 대여도서 연장하면 도서 반납 예정일이 변한다. 도서 반납 예정일을 추가한다.-->
+  	<update id="updateExtensionCount" parameterType="hashmap">
+ 	 	 UPDATE RENT SET RETURN_DUE_DATE = RETURN_DUE_DATE + #{extension_count} WHERE userid = #{userid} AND isbn = #{isbn} AND RETURN_DATE IS NULL
+  	</update>
+  	<!-- nullPointException을 피하기 위해 1을 리턴하면 반납 가능, 0을 리턴하면 반납 불가능 -->
+  	<select id="selectReturnAvailable" parameterType="hashmap" resultType="int">
+  		SELECT COUNT(*) RETURN_DATE  FROM rent WHERE isbn = #{isbn} AND userid = #{userid} AND RETURN_DATE IS NULL 
+  	</select>
+  	<!-- 연체 도서 목록 보기 -->
+ 	<select id="selectOverdueBook" parameterType="hashmap" resultType="BookVO">
+ 		select 
+ 			*
+ 		from
+	 		(select 
+	 			rownum rnum, R.*
+	 		from
+	 		<![CDATA[
+	 			(SELECT * FROM rent WHERE RETURN_DUE_DATE <RETURN_DATE OR (RETURN_DUE_DATE < SYSDATE AND RETURN_DATE IS NULL) ;
+	 			 order by rent_id desc) R
+	 		]]>
+	 		where
+	 			<![CDATA[
+	 				rownum <= #{endNo}
+	 			]]>
+			) Q
+		where
+ 			<![CDATA[
+ 			rnum >= #{startNo}
+ 			]]>
+ 	</select>
+ 	<!-- 전체 회원의 연체 도서 목록 개수 -->
+ 	<select id="selectOverdueBookCount" resultType="int">
+ 	<![CDATA[
+ 		SELECT count(*) FROM rent WHERE RETURN_DUE_DATE <RETURN_DATE OR (RETURN_DUE_DATE < SYSDATE AND RETURN_DATE IS NULL)
+ 	]]>
+ 	</select>
+</mapper>
