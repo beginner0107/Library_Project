@@ -1,12 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<html lang="ko">
+<head>
 <% response.setHeader("Cache-Control","no-store"); 
    response.setHeader("Pragma","no-cache"); 
    response.setDateHeader("Expires",0); 
    if (request.getProtocol().equals("HTTP/1.1")) 
 	   response.setHeader("Cache-Control", "no-cache"); %>
-<html lang="ko">
-<head>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -26,6 +26,15 @@
 	rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
+<!--    회원 정의 추가용-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<c:import url = "/WEB-INF/views/include/admin_top_menu.jsp"/>	
@@ -39,7 +48,7 @@
                 <p>관리자님 안녕하세요! <br /> 관리자님의 행복한 하루를 기원합니다.</p>
             </div>
         </div>
-
+	</div>
         <!--    도서 / 알림 / 회원 모음집 섹션 -->
 
         <div class="container my-5 py-4 text-center">
@@ -81,7 +90,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title">연체 도서</h5>
                                         <p class="card-text">도서 시스템에<br /> <b>연체된 도서 정보를</b> 보는 기능을 이용합니다.</p>
-                                        <a href="/admin/book/overdue" class="btn btn-primary">연체 도서</a>
+                                        <a href="${pageContext.request.contextPath }/admin/rent_overdue" class="btn btn-primary">연체 도서</a>
                                     </div>
                                 </div>
                             </div>
@@ -102,8 +111,8 @@
                                     <div class="card-body">
                                         <h5 class="card-title">사서 추천 도서</h5>
                                         <p class="card-text">도서 시스템의<br /> <b>사서 추천 도서 게시판</b>을 관리합니다.</p>
-                                        <a href="/admin/alarm/good/good_add" class="btn btn-primary">추천 도서 추가</a>
-                                        <a href="/admin/alarm/good/good_delete" class="btn btn-primary">추천 도서 삭제</a>
+                                        <a href="${pageContext.request.contextPath }/admin/good_add" class="btn btn-primary">추천 도서 추가</a>
+                                        <a href="${pageContext.request.contextPath }/admin/good_delete" class="btn btn-primary">추천 도서 삭제</a>
                                     </div>
 
                                 </div>
@@ -111,7 +120,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title">자유 게시판 관리</h5>
                                         <p class="card-text">도서 시스템의<br /> <b>자유 게시판 게시물</b>을 관리합니다.</p>
-                                        <a href="/admin/alarm/board/board_update" class="btn btn-primary">게시물 비공개 설정</a>
+                                        <a href="${pageContext.request.contextPath }/admin/freeBoard_update" class="btn btn-primary">게시물 비공개 설정</a>
                                     </div>
 
                                 </div>
@@ -134,7 +143,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title">회원 희망 도서</h5>
                                         <p class="card-text">회원들이 신청한<br /> <b>희망 도서</b>를 확인합니다.</p>
-                                        <form action="${pageContext.request.contextPath }/admin/member_good_list" method = "post">
+                                        <form action="${pageContext.request.contextPath }/admin/member_hope_list" method = "post">
                                         <input type= "submit" class = "btn btn-primary" value = "회원 희망 도서"/>
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                         </form>
@@ -156,6 +165,7 @@
                 </div>
             </div>
         </div>
+        <br><br><br><br><br><br>
 		<!-- Footer-->
 		<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp"/>
 
