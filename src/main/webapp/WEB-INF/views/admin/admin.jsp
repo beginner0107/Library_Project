@@ -12,7 +12,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>데모도서관</title>
+<title>도서관</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon"
 	href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
@@ -156,13 +156,6 @@
                 </div>
             </div>
         </div>
-		<h3>${msg }</h3>
-		<hr />
-		현재 사용자 : ${user }
-		<br />
-		<hr />
-		<a href="${pageContext.request.contextPath }/">홈으로</a>
-		<!-- Image Showcases-->
 		<!-- Footer-->
 		<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp"/>
 
