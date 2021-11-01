@@ -5,6 +5,11 @@
 <mapper namespace="kr.green.library.dao.MemberAuthDAO">
 	<!-- 저장 -->
 	<insert id="insert" parameterType="MemberAuthVO">
-		insert into member_auth values (member_auth_seq_idx.nextval, #{userid},#{role})
+		insert into member_auth values (member_auth_id_seq.nextval, #{userid},#{role})
 	</insert>
+	
+	<!-- 삭제 -->
+	<delete id="delete" parameterType="String">
+		delete from member_auth where userid=#{userid}
+	</delete>
 </mapper>
