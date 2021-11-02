@@ -120,4 +120,40 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		
 	}
 
+
+	@Override
+	public PagingVO<FreeBoardVO> selectAdminList(CommVO commVO) {
+		PagingVO<FreeBoardVO> pagingVO = null;
+		try {
+			// 전체 개수 구하기
+			int totalCount = freeBoardDAO.selectAdminCount();
+			// 페이지 계산
+			pagingVO = new PagingVO<>(commVO.getCurrentPage(), commVO.getPageSize(), commVO.getBlockSize(), totalCount);
+			// 글을 읽어오기
+			HashMap<String, Integer> map = new HashMap<String, Integer>();
+			map.put("startNo", pagingVO.getStartNo());
+			map.put("endNo", pagingVO.getEndNo());
+			List<FreeBoardVO> list = freeBoardDAO.selectAdminList(map);
+			// 해당글들의 첨부파일 정보를 넣어준다.
+			if (list != null && list.size() > 0) {
+				for (FreeBoardVO vo : list) {
+					List<FreeBoardUploadVO> fileList = freeBoardUploadDAO.selectList(vo.getFree_board_id());
+					vo.setFileList(fileList);
+				}
+			}
+			// 완성된 리스트를 페이징 객체에 넣는다.
+			pagingVO.setList(list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return pagingVO;
+	}
+
+
+	@Override
+	public void updateInappropriatePost(FreeBoardVO freeBoardVO) {
+		freeBoardDAO.updateInappropriatePost(freeBoardVO);
+	}
+
 }
