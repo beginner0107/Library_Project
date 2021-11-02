@@ -20,5 +20,6 @@ public class FreeBoardVO {
 	private String free_board_content;
 	private int free_board_view;
 	private Date free_board_regdate;
+	private String black;
 	private List<FreeBoardUploadVO> fileList;
 }
