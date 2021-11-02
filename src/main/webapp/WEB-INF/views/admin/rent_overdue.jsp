@@ -2,29 +2,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>여기에는 제목</title>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon"
-	href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
-<!--    회원 정의 추가용-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Library</title>
+	 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
+    <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <script type="text/javascript">
 	$(function() {
 
@@ -175,7 +164,7 @@
 	</main>
 	</div>
 	</div>
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp"/>
 </body>
 </html>
