@@ -30,12 +30,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import kr.green.library.service.BookService;
+import kr.green.library.service.GoodService;
 import kr.green.library.service.MemberService;
 import kr.green.library.vo.BookImageVO;
 import kr.green.library.vo.BookReplyVO;
 import kr.green.library.vo.BookVO;
 import kr.green.library.vo.CommVO;
-import kr.green.library.vo.MemberVO;
+import kr.green.library.vo.GoodVO;
 import kr.green.library.vo.PagingVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,7 +48,8 @@ public class MainController {
 	BookService bookService;
 	@Autowired
 	MemberService memberService;
-	
+	@Autowired
+	GoodService goodService;
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
@@ -154,6 +156,24 @@ public class MainController {
 		model.addAttribute("user", getPrincipal());
 		return "newBook";
 	}
+	
+	@RequestMapping(value = "/goodBook")
+	public String goodBook(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
+			@ModelAttribute CommVO commVO) {
+		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+		if (flashMap != null) {
+			params = (Map<String, String>) flashMap.get("map");
+			commVO.setP(Integer.parseInt(params.get("p")));
+			commVO.setS(Integer.parseInt(params.get("s")));
+			commVO.setB(Integer.parseInt(params.get("b")));
+		}
+		PagingVO<GoodVO> pv = goodService.selectList(commVO);
+		model.addAttribute("pv", pv);
+		model.addAttribute("cv", commVO);
+		model.addAttribute("user", getPrincipal());
+		return "goodBook";
+	}
+	
 	
 	@RequestMapping("/library_Introduce")
 	public String library_introduece() {
