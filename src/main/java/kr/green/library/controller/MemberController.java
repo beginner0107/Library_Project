@@ -1,8 +1,10 @@
 package kr.green.library.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import kr.green.library.service.BookService;
 import kr.green.library.service.MemberService;
@@ -22,7 +26,9 @@ import kr.green.library.service.RentService;
 import kr.green.library.service.RequestService;
 import kr.green.library.vo.BookReplyVO;
 import kr.green.library.vo.BookVO;
+import kr.green.library.vo.CommVO;
 import kr.green.library.vo.MemberVO;
+import kr.green.library.vo.PagingVO;
 import kr.green.library.vo.RentVO;
 import kr.green.library.vo.RequestVO;
 import lombok.extern.slf4j.Slf4j;
@@ -159,11 +165,15 @@ public class MemberController {
 		return "redirect:/member/mypage";
 	}
 	@RequestMapping(value = "/hopeBook")
-	public String hopeBoard(Model model) {
+	public String hopeBoard(Model model, HttpSession session) {
+		if(getPrincipal().equals("anonymousUser")) {
+			return "redirect:/";
+		}
 		model.addAttribute("user", getPrincipal());
 		return "member/hopeBook";
 	}
 	
+
 	
 	@PostMapping("requestOk")
 	public String requestOk(RequestVO requestVO) {
