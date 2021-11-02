@@ -163,7 +163,7 @@
 			</c:forEach>
 		</c:if>
 		<tr>
-			<td style="border: none;text-align: center;" colspan="5">
+			<td style="border: none;text-align: center;" colspan="6">
 				${pv.pageList }
 			</td>
 		</tr>
@@ -192,12 +192,12 @@
 							<h3 class="text-center font-weight-light my-4">게시글 공개 여부 수정</h3>
 						</div>
 						<div class="card-body">
-							<form action="/admin/alarm/board/board_update" method="POST">
+							<form action="${pageContext.request.contextPath }/admin/fboard_blackOk" method="POST">
 
 								<div class="form-floating mb-3">
-									<input class="form-control" id="userid" type="text"
-										placeholder="회원의 아이디를 입력해주세요." name="userid" /> <label
-										for="userid">수정을 원하는 게시글 회원의 아이디</label>
+									<input class="form-control" id="free_board_id" type="text"
+										placeholder="회원의 고유 번호를 입력해주세요." name="free_board_id" /> <label
+										for="free_board_id">수정을 원하는 게시글의 고유 번호</label>
 								</div>
 
 								<label for="black">회원 게시글 관리</label>
