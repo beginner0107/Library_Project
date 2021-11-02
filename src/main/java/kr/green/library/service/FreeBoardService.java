@@ -5,7 +5,7 @@ import kr.green.library.vo.FreeBoardVO;
 import kr.green.library.vo.PagingVO;
 
 public interface FreeBoardService {
-	// 1. 목록보기
+		// 1. 목록보기
 		PagingVO<FreeBoardVO> selectList(CommVO commVO);
 		// 2. 내용보기 - 글 1개 가져오기
 		FreeBoardVO selectByBoardId(int book_board_id);
@@ -15,4 +15,8 @@ public interface FreeBoardService {
 		void update(FreeBoardVO freeBoardVO, String[] delFiles, String realPath);
 		// 5. 글삭제
 		void delete(FreeBoardVO freeBoardVO, String uploadPath);
+		// 1. 목록보기
+		PagingVO<FreeBoardVO> selectAdminList(CommVO commVO);
+		// 
+		void updateInappropriatePost(FreeBoardVO freeBoardVO);
 }
