@@ -34,6 +34,7 @@ import kr.green.library.service.BookService;
 import kr.green.library.service.FreeBoardService;
 import kr.green.library.service.GoodService;
 import kr.green.library.service.MemberService;
+import kr.green.library.service.NoticeService;
 import kr.green.library.service.RentService;
 import kr.green.library.service.RequestService;
 import kr.green.library.vo.BookImageVO;
@@ -42,6 +43,7 @@ import kr.green.library.vo.CommVO;
 import kr.green.library.vo.FreeBoardVO;
 import kr.green.library.vo.GoodVO;
 import kr.green.library.vo.MemberVO;
+import kr.green.library.vo.NoticeVO;
 import kr.green.library.vo.PagingVO;
 import kr.green.library.vo.RentVO;
 import kr.green.library.vo.RequestVO;
@@ -71,6 +73,10 @@ public class AdminController {
 	@Autowired
 	private FreeBoardService freeBoardService;
 	
+	@Autowired
+	private NoticeService noticeService;
+	
+	
 	@RequestMapping(value = "/admin")
 	public String postAdmin(Model model) {
 		model.addAttribute("msg", "관리자 전용 페이지 입니다.");
@@ -97,7 +103,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/member_hope_list")
-	public String member_good_list(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
+	public String member_hope_list(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
 		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 		if (flashMap != null) {
@@ -312,6 +318,7 @@ public class AdminController {
 	
 	@PostMapping("goodAddOk")
 	public String goodAddOk(GoodVO goodVO) {
+		
 		goodService.insert(goodVO);
 		return "redirect:/admin/good_add";
 	}
@@ -345,13 +352,65 @@ public class AdminController {
 			commVO.setS(Integer.parseInt(params.get("s")));
 			commVO.setB(Integer.parseInt(params.get("b")));
 		}
-		PagingVO<FreeBoardVO> pv = freeBoardService.selectList(commVO);
+		PagingVO<FreeBoardVO> pv = freeBoardService.selectAdminList(commVO);
 		model.addAttribute("pv", pv);
 		model.addAttribute("cv", commVO);
 		model.addAttribute("user", getPrincipal());
 		return "admin/freeBoard_update";
 	}
 	
+	@PostMapping("fboard_blackOk")
+	public String fboard_blackOk(FreeBoardVO freeBoardVO) {
+		log.info("freeBoardVO : {}", freeBoardVO);
+		freeBoardService.updateInappropriatePost(freeBoardVO);
+		return "redirect:/admin/freeBoard_update";
+	}
+	
+	@RequestMapping(value = "/notice_add")
+	public String notice_add(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
+			@ModelAttribute CommVO commVO) {
+		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+		if (flashMap != null) {
+			params = (Map<String, String>) flashMap.get("map");
+			commVO.setP(Integer.parseInt(params.get("p")));
+			commVO.setS(Integer.parseInt(params.get("s")));
+			commVO.setB(Integer.parseInt(params.get("b")));
+		}
+		PagingVO<NoticeVO> pv = noticeService.selectList(commVO);
+		model.addAttribute("pv", pv);
+		model.addAttribute("cv", commVO);
+		model.addAttribute("user", getPrincipal());
+		return "admin/notice_add";
+	}
+	
+	@PostMapping("noticeAddOk")
+	public String noticeAddOk(NoticeVO noticeVO) {
+		log.info("noticeVO : {}", noticeVO);
+		noticeService.insert(noticeVO);
+		return "redirect:/admin/notice_add";
+	}
+	@RequestMapping(value = "/notice_delete")
+	public String notice_delete(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
+			@ModelAttribute CommVO commVO) {
+		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+		if (flashMap != null) {
+			params = (Map<String, String>) flashMap.get("map");
+			commVO.setP(Integer.parseInt(params.get("p")));
+			commVO.setS(Integer.parseInt(params.get("s")));
+			commVO.setB(Integer.parseInt(params.get("b")));
+		}
+		PagingVO<NoticeVO> pv = noticeService.selectList(commVO);
+		model.addAttribute("pv", pv);
+		model.addAttribute("cv", commVO);
+		model.addAttribute("user", getPrincipal());
+		return "admin/notice_delete";
+	}
+	@PostMapping("noticeDeleteOk")
+	public String noticeDeleteOk(NoticeVO noticeVO) {
+		log.info("noticeVO : {}", noticeVO);
+		noticeService.delete(noticeVO);
+		return "redirect:/admin/notice_delete";
+	}
 	/* 첨부 파일 업로드 */
 	@PostMapping(value="/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<BookImageVO>> uploadAjaxActionPOST(MultipartFile[] uploadFile) {
