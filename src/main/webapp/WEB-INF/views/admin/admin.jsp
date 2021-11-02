@@ -102,8 +102,8 @@
                                     <div class="card-body">
                                         <h5 class="card-title">공지사항</h5>
                                         <p class="card-text">도서 시스템의<br /> <b>공지사항 게시판</b>을 관리합니다.</p>
-                                        <a href="/admin/alarm/notice/notice_add" class="btn btn-primary">공지 사항 추가</a>
-                                        <a href="/admin/alarm/notice/notice_delete" class="btn btn-primary">공지 사항 삭제</a>
+                                        <a href="${pageContext.request.contextPath }/admin/notice_add" class="btn btn-primary">공지 사항 추가</a>
+                                        <a href="${pageContext.request.contextPath }/admin/notice_delete" class="btn btn-primary">공지 사항 삭제</a>
                                     </div>
 
                                 </div>
@@ -165,7 +165,7 @@
                 </div>
             </div>
         </div>
-        <br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
 		<!-- Footer-->
 		<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp"/>
 
