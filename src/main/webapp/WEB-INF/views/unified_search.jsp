@@ -8,7 +8,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>데모도서관</title>
+<title>도서관</title>
 <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
@@ -80,12 +80,18 @@
 <body>
 	<!-- Navigation-->
 	<c:import url = "/WEB-INF/views/include/top_menu.jsp"/>	
-	
 		<!-- Page Content-->
 	<div class="container px-4 px-lg-5">
-		<table class="table" style="width: 80%; text-align: center;" >
+		<!-- Heading Row-->
+
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid px-4">
+					<h1 class="mt-4">도서 검색</h1>
+			<br><br>
+		<table class="table" style="width: 90%; text-align: center;" >
 			<tr>
-				<td colspan="8" class="title"><b>자료 검색</b></td>
+				<td colspan="8" class="title"><b>도서 검색</b></td>
 			</tr>
 			<tr>
 				<td colspan="8" class="info" style="text-align: right;"><c:out value="${pv.getPageInfo() }"></c:out></td>
@@ -157,6 +163,9 @@
 	   		</div>
 	    	</form>
 	    </div>
+	</div>
+	</main>
+	</div>
 	</div>
 	<!-- Footer-->
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
