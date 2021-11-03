@@ -91,10 +91,19 @@
 </head>
 <body>
 <c:import url = "/WEB-INF/views/include/top_menu.jsp"/>	
-<!-- ${pv } -->
-<table class="table" style="width: 80%;">
+<!-- Page Content-->
+	<div class="container px-4 px-lg-5">
+		<!-- Heading Row-->
+
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid px-4">
+					<h1 class="mt-4">자유 게시판</h1>
+				</div>
+				<br><br>
+<table class="table" style="width: 90%;">
 		<tr>
-			<td colspan="4" class="title">자유 게시판 - 목록보기</td>
+			<td colspan="4" class="title"><b>자유 게시판 - 목록보기</b></td>
 		</tr>
 		<tr>
 			<td colspan="4" class="info" style="text-align: right;">
@@ -184,6 +193,9 @@
          <button style="background-color: #0d6efd; color: white; border-radius: 5px; font-size: 10pt">검 색</button>                				
    		</div>
     	</form>
+    </div>
+    </main>
+    </div>
     </div>
 <c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
 </body>
