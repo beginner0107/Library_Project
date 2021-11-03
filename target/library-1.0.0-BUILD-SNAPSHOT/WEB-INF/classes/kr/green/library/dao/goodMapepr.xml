@@ -31,5 +31,4 @@
  			rnum >= #{startNo}
  			]]>
  	</select>
- 	
 </mapper>
