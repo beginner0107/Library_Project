@@ -2,48 +2,35 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>여기에는 제목</title>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>온라인도서관</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
+<!-- Google fonts-->
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script   src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
+<!-- Bootstrap icons-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+<script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <script type="text/javascript">
    $(function(){
    
    });
 </script>
 <style type="text/css">
-	#result_card img{
-		max-width: 100%;
-	    height: auto;
-	    display: block;
-	    padding: 5px;
-	    margin-top: 10px;
-	    margin: auto;	
-	}
-	#result_card {
-		position: relative;
-	}
-	.imgDeleteBtn{
-	    position: absolute;
-	    top: 0;
-	    right: 5%;
-	    background-color: #ef7d7d;
-	    color: wheat;
-	    font-weight: 900;
-	    width: 30px;
-	    height: 30px;
-	    border-radius: 50%;
-	    line-height: 26px;
-	    text-align: center;
-	    border: none;
-	    display: block;
-	    cursor: pointer;	
-	}
 	.table {
       border-collapse: collapse;
       border-top: 3px solid #168;
@@ -84,23 +71,24 @@
 					<h1 class="mt-4">사서 추천 도서</h1>
 				</div>
 				<br><br>
-		<table class="table" style="width: 90%;">
+		<table class="table">
 			<tr>
-				<td colspan="5" class="title"><b>도서 목록</b></td>
+				<td colspan="6" class="title"><b>도서 목록</b></td>
 			</tr>
 			<tr>
-				<td colspan="5" class="info" style="text-align: right;"><c:out value="${pv.getPageInfo() }"></c:out></td>
+				<td colspan="6" class="info" style="text-align: right;"><c:out value="${pv.getPageInfo() }"></c:out></td>
 			</tr>
 			<tr>
 				<th>No</th>
 				<th>ISBN</th>
 				<th>제목</th>
 				<th>등록일자</th>
+				<th>도서에 대한 설명</th>
 				<th>해당 도서 페이지</th>
 			</tr>
 			<c:if test="${empty pv.list}">
 			<tr>
-				<td colspan="5" class="info2">조건에 맞는 회원이 존재하지 않습니다.</td>
+				<td colspan="6" class="info2">조건에 맞는 회원이 존재하지 않습니다.</td>
 			</tr>
 			</c:if>
 			<c:if test="${not empty pv.list }">
@@ -119,12 +107,15 @@
 							<fmt:formatDate value="${vo.good_regdate }" type="date" dateStyle="short"/>
 						</td>
 						<td>
+						<a href="#" onclick='SendPost("${pageContext.request.contextPath }/goodBook_detail",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize },"idx":${vo.good_id }},"post")'>자세히</a>
+						</td>
+						<td>
 							<a href = "${pageContext.request.contextPath }/book_detail?isbn=${vo.isbn }">자세히</a>
 						</td>
 					</tr>		
 				</c:forEach>
 					<tr>
-					<td style="border: none;text-align: center; padding-top: 20px;" colspan="5">
+					<td style="border: none;text-align: center; padding-top: 20px;" colspan="6">
 					${pv.pageList }
 					</td>
 				</tr>
