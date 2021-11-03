@@ -2,12 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>여기에는 제목</title>
-<script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>온라인도서관</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
 <!-- Google fonts-->
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
@@ -18,6 +22,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
+<!-- Bootstrap icons-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+<script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <script type="text/javascript">
 	$(function() {
 
@@ -80,9 +87,19 @@
 </head>
 <body>
 	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
-		<table class="table" style="width: 80%;">
+	<!-- Page Content-->
+	<div class="container px-4 px-lg-5">
+		<!-- Heading Row-->
+
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid px-4">
+					<h1 class="mt-4">신간 도서</h1>
+				</div>
+				<br><br>
+		<table class="table">
 			<tr>
-				<td colspan="8" class="title"><b>신규 도서 목록</b></td>
+				<td colspan="8" class="title"><b>신간 도서 목록</b></td>
 			</tr>
 			<tr>
 				<td colspan="8" class="info" style="text-align: right;"><c:out value="${pv.getPageInfo() }"></c:out></td>
@@ -138,7 +155,9 @@
 				</tr>
 			</c:if>
 		</table>
-	
+	</main>
+	</div>
+	</div>
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 
 </body>
