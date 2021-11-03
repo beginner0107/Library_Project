@@ -18,6 +18,9 @@
 </script>
 </head>
 <body>
-
+<!-- Navigation-->
+	<c:import url = "/WEB-INF/views/include/top_menu.jsp"/>	
+<!-- Footer-->
+	<c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
 </body>
 </html>
