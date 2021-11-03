@@ -130,7 +130,7 @@ $(function() {
 												placeholder="010-1234-5678" value = "${phone }" required/> 
 												<label for="phone">이메일 주소</label>
 										</div>
-										<div class="mt-4 mb-0">
+										<div class="mt-5 mb-0">
 											<div class="d-grid">
 												<input type="submit" class="btn btn-primary btn-block" value="수정완료" />
 											</div>
