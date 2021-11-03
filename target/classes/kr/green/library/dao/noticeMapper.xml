@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.green.library.dao.NoticeDAO">
+	<!-- 저장하기  -->
+	<insert id="insert" parameterType="NoticeVO">
+		insert into notice
+		(notice_id,notice_title,notice_regdate,notice_content)
+		values
+		(notice_id_seq.nextval, #{notice_title}, sysdate, #{notice_content})
+	</insert>
+	<!-- 전체 개수 세기 -->
+	<!-- 1페이지 얻기 -->
+ 	<select id="selectList" parameterType="hashmap" resultType="NoticeVO">
+ 		select 
+ 			*
+ 		from
+	 		(select 
+	 			rownum rnum, R.*
+	 		from
+	 			(select * from notice
+	 			 order by notice_regdate desc) R
+	 		where
+	 			<![CDATA[
+	 				rownum <= #{endNo}
+	 			]]>
+			) Q
+		where
+ 			<![CDATA[
+ 			rnum >= #{startNo}
+ 			]]>
+ 	</select>
+ 	<!-- 전체 개수 얻기 -->
+	<select id="selectCount" resultType="int">
+ 		select count(*) from notice
+ 	</select>
+ 	
+ 	<!-- 공지사항 삭제하기 -->
+ 	<delete id="delete" parameterType="int">
+ 		delete from notice where notice_id = #{notice_id}
+ 	</delete>
+ 	<!-- 한개 얻기 -->
+ 	<select id="selectByNoticeId" parameterType="int" resultType="NoticeVO">
+ 		select * from notice where notice_id = #{notice_id}
+ 	</select>
+</mapper>
