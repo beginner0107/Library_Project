@@ -40,4 +40,8 @@
 	<select id = "selectByGoodIdTitle" parameterType="GoodVO" resultType="int">
 		select count(*) from good where good_id=#{good_id} and good_title = #{good_title}
 	</select>
+	<!-- 한개 얻기 -->
+ 	<select id="selectByGoodId" parameterType="int" resultType="GoodVO">
+ 		select * from good where good_id = #{good_id}
+ 	</select>
 </mapper>
