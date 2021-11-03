@@ -6,7 +6,7 @@
  	<!-- id: 메서드명 , parameterType : 인수, resultType : 리턴값 -->
  	<!-- 1. 개수얻기 -->
  	<select id="selectCount" resultType="int">
- 		select count(*) from free_board 	
+ 		select count(*) from free_board where black = 'Y'	
  	</select>
  	<!-- 2. 1개 얻기 -->
  	<select id="selectByBoardId" parameterType="int" resultType="freeBoardVO">
@@ -14,6 +14,30 @@
  	</select>
  	<!-- 3. 1페이지 얻기 -->
  	<select id="selectList" parameterType="hashmap" resultType="freeBoardVO">
+ 		select 
+ 			*
+ 		from
+	 		(select 
+	 			rownum rnum, R.*
+	 		from
+	 			(select * from free_board where black = 'Y' order by free_board_id desc) R
+	 		where
+	 			<![CDATA[
+	 				rownum <= #{endNo}
+	 			]]>
+			) Q
+		where
+ 			<![CDATA[
+ 			rnum >= #{startNo}
+ 			]]>
+ 	</select>
+ 	
+ 	<!-- 1. 개수얻기 -->
+ 	<select id="selectAdminCount" resultType="int">
+ 		select count(*) from free_board	
+ 	</select>
+ 	<!-- 3. 1페이지 얻기 -->
+ 	<select id="selectAdminList" parameterType="hashmap" resultType="freeBoardVO">
  		select 
  			*
  		from
@@ -31,7 +55,6 @@
  			rnum >= #{startNo}
  			]]>
  	</select>
- 	
  	<!-- 4. 저장하기 -->
  	<insert id="insert" parameterType="freeBoardVO">
  		insert into	free_board 
@@ -58,5 +81,8 @@
  	<select id="selectSeq" resultType="int">
  		select max(free_board_id) from free_board
  	</select>
-  	
+  	<!-- 부적절한 게시글 비공개 처리 -->
+  	<update id="updateInappropriatePost" parameterType="freeBoardVO">
+  		update free_board set black = #{black} where free_board_id = #{free_board_id}
+  	</update>
 </mapper>
