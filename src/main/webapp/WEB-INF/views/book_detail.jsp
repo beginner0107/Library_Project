@@ -35,14 +35,11 @@
 	<!-- Navigation-->
 	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
 	<!-- Product section-->
-	<form action="${pageContext.request.contextPath }/member/book_rentOk"
-		method="POST">
 		<section class="py-5">
 			<div class="container px-4 px-lg-5 my-5">
 				<div class="row gx-4 gx-lg-5 align-items-center">
 					<div class="col-md-6">
 						<div id="uploadResult">
-																		
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -55,6 +52,7 @@
 							저자 : <c:out value="${vo.author }"></c:out><br /> 출판사 : <c:out value="${vo.publisher }"></c:out><br /><c:out value="${vo.content }"></c:out>
 						</p>
 						<div class="d-flex">
+						<form action="${pageContext.request.contextPath }/member/book_rentOk" method="POST">
 						<input type = "hidden" name = "isbn" id = "isbn" value = "${vo.isbn }">
 						<input type = "hidden" name = "title" id = "title" value = "${vo.title }">
 						<c:if test="${user != 'anonymousUser' && vo.count gt 0 }">
@@ -62,6 +60,7 @@
 								  <i class="bi-cart-fill me-1">대여 하기</i>
 							</button>
 						</c:if>
+						</form>
 						<c:if test="${vo.count==0 }">
 								  <i class="bi-cart-fill me-1">재고가 없습니다.</i>
 						</c:if>
@@ -70,9 +69,10 @@
 				</div>
 			</div>
 		</section>
-	</form>
-	
 		<!-- Comments section-->
+		<div class="container mt-5">
+            <!--        중앙정렬-->
+            <div class="row">
         <section class="mb-5">
                   <div class="card bg-light">
      	               <div class="card-body">
@@ -133,6 +133,8 @@
                   </div>
               </div>
           </section>
+		</div>
+		</div>
                 
 	<!-- Footer-->
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
