@@ -12,8 +12,28 @@
 		select * from rent where isbn=#{isbn} and userid = #{userid} AND return_date IS NULL 
 	</select>
 	<!-- 회원이 빌린 책들의 목록 -->
-	<select id="rentListByUserid" parameterType="String" resultType="RentVO">
-		select * from rent where userid = #{userid}
+	<select id="rentListByUserid" parameterType="hashmap" resultType="RentVO">
+		select 
+ 			*
+ 		from
+	 		(select 
+	 			rownum rnum, R.*
+	 		from
+	 			(select * from rent where userid = #{userid} AND RETURN_date IS NULL
+	 			 order by rent_date desc) R
+	 		where
+	 			<![CDATA[
+	 				rownum <= #{endNo}
+	 			]]>
+			) Q
+		where
+ 			<![CDATA[
+ 			rnum >= #{startNo}
+ 			]]>
+	</select>
+	<!-- 회원 대여한 도서의 목록 개수 -->
+	<select id="rentListCount" resultType="int">
+		select count(*) from rent where userid = #{userid} AND RETURN_date IS NULL
 	</select>
 	<!-- 반납 날짜를 등록한다. -->
 	<update id="updateReturnDate" parameterType="hashmap" >
@@ -27,12 +47,36 @@
 	</select>
 	<!-- 대여도서 연장하면 도서 반납 예정일이 변한다. 도서 반납 예정일을 추가한다.-->
   	<update id="updateExtensionCount" parameterType="hashmap">
- 	 	 UPDATE RENT SET RETURN_DUE_DATE = RETURN_DUE_DATE + #{extension_count} WHERE userid = #{userid} AND isbn = #{isbn} AND RETURN_DATE IS NULL
+ 	 	 UPDATE RENT SET RETURN_DUE_DATE = RETURN_DUE_DATE + #{extension_count}, extension_count = #{extension_count} WHERE userid = #{userid} AND isbn = #{isbn} AND RETURN_DATE IS NULL
   	</update>
   	<!-- nullPointException을 피하기 위해 1을 리턴하면 반납 가능, 0을 리턴하면 반납 불가능 -->
   	<select id="selectReturnAvailable" parameterType="hashmap" resultType="int">
   		SELECT COUNT(*) RETURN_DATE  FROM rent WHERE isbn = #{isbn} AND userid = #{userid} AND RETURN_DATE IS NULL 
   	</select>
+  	<!-- 회원이 대여했던 책들의 목록 -->
+	<select id="selectBorrowedList" parameterType="hashmap" resultType="RentVO">
+		select 
+ 			*
+ 		from
+	 		(select 
+	 			rownum rnum, R.*
+	 		from
+	 			(select * from rent where userid = #{userid}  AND RETURN_date IS NOT NULL 
+	 			 order by rent_date desc) R
+	 		where
+	 			<![CDATA[
+	 				rownum <= #{endNo}
+	 			]]>
+			) Q
+		where
+ 			<![CDATA[
+ 			rnum >= #{startNo}
+ 			]]>
+	</select>
+	<!-- 회원 대여했던 도서의 목록 개수 -->
+	<select id="borrowedCount" parameterType="String" resultType="int">
+		select count(*) from rent where userid = #{userid} AND RETURN_date IS NOT NULL
+	</select>
   	<!-- 연체 도서 목록 보기 -->
  	<select id="selectOverdueBookList" parameterType="hashmap" resultType="RentVO">
  		select 
