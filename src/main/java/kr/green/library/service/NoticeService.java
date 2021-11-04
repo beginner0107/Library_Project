@@ -10,4 +10,6 @@ public interface NoticeService {
 	PagingVO<NoticeVO>selectList(CommVO commVO);
 	
 	void delete(NoticeVO noticeVO);
+	
+	NoticeVO selectByNoticeId(int notice_id);
 }

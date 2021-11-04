@@ -47,4 +47,11 @@ public class NoticeServiceImpl implements NoticeService {
 		noticeDAO.delete(noticeVO.getNotice_id());
 	}
 
+	@Override
+	public NoticeVO selectByNoticeId(int notice_id) {
+		NoticeVO noticeVO = noticeDAO.selectByNoticeId(notice_id);
+		return noticeVO;
+		
+	}
+
 }
