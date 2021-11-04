@@ -35,4 +35,21 @@
 	<select id="selectCount" parameterType="String" resultType="int">
  		select count(*) from book_reply where isbn = #{isbn}  
  	</select>
+ 	<!-- 댓글 수정 -->
+ 	<update id="updateReply" parameterType="BookReplyVO">
+ 		update book_reply set content = #{content}, modified_date = sysdate
+ 		where breply_id = #{breply_id}
+ 	</update>
+ 	<!-- 댓글 삭제 -->
+ 	<delete id="deleteReply" parameterType="int">
+ 		delete from book_reply where breply_id = #{breply_id}
+ 	</delete>
+ 	<!-- 댓글 하나 얻기 -->
+ 	<select id="selectByBreplyId" parameterType="int" resultType="BookReplyVO">
+ 		select * from book_reply where breply_id = #{breply_id}
+ 	</select>
+ 	<!-- 댓글 리스트 전체 읽기 Ajax -->
+ 	<select id="getBookReplyList" resultType="BookReplyVO">
+ 		select * from book_reply where isbn = #{isbn} order by regdate desc
+ 	</select>
 </mapper>
