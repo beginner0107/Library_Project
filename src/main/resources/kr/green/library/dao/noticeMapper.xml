@@ -40,4 +40,8 @@
  	<delete id="delete" parameterType="int">
  		delete from notice where notice_id = #{notice_id}
  	</delete>
+ 	<!-- 한개 얻기 -->
+ 	<select id="selectByNoticeId" parameterType="int" resultType="NoticeVO">
+ 		select * from notice where notice_id = #{notice_id}
+ 	</select>
 </mapper>
