@@ -29,6 +29,10 @@
 	    margin-top: 10px;
 	    margin: auto;	
 	}
+	pre {
+		white-space: pre-wrap;
+	}
+	
 </style>
 </head>
 <body>
@@ -49,8 +53,10 @@
 							<span class="">도서 재고 : </span><c:out value="${vo.count}"></c:out> <span></span>
 						</div>
 						<p class="lead">
-							저자 : <c:out value="${vo.author }"></c:out><br /> 출판사 : <c:out value="${vo.publisher }"></c:out><br /><c:out value="${vo.content }"></c:out>
+							저자 : <c:out value="${vo.author }"></c:out><br /> 출판사 : <c:out value="${vo.publisher }"></c:out>
+							<br />
 						</p>
+						<pre class="lead" style="font-size: 14pt;"><c:out value="${vo.content}"/></pre>
 						<div class="d-flex">
 						<form action="${pageContext.request.contextPath }/member/book_rentOk" method="POST">
 						<input type = "hidden" name = "isbn" id = "isbn" value = "${vo.isbn }">
@@ -94,7 +100,6 @@
 	                                                    <textarea class="form-control" id="content" placeholder="로그인 해야 입력이 가능합니다." rows="3" name="content" readonly="readonly"></textarea>
                                                 	</c:if>
                                                 </div>
-                                                <div id="content">(0 / 1000)</div>
 												<input type = "hidden" name = "isbn" id = "isbn" value ="${vo.isbn }">
 													<c:if test="${user != 'anonymousUser' }">
 	                                                     <div class="mt-5 mb-0">
@@ -121,8 +126,14 @@
                     <div class="d-flex mb-4 ">
                 <!-- Parent comment-->
                 		 <div class="ms-3">
-                         <div class="fw-bold">${vo.userid} / ${vo.modified_date }</div>
-                          ${vo.content}
+                         <div class="fw-bold">${vo.userid} / ${vo.modified_date }&nbsp&nbsp&nbsp
+                         <input type = "button" onclick="updateReply()" value = "수정" style="text-align: right;"/>
+                         <input type = "button" onclick="deleteReply()" value = "삭제" style="text-align: right;"/>
+                         <script type="text/javascript">
+                         	
+                         </script>
+                         </div>
+                          ${vo.content} 
                       </div>
                     </div>
                 </c:forEach>
@@ -135,7 +146,7 @@
           </section>
 		</div>
 		</div>
-                
+	${br }
 	<!-- Footer-->
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 	<script type="text/javascript">
