@@ -1,7 +1,5 @@
 package kr.green.library.service;
 
-import java.util.List;
-
 import kr.green.library.vo.CommVO;
 import kr.green.library.vo.PagingVO;
 import kr.green.library.vo.RentVO;
@@ -12,7 +10,7 @@ public interface RentService {
 	// 	<!-- isbn과 아이디로 대여한 도서 찾기(중복된 도서 대여 불가, 확인) -->
 	RentVO rentAvailable(String isbn, String userid);
 	
-	List<RentVO> rentListByUserid(String userid);
+	PagingVO<RentVO> rentListByUserid(CommVO commVO, String userid);
 	// 반납하기
 	void updateReturnDate(RentVO rentVO);
 	
@@ -23,4 +21,6 @@ public interface RentService {
 	int selectReturnAvailable(RentVO rentVO);
 	
 	PagingVO<RentVO> selectOverdueBookList(CommVO commVO);
+	
+	PagingVO<RentVO> selectBorrowedList(CommVO commVO, String userid);
 }

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import kr.green.library.dao.RentDAO;
 import kr.green.library.vo.CommVO;
-import kr.green.library.vo.MemberVO;
 import kr.green.library.vo.PagingVO;
 import kr.green.library.vo.RentVO;
 import lombok.extern.slf4j.Slf4j;
@@ -33,10 +32,27 @@ public class RentServiceImpl implements RentService{
 		return vo;
 	}
 	@Override
-	public List<RentVO> rentListByUserid(String userid) {
-		List<RentVO> rentList = null;
-		rentList = rentDAO.rentListByUserid(userid);
-		return rentList;
+	public PagingVO<RentVO> rentListByUserid(CommVO commVO, String userid) {
+		log.info("{}의 selectList 호출 : {}", this.getClass().getName(), commVO);
+		PagingVO<RentVO>pagingVO = null;
+		try {
+			// 전체 개수 구하기
+			int totalCount = rentDAO.rentListCount(userid);
+			// 페이지 계산
+			pagingVO = new PagingVO<>(commVO.getCurrentPage(), commVO.getPageSize(), commVO.getBlockSize(), totalCount, commVO.getType(), commVO.getKeyword());
+			// 글을 읽어오기
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("userid", userid);
+			map.put("startNo", pagingVO.getStartNo()+"");
+			map.put("endNo", pagingVO.getEndNo()+"");
+			List<RentVO> list = rentDAO.rentListByUserid(map);
+			// 완성된 리스트를 페이징 객체에 넣는다.
+			pagingVO.setList(list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return pagingVO;
 	}
 	@Override
 	public void updateReturnDate(RentVO rentVO) {
@@ -68,7 +84,6 @@ public class RentServiceImpl implements RentService{
 		PagingVO<RentVO>pagingVO = null;
 		try {
 			// 전체 개수 구하기
-			HashMap<String, String>totalMap = new HashMap<>();
 			int totalCount = rentDAO.selectOverdueBookCount();
 			// 페이지 계산
 			pagingVO = new PagingVO<>(commVO.getCurrentPage(), commVO.getPageSize(), commVO.getBlockSize(), totalCount, commVO.getType(), commVO.getKeyword());
@@ -77,6 +92,29 @@ public class RentServiceImpl implements RentService{
 			map.put("startNo", pagingVO.getStartNo()+"");
 			map.put("endNo", pagingVO.getEndNo()+"");
 			List<RentVO> list = rentDAO.selectOverdueBookList(map);
+			// 완성된 리스트를 페이징 객체에 넣는다.
+			pagingVO.setList(list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return pagingVO;
+	}
+	@Override
+	public PagingVO<RentVO> selectBorrowedList(CommVO commVO, String userid) {
+		log.info("{}의 selectList 호출 : {}", this.getClass().getName(), commVO);
+		PagingVO<RentVO>pagingVO = null;
+		try {
+			// 전체 개수 구하기
+			int totalCount = rentDAO.borrowedCount(userid);
+			// 페이지 계산
+			pagingVO = new PagingVO<>(commVO.getCurrentPage(), commVO.getPageSize(), commVO.getBlockSize(), totalCount, commVO.getType(), commVO.getKeyword());
+			// 글을 읽어오기
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("userid", userid);
+			map.put("startNo", pagingVO.getStartNo()+"");
+			map.put("endNo", pagingVO.getEndNo()+"");
+			List<RentVO> list = rentDAO.selectBorrowedList(map);
 			// 완성된 리스트를 페이징 객체에 넣는다.
 			pagingVO.setList(list);
 		} catch (Exception e) {
