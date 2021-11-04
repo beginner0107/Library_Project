@@ -185,6 +185,26 @@ public class BookServiceImpl implements BookService {
 		return pagingVO;
 	}
 
+	@Override
+	public void updateReply(BookReplyVO bookReplyVO) {
+		bookReplyDAO.updateReply(bookReplyVO);
+	}
+
+	@Override
+	public void deleteReply(int breply_id) {
+		bookReplyDAO.deleteReply(breply_id);
+	}
+
+	@Override
+	public BookReplyVO selectByBreplyId(int breply_id) {
+		return bookReplyDAO.selectByBreplyId(breply_id);
+	}
+
+	@Override
+	public List<BookReplyVO> getBookReplyList(String isbn) {
+		return bookReplyDAO.getBookReplyList(isbn);
+	}
+
 	
 
 	

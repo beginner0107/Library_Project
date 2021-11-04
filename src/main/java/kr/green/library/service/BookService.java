@@ -1,5 +1,7 @@
 package kr.green.library.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import kr.green.library.vo.BookImageVO;
@@ -37,4 +39,11 @@ public interface BookService {
 	// 신규 도서 목록 보기
 	PagingVO<BookVO> selectNewBook(CommVO commVO);
 	
+	void updateReply(BookReplyVO bookReplyVO);
+	
+	void deleteReply(int breply_id);
+	// 도서 특정 댓글 읽기
+	BookReplyVO selectByBreplyId(int breply_id);
+	// 댓글 리스트(전체, 페이징 X)
+	List<BookReplyVO> getBookReplyList(String isbn);
 }
