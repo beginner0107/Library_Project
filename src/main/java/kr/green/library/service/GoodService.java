@@ -12,4 +12,6 @@ public interface GoodService{
 	void delete(GoodVO goodVO);
 	
 	int selectByGoodIdTitle(GoodVO goodVO);
+	
+	GoodVO selectByGoodId(int good_id);
 }

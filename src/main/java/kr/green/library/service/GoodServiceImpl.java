@@ -55,4 +55,9 @@ public class GoodServiceImpl implements GoodService {
 		return existence;
 	}
 
+	@Override
+	public GoodVO selectByGoodId(int good_id) {
+		return goodDAO.selectByGoodId(good_id);
+	}
+
 }
