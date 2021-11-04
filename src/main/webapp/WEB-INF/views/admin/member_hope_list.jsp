@@ -15,33 +15,6 @@
     <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
     <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <style type="text/css">
-	#result_card img{
-		max-width: 100%;
-	    height: auto;
-	    display: block;
-	    padding: 5px;
-	    margin-top: 10px;
-	    margin: auto;	
-	}
-	#result_card {
-		position: relative;
-	}
-	.imgDeleteBtn{
-	    position: absolute;
-	    top: 0;
-	    right: 5%;
-	    background-color: #ef7d7d;
-	    color: wheat;
-	    font-weight: 900;
-	    width: 30px;
-	    height: 30px;
-	    border-radius: 50%;
-	    line-height: 26px;
-	    text-align: center;
-	    border: none;
-	    display: block;
-	    cursor: pointer;	
-	}
 	.table {
       border-collapse: collapse;
       border-top: 3px solid #168;
@@ -89,7 +62,6 @@
 								리스트</a></li>
                     </ol>
 		</div>
-                                      
 		<table class="table" style="width: 90%;">
 			<tr>
 				<td colspan="4" class="title"><b>회원 희망 도서</b></td>
@@ -101,7 +73,7 @@
 				<th>isbn</th>
 				<th>도서 제목</th>
 				<th>도서요청 날짜</th>
-				<th>도서 링크</th>
+				<th width="50px;">도서 링크</th>
 			</tr>
 			<c:if test="${empty pv.list}">
 			<tr>
@@ -120,7 +92,7 @@
 						<td>
 							<fmt:formatDate value="${vo.request_regdate }" type="date" dateStyle="short"/>
 						</td>
-						<td>
+						<td style="text-align: left;">
 							<c:out value="${vo.request_link }"></c:out>
 						</td>
 					</tr>		
