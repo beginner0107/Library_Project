@@ -71,6 +71,7 @@ public class BoardController {
 			return "redirect:/board/freeBoard";
 		}
 		model.addAttribute("cv", commVO);
+		model.addAttribute("user", getPrincipal());
 		return "board/fboard_insertForm";
 	}
 
