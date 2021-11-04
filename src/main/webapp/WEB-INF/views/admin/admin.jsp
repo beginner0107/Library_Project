@@ -42,7 +42,6 @@
     <div class="container px-4 px-lg-5">
         <!-- Heading Row-->
         <div class="row gx-4 gx-lg-5 align-items-center my-5">
-            <div class="col-lg-7"><img class="img-fluid rounded mb-4 mb-lg-0" /></div>
             <div class="col-lg-5">
                 <h1 class="font-weight-light">Library<br /> 관리자 페이지</h1>
                 <p>관리자님 안녕하세요! <br /> 관리자님의 행복한 하루를 기원합니다.</p>
