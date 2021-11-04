@@ -12,4 +12,6 @@ public interface GoodDAO {
 	void delete(GoodVO goodVO);
 	
 	int selectByGoodIdTitle(GoodVO goodVO);
+	
+	GoodVO selectByGoodId(int good_id);
 }
