@@ -32,11 +32,13 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import kr.green.library.service.BookService;
 import kr.green.library.service.GoodService;
 import kr.green.library.service.MemberService;
+import kr.green.library.service.NoticeService;
 import kr.green.library.vo.BookImageVO;
 import kr.green.library.vo.BookReplyVO;
 import kr.green.library.vo.BookVO;
 import kr.green.library.vo.CommVO;
 import kr.green.library.vo.GoodVO;
+import kr.green.library.vo.NoticeVO;
 import kr.green.library.vo.PagingVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,6 +52,8 @@ public class MainController {
 	MemberService memberService;
 	@Autowired
 	GoodService goodService;
+	@Autowired
+	NoticeService noticeService;
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
@@ -97,22 +101,14 @@ public class MainController {
 			commVO.setIsbn(params.get("isbn"));
 		}
 		PagingVO<BookReplyVO> pv = bookService.selectReplyList(commVO);
+		List<BookReplyVO> br = bookService.getBookReplyList(isbn);
 		model.addAttribute("pv", pv);
 		model.addAttribute("cv", commVO);
 		model.addAttribute("user", getPrincipal());
+		model.addAttribute("br", br);
 		log.info("pv : {}", pv.toString());
 		return "book_detail";
 	}
-	@PostMapping(value = "/test")
-	public String test(Model model,HttpServletRequest request) {
-		log.info("isbn : {}", request.getParameter("isbn"));
-		String isbn = request.getParameter("isbn");
-		BookVO bvo = bookService.selectByIsbn(isbn);
-		model.addAttribute("user", getPrincipal());
-		model.addAttribute("bvo", bvo);
-		return "admin/book_update";
-	}
-	
 	/* 이미지 정보 반환 */
 	@GetMapping(value="/getImageList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<BookImageVO>> getImageList(String isbn){
@@ -180,9 +176,63 @@ public class MainController {
 		return "library_Introduce";
 	}
 	@RequestMapping("/notice")
-	public String notice() {
+	public String notice(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
+			@ModelAttribute CommVO commVO) {
+		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+		if (flashMap != null) {
+			params = (Map<String, String>) flashMap.get("map");
+			commVO.setP(Integer.parseInt(params.get("p")));
+			commVO.setS(Integer.parseInt(params.get("s")));
+			commVO.setB(Integer.parseInt(params.get("b")));
+		}
+		PagingVO<NoticeVO> pv = noticeService.selectList(commVO);
+		model.addAttribute("pv", pv);
+		model.addAttribute("cv", commVO);
+		model.addAttribute("user", getPrincipal());
 		return "notice";
 	}
+	
+	@RequestMapping("notice_detail")
+	public String notice_detail(@RequestParam Map<String, String> params, HttpServletRequest request,
+			@ModelAttribute CommVO commVO, Model model) {
+		log.info("{}의 view호출 : {}", this.getClass().getName(), commVO);
+		// POST전송된것을 받으려면 RequestContextUtils.getInputFlashMap(request)로 맵이 존재하는지 판단해서
+		// 있으면 POST처리를 하고 없으면 GET으로 받아서 처리를 한다.
+		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+		if (flashMap != null) {
+			params = (Map<String, String>) flashMap.get("map");
+			commVO.setP(Integer.parseInt(params.get("p")));
+			commVO.setS(Integer.parseInt(params.get("s")));
+			commVO.setB(Integer.parseInt(params.get("b")));
+			commVO.setIdx(Integer.parseInt(params.get("idx")));
+		}
+		NoticeVO noticeVO = noticeService.selectByNoticeId(commVO.getIdx());
+		model.addAttribute("nvo",noticeVO);
+		model.addAttribute("cv", commVO);
+		model.addAttribute("user", getPrincipal());
+		return "notice_detail";
+	}
+	@RequestMapping("goodBook_detail")
+	public String good_detail(@RequestParam Map<String, String> params, HttpServletRequest request,
+			@ModelAttribute CommVO commVO, Model model) {
+		log.info("{}의 view호출 : {}", this.getClass().getName(), commVO);
+		// POST전송된것을 받으려면 RequestContextUtils.getInputFlashMap(request)로 맵이 존재하는지 판단해서
+		// 있으면 POST처리를 하고 없으면 GET으로 받아서 처리를 한다.
+		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+		if (flashMap != null) {
+			params = (Map<String, String>) flashMap.get("map");
+			commVO.setP(Integer.parseInt(params.get("p")));
+			commVO.setS(Integer.parseInt(params.get("s")));
+			commVO.setB(Integer.parseInt(params.get("b")));
+			commVO.setIdx(Integer.parseInt(params.get("idx")));
+		}
+		GoodVO goodVO = goodService.selectByGoodId(commVO.getIdx());
+		model.addAttribute("gvo",goodVO);
+		model.addAttribute("cv", commVO);
+		model.addAttribute("user", getPrincipal());
+		return "goodBook_detail";
+	}
+	
 	
 	// 인증 정보를 얻어내는 method
 	private String getPrincipal() {
