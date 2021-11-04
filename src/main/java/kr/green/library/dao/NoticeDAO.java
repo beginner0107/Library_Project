@@ -13,4 +13,6 @@ public interface NoticeDAO {
 	List<NoticeVO>selectList(HashMap<String, String>map);
 	
 	void delete(int notice_id);
+	
+	NoticeVO selectByNoticeId(int notice_id);
 }
