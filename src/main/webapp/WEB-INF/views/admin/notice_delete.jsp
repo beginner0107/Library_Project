@@ -97,9 +97,9 @@
 					<div class="card mb-4">
 						<div class="card-body">현재 추가 하고자 하는 공지 사항이 존재하는지 미리 확인하세요!</div>
 					</div>
-					<table class="table" style="width: 90%;">
+									<table class="table">
 		<tr>
-			<td colspan="3" class="info" style="text-align: right;">
+			<td colspan="4" class="info" style="text-align: right;">
 				${pv.pageInfo }
 				<script type="text/javascript">
 					$(function(){
@@ -122,10 +122,11 @@
 			<th>NO</th>
 			<th width="40%">제목</th>
 			<th>작성일</th>
+			<th>상세보기</th>
 		</tr>
 		<c:if test="${pv.totalCount==0 }">
 			<tr>
-				<td colspan="3" class="info2">등록된 글이 없습니다.</td>
+				<td colspan="4" class="info2">등록된 글이 없습니다.</td>
 			</tr>
 		</c:if>
 		<c:if test="${not empty pv.list }">
@@ -135,16 +136,19 @@
 						<c:out value="${vo.notice_id}"></c:out>
 					</td>
 					<td align="left" >
-						<a href="#" onclick='SendPost("${pageContext.request.contextPath }/board/fboard_view",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize },"idx":${vo.notice_id },"m":"view","h":"true"},"post")'><c:out value="${vo.notice_title }"></c:out></a>
+						<c:out value="${vo.notice_title }"></c:out>
 					</td>
 					<td>
 						<fmt:formatDate value="${vo.notice_regdate}" type="date" dateStyle="short"/>
+					</td>
+					<td>
+						<a href="#" onclick='SendPost("${pageContext.request.contextPath }/notice_detail",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize },"idx":${vo.notice_id }},"post")'>자세히</a>
 					</td>
 				</tr>
 			</c:forEach>
 		</c:if>
 		<tr>
-			<td style="border: none;text-align: center;" colspan="3">
+			<td style="border: none;text-align: center;" colspan="4">
 				${pv.pageList }
 			</td>
 		</tr>
@@ -195,7 +199,7 @@
 										</div>
 									</div>
 
-									<div class="mt-4 mb-0">
+									<div class="mt-5 mb-0">
 										<div class="d-grid">
 											<input type="submit" class="btn btn-primary btn-block"
 												value="공지 사항을 삭제합니다." />
