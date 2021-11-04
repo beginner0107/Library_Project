@@ -35,33 +35,6 @@
    });
 </script>
 <style type="text/css">
-		#result_card img{
-		max-width: 100%;
-	    height: auto;
-	    display: block;
-	    padding: 5px;
-	    margin-top: 10px;
-	    margin: auto;	
-	}
-	#result_card {
-		position: relative;
-	}
-	.imgDeleteBtn{
-	    position: absolute;
-	    top: 0;
-	    right: 5%;
-	    background-color: #ef7d7d;
-	    color: wheat;
-	    font-weight: 900;
-	    width: 30px;
-	    height: 30px;
-	    border-radius: 50%;
-	    line-height: 26px;
-	    text-align: center;
-	    border: none;
-	    display: block;
-	    cursor: pointer;	
-	}
 	.table {
       border-collapse: collapse;
       border-top: 3px solid #168;
@@ -103,10 +76,10 @@
 				<br><br>
 <table class="table" style="width: 90%;">
 		<tr>
-			<td colspan="4" class="title"><b>자유 게시판 - 목록보기</b></td>
+			<td colspan="5" class="title"><b>자유 게시판 - 목록보기</b></td>
 		</tr>
 		<tr>
-			<td colspan="4" class="info" style="text-align: right;">
+			<td colspan="5" class="info" style="text-align: right;">
 				${pv.pageInfo }
 				<script type="text/javascript">
 					$(function(){
@@ -125,22 +98,23 @@
 				</select>씩 보기	
 			</td>
 		</tr>
-		<tr style="text-align: center">
+		<tr>
 			<th width="40%">제목</th>
 			<th>작성자</th>
 			<th>작성일</th>
 			<th>첨부파일</th>
+			<th>상세보기</th>
 		</tr>
 		<c:if test="${pv.totalCount==0 }">
 			<tr>
-				<td colspan="4" class="info2">등록된 글이 없습니다.</td>
+				<td colspan="5" class="info2">등록된 글이 없습니다.</td>
 			</tr>
 		</c:if>
 		<c:if test="${not empty pv.list }">
 			<c:forEach var="vo" items="${pv.list }" varStatus="vs">
 				<tr align="center">
-					<td align="left" >
-						<a href="#" onclick='SendPost("${pageContext.request.contextPath }/board/fboard_view",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize },"idx":${vo.free_board_id },"m":"view","h":"true"},"post")'><c:out value="${vo.free_board_title }"></c:out></a>
+					<td style="text-align: left;">
+						<c:out value="${vo.free_board_title }"></c:out>
 					</td>
 					<td>
 						<c:out value="${vo.userid}"></c:out>
@@ -159,6 +133,11 @@
 								<a href="${url }" title="${fvo.oriname }"><span class="material-icons">file_download</span></a>
 							</c:forEach>
 						</c:if>
+					</td>
+					<td>
+						<a href="#" onclick='SendPost("${pageContext.request.contextPath }/board/fboard_view",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize },"idx":${vo.free_board_id },"m":"view","h":"true"},"post")'>
+						자세히
+						</a>
 					</td>
 				</tr>		
 			</c:forEach>
