@@ -20,4 +20,8 @@ public interface FreeBoardDAO {
 	void delete(int free_board_id);
 	// 현재 저장한 free_board_id값 알아내기
 	int selectSeq();
+	int selectAdminCount();
+	// <!-- 3. 1페이지 얻기 -->
+	List<FreeBoardVO> selectAdminList(HashMap<String, Integer> map);
+	void updateInappropriatePost(FreeBoardVO freeBoardVO);
 }
