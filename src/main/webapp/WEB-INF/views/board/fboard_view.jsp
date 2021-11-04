@@ -112,7 +112,7 @@
 	<div class="container mt-5">
             <!--        중앙정렬-->
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <!-- Post content-->
                     <article>
                         <!-- Post header-->
@@ -142,12 +142,18 @@
 						</c:if>
                         </div>
                         <br><br>
-		               <input type="button" value=" 돌아가기 " class="btn btn-outline-success btn-sm" onclick="goBack()"/>
+                    </article>
+                    <table class="table">
+                    <tr>
+                    	<td style="text-align: right; border: none">
+                     <input type="button" value=" 돌아가기 " class="btn btn-outline-success btn-sm" onclick="goBack()" />
 						<c:if test="${user!='anonymousUser' && prohibition!=null }">
 							<input type="button" value=" 수정하기 " class="btn btn-outline-success btn-sm" onclick="goUpdate()"/>
 							<input type="button" value=" 삭제하기 " class="btn btn-outline-success btn-sm" onclick="goDelete()"/>
 						</c:if>
-                    </article>
+                        </td>
+                    </tr>
+                    </table>
                          <!-- Comments section-->
                     <section class="mb-5">
                         <div class="card bg-light">
