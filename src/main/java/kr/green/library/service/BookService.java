@@ -31,7 +31,7 @@ public interface BookService {
 	// 도서 정보 수정할 때 이미지 삭제하고 다시 추가 할 때에 수행
 	void insertBookImage(BookImageVO bookImageVO);
 	// 도서 댓글 추가
-	void insertBookReply(BookReplyVO bookReplyVO);
+	int insertBookReply(BookReplyVO bookReplyVO);
 	// 도서 대여 -> 수량 -1
 	void updateBookCount(String isbn);
 	// 도서 반납 -> 수량 +1;

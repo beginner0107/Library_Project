@@ -6,7 +6,7 @@ import java.util.List;
 import kr.green.library.vo.BookReplyVO;
 
 public interface BookReplyDAO {
-	void insertBookReply(BookReplyVO bookReplyVO);
+	int insertBookReply(BookReplyVO bookReplyVO);
 	
 	List<BookReplyVO> selectReplyList(HashMap<String, String>map);
 	
