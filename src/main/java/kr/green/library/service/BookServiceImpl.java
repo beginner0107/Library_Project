@@ -119,8 +119,9 @@ public class BookServiceImpl implements BookService {
 
 	// 도서 댓글 추가
 	@Override
-	public void insertBookReply(BookReplyVO bookReplyVO) {
-		bookReplyDAO.insertBookReply(bookReplyVO);
+	public int insertBookReply(BookReplyVO bookReplyVO) {
+		int insert = bookReplyDAO.insertBookReply(bookReplyVO);
+		return insert;
 	}
 
 	@Override
@@ -202,6 +203,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<BookReplyVO> getBookReplyList(String isbn) {
+		log.info(isbn);
 		return bookReplyDAO.getBookReplyList(isbn);
 	}
 
