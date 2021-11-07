@@ -128,20 +128,35 @@ public class MemberController {
 
 	// 댓글 달기(나중에 Ajax로 바꿀)
 	@PostMapping("book_detail_replyOk")
-	public String board_detail_replyOk(BookReplyVO bookReplyVO, RedirectAttributes rs) {
+	@ResponseBody
+	public BookReplyVO board_detail_replyOk(BookReplyVO bookReplyVO, RedirectAttributes rs) {
 		log.info("board_detail_replyOk호출 : {}", bookReplyVO);
 		bookReplyVO.setUserid(getPrincipal());
-		bookService.insertBookReply(bookReplyVO);
-		rs.addAttribute("isbn", bookReplyVO.getIsbn());
+		int insert = bookService.insertBookReply(bookReplyVO);
+		BookReplyVO replyVO = bookService.selectByBreplyId(bookReplyVO.getBreply_id());
 		log.info("board_detail_replyOk호출 : {}", bookReplyVO);
-		return "redirect:/book_detail";
+		System.out.println(insert);
+		return replyVO;
+	}
+	// 댓글 달기(나중에 Ajax로 바꿀)
+	@PostMapping("book_detail_updateReplyOk")
+	@ResponseBody
+	public void book_detail_updateReplyOk(String content, String breply_id) {
+		log.info("breply_id 넘어오나 : {}", breply_id);
+		log.info("content 넘어오나 : {}", content);
+		BookReplyVO bookReplyVO = new BookReplyVO();
+		bookReplyVO.setBreply_id(Integer.parseInt(breply_id) );
+		bookReplyVO.setContent(content);
+		bookService.updateReply(bookReplyVO);
+	}
+	// 댓글 달기(나중에 Ajax로 바꿀)
+	@PostMapping("book_detail_deleteReplyOk")
+	@ResponseBody
+	public void book_detail_deleteReplyOk(String breply_id) {
+		log.info("breply_id 넘어오나 : {}", breply_id);
+		bookService.deleteReply(Integer.parseInt(breply_id));
 	}
 
-	@RequestMapping("/insertReplyOk") // 댓글 작성
-	@ResponseBody
-	private int insertReplyOk(BookReplyVO bookReplyVO) throws Exception {
-		return 1;
-	}
 
 	// 책 대여
 	@PostMapping("book_rentOk")

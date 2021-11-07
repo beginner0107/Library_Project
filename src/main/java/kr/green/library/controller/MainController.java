@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import kr.green.library.service.BookService;
@@ -101,14 +102,22 @@ public class MainController {
 			commVO.setIsbn(params.get("isbn"));
 		}
 		PagingVO<BookReplyVO> pv = bookService.selectReplyList(commVO);
-		List<BookReplyVO> br = bookService.getBookReplyList(isbn);
+		//List<BookReplyVO> pv = bookService.getBookReplyList(isbn);
+		log.info("pv : {}", pv);
 		model.addAttribute("pv", pv);
 		model.addAttribute("cv", commVO);
 		model.addAttribute("user", getPrincipal());
-		model.addAttribute("br", br);
 		log.info("pv : {}", pv.toString());
 		return "book_detail";
 	}
+	@RequestMapping(value = "/bookList")
+	@ResponseBody
+	public List<BookReplyVO>getBookReplyList(String isbn){
+		log.info("getBookReplyList호출 : {}",isbn);
+		List<BookReplyVO>pv = bookService.getBookReplyList(isbn);
+		return pv;
+	}
+	
 	/* 이미지 정보 반환 */
 	@GetMapping(value="/getImageList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<BookImageVO>> getImageList(String isbn){
