@@ -4,11 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.green.library.dao.BookReplyDAO">
 	<!-- 저장하기 : 댓글 등록 -->
-	<insert id="insertBookReply" parameterType="BookReplyVO">
+	<insert id="insertBookReply" parameterType="BookReplyVO" >
 		insert into book_reply
 		(breply_id,isbn,userid,regdate,content, modified_date)
 		values
 		(BREPLY_ID_SEQ.nextval, #{isbn}, #{userid}, sysdate, #{content}, sysdate)
+		<selectKey keyProperty="breply_id" resultType="int" order="AFTER">
+			select breply_id_seq.currval from DUAL
+		</selectKey>
 	</insert>
 	<!-- 1페이지 얻기 -->
  	<select id="selectReplyList" parameterType="hashmap" resultType="BookReplyVO">
