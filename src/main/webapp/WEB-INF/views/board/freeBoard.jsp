@@ -74,7 +74,7 @@
 					<h1 class="mt-4">자유 게시판</h1>
 				</div>
 				<br><br>
-<table class="table" style="width: 90%;">
+	<table class="table" style="width: 90%;">
 		<tr>
 			<td colspan="5" class="title"><b>자유 게시판 - 목록보기</b></td>
 		</tr>
