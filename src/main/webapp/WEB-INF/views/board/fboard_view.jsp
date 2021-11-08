@@ -30,60 +30,6 @@
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
 
 <script>
-	$(function(){
-		$('#content').summernote(
-				{
-					lang : 'ko-KR', // default: 'en-US'
-					height : 200, // set editor height
-					minHeight : null, // set minimum height of editor
-					maxHeight : null, // set maximum height of editor
-					fontNames : [ '맑은고딕', 'Arial', 'Arial Black',
-							'Comic Sans MS', 'Courier New', ],
-					fontNamesIgnoreCheck : [ '맑은고딕' ],
-					focus : true,
-					callbacks : {
-						onImageUpload : function(files, editor, welEditable) {
-							for (var i = files.length - 1; i >= 0; i--) {
-								sendFile(files[i], this);
-							}
-						}
-					}
-				});
-		$('#content').summernote('disable');
-		/*
-		// 서머노트에 text 쓰기
-		$('#summernote').summernote('insertText', 써머노트에 쓸 텍스트);
-		// 서머노트 쓰기 비활성화
-		$('#summernote').summernote('disable');
-		// 서머노트 쓰기 활성화
-		$('#summernote').summernote('enable');
-		// 서머노트 리셋
-		$('#summernote').summernote('reset');
-		// 마지막으로 한 행동 취소 ( 뒤로가기 )
-		$('#summernote').summernote('undo');
-		// 앞으로가기
-		$('#summernote').summernote('redo');
-		*/
-	});
-	function sendFile(file, el) {
-		var form_data = new FormData();
-	  	form_data.append('file', file);
-	  	$.ajax({
-	    	data: form_data,
-	    	type: "POST",
-	    	url: '${pageContext.request.contextPath}/board/imageUpload',
-	    	cache: false,
-	    	contentType: false,
-	    	enctype: 'multipart/form-data',
-	    	processData: false,
-	    	success: function(img_name) {
-	      		$(el).summernote('editor.insertImage', img_name);
-	    	},
-	    	error : function(){
-	    		alert('에러!!!');
-	    	}
-	  	});
-	}
 	//-----------------------------------------------------------------------------------------------------------
 	// 돌아가기버튼 클릭시 사용할 함수
 	function goBack(){
@@ -121,7 +67,7 @@
                             <h1 class="fw-bolder mb-1">${fv.free_board_title}</h1>
                             <!-- Post meta content-->
                             <div class="text-muted fst-italic mb-2"><fmt:formatDate value="${fv.free_board_regdate }" pattern="yyyy년 MM월 dd일(E) hh:mm:ss"/></div>
-
+							<input type = "hidden" id = "free_board_id" name = "free_board_id" value ="${fv.free_board_id }"/>
                             <!-- Post categories -->
                             <div class="badge bg-secondary text-decoration-none link-light">회원 아이디 : ${fv.userid}</div>
                         </header>
@@ -154,57 +100,244 @@
                         </td>
                     </tr>
                     </table>
-                         <!-- Comments section-->
-                    <section class="mb-5">
-                        <div class="card bg-light">
-                            <div class="card-body">
-                                <!-- Comment form-->
-                                <!--
-                            <form class="mb-4">
-                                <textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea>
-                            </form>
--->
-                                <!-- 							댓글 추가 창 -->
-                                <div class="mb-3">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="text-center font-weight-light my-2">댓글</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <form action="/board/board_detail?boardID=${boardDTO.boardID}" method="POST">
-
-                                                <div class="form-group">
-                                                    <textarea class="form-control" id="inputCommentContent" placeholder="댓글을 입력해주세요." rows="3" name="inputCommentContent"></textarea>
-                                                </div>
-                                                <div id="inputCommentContentCount">(0 / 1000)</div>
-
-                                                <div class="mt-4 mb-0">
-                                                    <div class="d-grid">
-                                                        <input type="submit" class="btn btn-primary btn-block" value="댓글 추가" />
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!--                             댓글 나오는 창-->
-                                <c:forEach var="commentDTO" items="${commentDTOList}">
-                                <div class="d-flex mb-4 ">
-                                    <!-- Parent comment-->
-                                    <div class="ms-3">
-                                        <div class="fw-bold">${commentDTO.commentName}</div>
-                                        ${commentDTO.commentContent}
-                                    </div>
-                                </div>
-                                </c:forEach>
-                                <!-- Single comment-->
-                            </div>
-                        </div>
-                    </section>
+                 </div>
+               </div>
+                   <!-- Comments section-->
+				<div class="container mt-5">
+		            <!--        중앙정렬-->
+		            <div class="row">
+		        <section class="mb-5">
+		                  <div class="card bg-light">
+		     	               <div class="card-body">
+		                     <!-- Comment form-->
+		                                <!-- 댓글 추가 창 -->
+		                                <div class="mb-3">
+		                                    <div class="card">
+		                                        <div class="card-header">
+		                                            <h3 class="text-center font-weight-light my-2">한줄평</h3>
+		                                        </div>
+		                                        <div class="card-body">
+		                                                <div class="form-group">
+			                                                    <textarea class="form-control" id="content" placeholder="댓글을 입력해주세요." rows="3" name="content" readonly="readonly"></textarea>
+		                                                </div>
+			                                                     <div class="mt-5 mb-0">
+		                                                    <div class="d-grid">
+		                                                        <button id = "reply_save" name = "reply_save" class="btn btn-primary btn-block">댓글 등록</button>
+		                                                    </div>
+		                                                	</div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		
+		                                <!--                             댓글 나오는 창-->
+		               <div id = "reply_area">
+		               </div>
+		              </div>
+		             </div>
+		          </section>
+				</div>
+				</div>
                 </div>
-                </div>
-                </div>
+              
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+	<script type="text/javascript">
+		function updateReply(fboard_reply_id){
+			var content = $("#replyContent"+fboard_reply_id).val();
+			console.log(content);
+			var breply = "replyContent"+fboard_reply_id;
+			$('textarea[name='+breply+']').attr("readonly",false);
+			$('textarea[name='+breply+']').focus();
+			$('input[name=updateReplyOk'+fboard_reply_id+']').css("display", "inline");
+			$('input[name=cancle'+fboard_reply_id+']').css("display", "inline");
+			//$("textarea").attr('readonly', false);
+		}
+		function cancle(breply_id){
+			//$('input[name=updateReplyOk'+breply_id+']').css("display", "none");
+			//$('input[name=cancle'+breply_id+']').css("display", "none");
+			//$('textarea[name=breply_content'+breply_id+']').attr("readonly","readonly");
+			loadReply();
+		}
+
+	</script>
+	<script type="text/javascript">
+	$(function() {
+		loadReply();
+		var staus = false;
+		// 댓글 저장
+		$("#content").click(function(){
+			var userid = '${user}';
+			if(userid == 'anonymousUser'){
+				alert('로그인 해야 이용 가능합니다');
+			}else{
+				$("#content").attr("readonly", false);
+			}
+		});
+		
+		$("#reply_save").click(function(){
+			if($("#content").val().trim()==""){
+				alert("댓글 내용을 입력하세요");
+				$("#content").focus();
+				return false;
+			}
+			
+						
+			var freeBoardReplyVO = {};
+			
+			freeBoardReplyVO.free_board_id = $("#free_board_id").val();
+			freeBoardReplyVO.fboard_reply_content = $("#content").val();
+			alert(freeBoardReplyVO.free_board_id);
+			alert(freeBoardReplyVO.fboard_reply_content);
+			//ajax 호출
+	        $.ajax({
+	            url         :   "${pageContext.request.contextPath}/member/fboardReplyOk",
+	            contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+	            type        :   "post",
+	            data        :   freeBoardReplyVO,
+	            success     :   function(){ // 객체로 받는다 . data -> bookReplyVO
+	        		//alert('댓글 등록 성공!')
+	            	loadReply();
+	         		// 댓글 초기화 해준다.
+	                 $("#content").val("");
+	                return false;
+	        		}
+	            ,
+	            error : function(request, status, error){
+	                console.log("AJAX_ERROR");
+	                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	            }
+	        });
+		})
+		function loadReply(){
+			var free_board_id = parseInt($("#free_board_id").val());
+			$.ajax({
+				type : "GET",
+				url : "${pageContext.request.contextPath}/member/fboardList",
+				data : {free_board_id : free_board_id},
+				dataType : "json",
+				success : function(data){
+					//console.log(data.list);
+					//let str = JSON.stringify(data.list);
+					//alert(str);
+					console.log(data);
+					var userid = "${user}";
+					var replyList = '<div id = "reply_area">';
+					for(var i = 0; i<data.length; i++){
+						replyList += '<div class="d-flex mb-4 ">';
+						replyList += '<div class="ms-3" style = "width : 90%;">';
+						replyList += '<div class="fw-bold">'+data[i].userid+' / '+data[i].fboard_reply_regdate+'&nbsp&nbsp&nbsp';
+						if(userid != "anonymousUser" && userid == data[i].userid){
+						replyList += '<input type = "button" onclick="updateReply('+data[i].fboard_reply_id+')" value = "수정" style="text-align: right;"/>&nbsp';
+						replyList += '<input type = "button" onclick="deleteReplyOk('+data[i].fboard_reply_id+')" value = "삭제" style="text-align: right;"/>';
+						replyList += '<input type = "button" value = "취소하기" onclick = "cancle('+data[i].fboard_reply_id+');" id = "cancle'+data[i].fboard_reply_id+'" name = "cancle'+data[i].fboard_reply_id+'" style="text-align: right; display: none;"/>';
+						}
+						replyList += '</div>';
+						replyList += '<textarea id = "replyContent'+data[i].fboard_reply_id+'" name = "replyContent'+data[i].fboard_reply_id+'" readonly = "readonly" style = "border: none; width : 100%; resize: none; background-color : #f8f9fa;">'
+						replyList += data[i].fboard_reply_content+'</textarea></div>';
+						replyList += '&nbsp&nbsp&nbsp&nbsp<input type = "button" onclick="updateReplyOk('+data[i].fboard_reply_id+')" value = "수정하기" id = "updateReplyOk'+data[i].fboard_reply_id+'" name = "updateReplyOk'+data[i].fboard_reply_id+'" style="text-align: center; display:none;"/></div>';
+					}
+					replyList += '</div>'
+					$('#reply_area').html(replyList);
+					return false;
+				},
+				error : function(request, status, error){
+					//alert('댓글 불러오기 에러 발생');
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+			
+			}
+	});	
+	function loadReply(){
+		var free_board_id = parseInt($("#free_board_id").val());
+		$.ajax({
+			type : "GET",
+			url : "${pageContext.request.contextPath}/member/fboardList",
+			data : {free_board_id : free_board_id},
+			dataType : "json",
+			success : function(data){
+				//console.log(data.list);
+				//let str = JSON.stringify(data.list);
+				//alert(str);
+				console.log(data);
+				var userid = "${user}";
+				var replyList = '<div id = "reply_area">';
+				for(var i = 0; i<data.length; i++){
+					replyList += '<div class="d-flex mb-4 ">';
+					replyList += '<div class="ms-3" style = "width : 90%;">';
+					replyList += '<div class="fw-bold">'+data[i].userid+' / '+data[i].fboard_reply_regdate+'&nbsp&nbsp&nbsp';
+					if(userid != "anonymousUser" && userid == data[i].userid){
+					replyList += '<input type = "button" onclick="updateReply('+data[i].fboard_reply_id+')" value = "수정" style="text-align: right;"/>&nbsp';
+					replyList += '<input type = "button" onclick="deleteReplyOk('+data[i].fboard_reply_id+')" value = "삭제" style="text-align: right;"/>';
+					replyList += '<input type = "button" value = "취소하기" onclick = "cancle('+data[i].fboard_reply_id+');" id = "cancle'+data[i].fboard_reply_id+'" name = "cancle'+data[i].fboard_reply_id+'" style="text-align: right; display: none;"/>';
+					}
+					replyList += '</div>';
+					replyList += '<textarea id = "replyContent'+data[i].fboard_reply_id+'" name = "replyContent'+data[i].fboard_reply_id+'" readonly = "readonly" style = "border: none; width : 100%; resize: none; background-color : #f8f9fa;">'
+					replyList += data[i].fboard_reply_content+'</textarea></div>';
+					replyList += '&nbsp&nbsp&nbsp&nbsp<input type = "button" onclick="updateReplyOk('+data[i].fboard_reply_id+')" value = "수정하기" id = "updateReplyOk'+data[i].fboard_reply_id+'" name = "updateReplyOk'+data[i].fboard_reply_id+'" style="text-align: center; display:none;"/></div>';
+				}
+				replyList += '</div>'
+				$('#reply_area').html(replyList);
+				return false;
+			},
+			error : function(request, status, error){
+				//alert('댓글 불러오기 에러 발생');
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+		});
+		
+		}
+	function updateReplyOk(reply_id){
+		var content = $("#replyContent"+reply_id).val().trim();
+		var fboard_reply_id = parseInt(reply_id);
+		var free_board_id = parseInt($("#free_board_id").val());
+		alert(content);
+		if(!content){
+			alert('댓글을 입력해 주세요');
+			return false;
+		}else{
+			//ajax 호출
+	        $.ajax({
+	            url         :   "${pageContext.request.contextPath}/member/fboard_updateReplyOk",
+	            contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+	            type        :   "post",
+	            data        :   {content : content, fboard_reply_id : fboard_reply_id, free_board_id : free_board_id},
+	            success     :   function(){ // 객체로 받는다 . data -> bookReplyVO
+	        		//alert('댓글 수정 성공!')
+	         		// 댓글 초기화 해준다.
+	         		loadReply();
+	                return false;
+	        		}
+	            ,
+	            error : function(request, status, error){
+	                console.log("왜 오류가 날까");
+	                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	            }
+	        });
+		}
+	}
+	function deleteReplyOk(reply_id){
+			var fboard_reply_id = parseInt(reply_id);
+			var user = "${user}";
+			
+			//ajax 호출
+	        $.ajax({
+	            url         :   "${pageContext.request.contextPath}/member/fboard_deleteReplyOk",
+	            contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+	            type        :   "post",
+	            data        :   {fboard_reply_id : fboard_reply_id},
+	            success     :   function(){ // 객체로 받는다 . data -> bookReplyVO
+	        		alert('댓글 삭제 성공!')
+	         		// 댓글 초기화 해준다.
+	                loadReply();
+	                return false;
+	        		}
+	            ,
+	            error : function(request, status, error){
+	                console.log("왜 오류가 날까");
+	                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	            }
+	        });
+	}
+	</script>
 </body>
 </html>
