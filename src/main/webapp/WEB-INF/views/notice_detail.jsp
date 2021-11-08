@@ -50,7 +50,7 @@ body{font-family: 맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;}
                         </header>
                         <!-- Post content-->
                         <section class="mb-5" style="font-size: 15pt">
-                        	<pre><c:out value="${nvo.notice_content }" /></pre>
+                        	<pre class="lead" style="font-size: 14pt;"><c:out value="${nvo.notice_content }"/></pre>
                         </section>
                     </article>
                 </div>
