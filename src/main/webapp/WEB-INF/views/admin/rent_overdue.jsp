@@ -112,7 +112,7 @@
 			</tr>
 			<c:if test="${empty pv.list}">
 			<tr>
-				<td colspan="6" class="info2">조건에 맞는 회원이 존재하지 않습니다.</td>
+				<td colspan="6" class="info2">연체도서가 없습니다.</td>
 			</tr>
 			</c:if>
 			<c:if test="${not empty pv.list }">
