@@ -52,11 +52,13 @@ public class BookServiceImpl implements BookService {
 			// 전체 개수 구하기
 			int totalCount = bookDAO.selectCount();
 			// 페이지 계산
-			pagingVO = new PagingVO<>(commVO.getCurrentPage(), commVO.getPageSize(), commVO.getBlockSize(), totalCount);
+			pagingVO = new PagingVO<>(totalCount, totalCount, totalCount, totalCount, commVO.getType(), commVO.getKeyword());
 			// 글을 읽어오기
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("startNo", pagingVO.getStartNo()+"");
 			map.put("endNo", pagingVO.getEndNo()+"");
+			map.put("type", commVO.getType());
+			map.put("keyword", commVO.getKeyword());
 			List<BookVO> list = bookDAO.selectList(map);
 			if(list!=null) {
 				for(BookVO b : list) {
