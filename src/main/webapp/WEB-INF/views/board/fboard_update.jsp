@@ -134,70 +134,62 @@
 </head>
 <body>
 <c:import url="/WEB-INF/views/include/top_menu.jsp" />
-	<%-- ${cv } --%>
-	<form action="${pageContext.request.contextPath}/board/updateOK" method="post" enctype="multipart/form-data" onsubmit="return formCheck();" >
-		<table id="main_content">
-			<tr>
-				<td colspan="4" class="title" >
-				자료실 수정하기
-					<%-- 페이지번호, 페이지 크기, 블록크기를 숨겨서 넘긴다.  --%>
-					<input type="hidden" name="p"  value="${cv.currentPage }"/>
+		<div class="container mt-5">
+            <!--        중앙정렬-->
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Post content-->
+                  <form action="${pageContext.request.contextPath}/board/fboard_insertOk" method="post" enctype="multipart/form-data" onsubmit="return formCheck();" >
+                    <article>
+                        <!-- Post header-->
+                        <header class="mb-4">
+                            <!-- Post title-->
+                            <h1 class="fw-bolder mb-1"><input type="text" id="free_board_title" name="free_board_title" value="${fv.free_board_title }" placeholder="제목"/></h1>
+                            <!-- Post categories -->
+                            <div class="badge bg-secondary text-decoration-none link-light">회원 아이디 : ${fv.userid }</div>
+                        </header>
+                        <!-- Post content-->
+                        <section class="mb-5">
+                            <p class="fs-5 mb-4"><textarea name="free_board_content" id="free_board_content">${fv.free_board_content }</textarea></p>
+                        </section>
+                        <div>
+			   			   <c:if test="${not empty fv.fileList }">
+								<c:forEach var="fvo" items="${fv.fileList }" varStatus="vs">
+									<%-- 파일명 출력 --%>
+									<i class="axi axi-download2"></i> ${fvo.oriname } 
+									<%-- 삭제 아이콘을 표시 :  클릭시 삭제여부를 물어보고 삭제 표시를 한다. --%>
+									<i style="font-size: 15pt;color:red;cursor: pointer;" class="axi axi-delete2" onclick="deleteFile(${fvo.fboard_upload_id}, ${vs.count })"></i>
+									<input type="hidden" name="delfile" id="delfile${vs.count }" size="5" value="0">
+									<span id="msg${vs.count }" style="color:red;"></span>
+									<br />
+								</c:forEach>
+							</c:if>	
+                        </div>
+                        <input type="button" value=" + " class="btn btn-outline-success btn-sm" style="margin-bottom: 5px;" onclick="addFile();"/>
+						<input type="button" value=" - " class="btn btn-outline-success btn-sm" style="margin-bottom: 5px;" onclick="removeFile();"/>
+						<span style="color:red;font-size: 9pt;">※ 이미지는 내용에 직접 첨부하세요!!!</span>
+						<br />
+						<div id="fileBox">
+							<div id="fileItem1" class="fileItem"> <input type="file" name="upfile"/></div>
+						</div>
+                        <br><br>
+                    </article>
+                    <table class="table">
+                    <tr>
+						<td colspan="4" class="info">
+							<input type="submit" value=" 수정하기 " class="btn btn-outline-success btn-sm" />
+							<input type="button" value=" 돌아가기 " class="btn btn-outline-success btn-sm" onclick="goBack()"/>
+						</td>
+					</tr>
+                    </table>
+                    <input type="hidden" name="p"  value="${cv.currentPage }"/>
 					<input type="hidden" name="s"  value="${cv.pageSize }"/>
 					<input type="hidden" name="b"  value="${cv.blockSize }"/>
 					<input type="hidden" name="idx"  value="${cv.idx }"/>
-				</td>
-			</tr>
-			<tr>
-				<th>이름</th>
-				<td> 
-					<input type="text" id="name" name="name" size="30" value="${fv.userid }" readonly="readonly"/>
-				</td>
-			</tr>
-			<tr>
-				<th>제목</th>
-				<td colspan="3"> 
-					<input type="text" id="free_board_title" name="free_board_title" size="110" value="${fv.free_board_title }" />
-				</td>
-			</tr>
-			<tr>
-				<th valign="top">내용</th>
-				<td colspan="3"> 
-					<textarea name="free_board_content" id="free_board_content" cols="135" rows="7">${fv.free_board_content }</textarea>
-				</td>
-			</tr>
-			<tr>
-				<th valign="top">자료</th>
-				<td colspan="3">
-					<%-- 기존에 있던 파일들을 표시하고 삭제버튼을 눌러 삭제가 가능하게 한다. --%>
-					<c:if test="${not empty fv.fileList }">
-					<c:forEach var="fvo" items="${fv.fileList }" varStatus="vs">
-						<%-- 파일명 출력 --%>
-						<i class="axi axi-download2"></i> ${fvo.oriname } 
-						<%-- 삭제 아이콘을 표시 :  클릭시 삭제여부를 물어보고 삭제 표시를 한다. --%>
-						<i style="font-size: 15pt;color:red;cursor: pointer;" class="axi axi-delete2" onclick="deleteFile(${fvo.fboard_upload_id}, ${vs.count })"></i>
-						<input type="hidden" name="delfile" id="delfile${vs.count }" size="5" value="0">
-						<span id="msg${vs.count }" style="color:red;"></span>
-						<br />
-					</c:forEach>
-				</c:if>					 
-					<hr />
-					<input type="button" value=" + " class="btn btn-outline-success btn-sm" style="margin-bottom: 5px;" onclick="addFile();"/>
-					<input type="button" value=" - " class="btn btn-outline-success btn-sm" style="margin-bottom: 5px;" onclick="removeFile();"/>
-					<span style="color:red;font-size: 9pt;">※ 이미지는 내용에 직접 첨부하세요!!!</span>
-					<br />
-					<div id="fileBox">
-						<div id="fileItem1" class="fileItem"> <input type="file" name="upfile"/></div>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="4" class="info">
-					<input type="submit" value=" 수정하기 " class="btn btn-outline-success btn-sm" />
-					<input type="button" value=" 돌아가기 " class="btn btn-outline-success btn-sm" onclick="goBack()"/>
-				</td>
-			</tr>
-		</table>
-	</form>
+                 </form>
+             </div>
+             </div>
+            </div>
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 	
 </body>
