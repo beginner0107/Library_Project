@@ -21,6 +21,18 @@
 	 			rownum rnum, R.*
 	 		from
 	 			(select * from book
+	 			<if test = 'type == "I"'>
+	 				where (isbn like '%'||#{keyword}||'%')
+	 			</if>
+	 			<if test = 'type == "T"'>
+	 				where (title like '%'||#{keyword}||'%')
+	 			</if>
+	 			<if test = 'type == "A"'>
+	 				where (author like '%'||#{keyword}||'%')
+	 			</if>
+	 			<if test = 'type == "G"'>
+	 				where (genre like '%'||#{keyword}||'%')
+	 			</if>
 	 			 order by regdate desc) R
 	 		where
 	 			<![CDATA[
@@ -35,6 +47,18 @@
 	<!-- 전체 개수 얻기 -->
 	<select id="selectCount" resultType="int">
  		select count(*) from book 
+ 		<if test = "type == 'I'.toString()">
+	 		 where (isbn like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = "type == 'T'.toString()">
+	 		 where (title like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = "type == 'A'.toString()">
+	 		 where (author like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = "type == 'G'.toString()">
+	 		 where (genre like '%'||#{keyword}||'%')
+	 	</if>
  	</select>
  	<!-- isbn으로 찾기 -->
 	<select id="selectByIsbn" parameterType="string" resultType="BookVO">
