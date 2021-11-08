@@ -48,7 +48,7 @@
 							<div class="features-icons-icon d-flex">
 								<i class="bi-window m-auto text-primary"></i>
 							</div>
-							<p class="lead mb-0">이달의 도서</p>
+							<p class="lead mb-0"><a href = "${pageContext.request.contextPath }/unified_search">도서 검색</a></p>
 						</div>
 					</div>
 					<div class="col-lg-4">
@@ -56,7 +56,7 @@
 							<div class="features-icons-icon d-flex">
 								<i class="bi-layers m-auto text-primary"></i>
 							</div>
-							<p class="lead mb-0">사서 추천 도서</p>
+							<p class="lead mb-0"><a href = "${pageContext.request.contextPath }/goodBook">사서 추천 도서</a></p>
 						</div>
 					</div>
 					<div class="col-lg-4">
@@ -64,7 +64,7 @@
 							<div class="features-icons-icon d-flex">
 								<i class="bi-terminal m-auto text-primary"></i>
 							</div>
-							<p class="lead mb-0">대여 순위</p>
+							<p class="lead mb-0"><a href ="${pageContext.request.contextPath }/notice">공지사항</a></p>
 						</div>
 					</div>
 				</div>
