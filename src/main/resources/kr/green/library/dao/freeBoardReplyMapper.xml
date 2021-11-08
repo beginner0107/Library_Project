@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.green.library.dao.FreeBoardReplyDAO">
+	<!-- 저장하기 : 댓글 등록 -->
+	<insert id="insertFboardReply" parameterType="FreeBoardReplyVO" >
+		insert into FREE_BOARD_REPLY
+		(fboard_reply_id,free_board_id,userid,fboard_reply_regdate,fboard_reply_content)
+		values
+		(fboard_reply_id_seq.nextval, #{free_board_id}, #{userid}, sysdate, #{fboard_reply_content})
+	</insert>
+ 	<!-- 전체 개수 얻기 -->
+	<select id="selectCount" parameterType="int" resultType="int">
+ 		select count(*) from FREE_BOARD_REPLY where free_board_id = #{free_board_id}  
+ 	</select>
+ 	<!-- 댓글 수정 -->
+ 	<update id="updateReply" parameterType="FreeBoardReplyVO">
+ 		update FREE_BOARD_REPLY set fboard_reply_content = #{fboard_reply_content}
+ 		where fboard_reply_id = #{fboard_reply_id}
+ 	</update>
+ 	<!-- 댓글 삭제 -->
+ 	<delete id="deleteReply" parameterType="int">
+ 		delete from FREE_BOARD_REPLY where fboard_reply_id = #{fboard_reply_id}
+ 	</delete>
+ 	<!-- 댓글 하나 얻기 -->
+ 	<select id="selectByFreplyId" parameterType="int" resultType="FreeBoardReplyVO">
+ 		select * from FREE_BOARD_REPLY where fboard_reply_id = #{fboard_reply_id}
+ 	</select>
+ 	<!-- 댓글 리스트 전체 읽기 Ajax -->
+ 	<select id="selectReplyList" parameterType="int" resultType="FreeBoardReplyVO">
+ 		select * from FREE_BOARD_REPLY where free_board_id = #{free_board_id} order by fboard_reply_regdate desc
+ 	</select>
+ 	<!-- 댓글 전체 삭제 게시글이 삭제 될 때 -->
+ 	<delete id="deleteAllReply" parameterType="int">
+ 		delete from FREE_BOARD_REPLY where free_board_id = #{free_board_id}
+ 	</delete>
+</mapper>
