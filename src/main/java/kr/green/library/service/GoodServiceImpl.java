@@ -29,11 +29,13 @@ public class GoodServiceImpl implements GoodService {
 			// 전체 개수 구하기
 			int totalCount = goodDAO.selectCount();
 			// 페이지 계산
-			pagingVO = new PagingVO<>(commVO.getCurrentPage(), commVO.getPageSize(), commVO.getBlockSize(), totalCount);
+			pagingVO = new PagingVO<>(commVO.getCurrentPage(), commVO.getPageSize(), commVO.getBlockSize(), totalCount,commVO.getType(), commVO.getKeyword());
 			// 글을 읽어오기
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("startNo", pagingVO.getStartNo()+"");
 			map.put("endNo", pagingVO.getEndNo()+"");
+			map.put("keyword", commVO.getKeyword());
+			map.put("type", commVO.getType());
 			// 완성된 리스트를 페이징 객체에 넣는다.
 			List<GoodVO>list = goodDAO.selectList(map);
 			pagingVO.setList(list);
