@@ -1,5 +1,6 @@
 package kr.green.library.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,11 +25,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import kr.green.library.service.BookService;
+import kr.green.library.service.FreeBoardService;
 import kr.green.library.service.MemberService;
 import kr.green.library.service.RentService;
 import kr.green.library.service.RequestService;
 import kr.green.library.vo.BookReplyVO;
 import kr.green.library.vo.CommVO;
+import kr.green.library.vo.FreeBoardReplyVO;
+import kr.green.library.vo.FreeBoardVO;
 import kr.green.library.vo.MemberVO;
 import kr.green.library.vo.PagingVO;
 import kr.green.library.vo.RentVO;
@@ -51,6 +55,9 @@ public class MemberController {
 
 	@Autowired
 	RequestService requestService;
+	
+	@Autowired
+	FreeBoardService freeBoardService;
 
 	// 회원 정보 변경
 	@GetMapping("modify")
@@ -189,6 +196,41 @@ public class MemberController {
 		return "redirect:/book_detail";
 	}
 
+	@PostMapping("rentOk")
+	@ResponseBody
+	public String rentOk(String isbn, String title) {
+		String message = "";
+		MemberVO memberVO = memberService.selectByUserid(getPrincipal());
+		RentVO vo = rentService.rentAvailable(isbn, getPrincipal());
+		int overdueBook = rentService.selectOverdueBook(getPrincipal());
+		if (overdueBook == 3) { // 연체한 도서의 개수가 3이라면 회원의 등급을 -1 감소시키고 대여 가능한 도서의 개수도 0으로 바꿔준다.
+			memberService.updateRankDown(getPrincipal()); // 회원의 랭크와 회원의 대여 가능 횟수가 0이므로 대여가 불가능
+			message = "OVERDUE";
+			return message;
+		}
+		// 회원의 랭크가 -1이거나 회원의 대여 가능 횟수가 이라면 다시 book_detail 페이지로 리다이렉트
+		if (vo != null && vo.getReturn_date() == null || memberVO.getRank() == -1
+				|| memberVO.getRent_available() == 0) {
+			message = "IMPOSSIBILITY";//대여한 도서와 연체한 도서를 확인해주세요
+			return message;
+		}
+		// 조건에 부합한다면
+		RentVO rentVO = new RentVO();
+		rentVO.setUserid(getPrincipal()); // 회원의 아이디
+		rentVO.setIsbn(isbn); // 대여하는 도서의 isbn
+		rentVO.setTitle(title); // 회원이 대여하고자 하는 책의 이름
+											// 대여(RentVO)에 담아준다.
+		// 책을 빌리고
+		rentService.insert(rentVO);
+		// 책의 수량을 감소시키고
+		bookService.updateBookCount(rentVO.getIsbn());
+		// 회원의 대여 가능 횟수를 감소시킨다.
+		memberService.updateRentAvailable(rentVO.getUserid());
+		message = "SUCCESS";
+		log.info("success : {}", message);
+		return message;
+	}
+	
 	// 책을 반납하는/..
 	@PostMapping("return_bookOk")
 	public String return_bookOk(RentVO rentVO, Model model) throws NullPointerException {
@@ -254,7 +296,42 @@ public class MemberController {
 		String requestSuccess = "<script>alert('희망 도서 등록되었습니다.'); location.href='hopeBook'</script>";
 		return requestSuccess;
 	}
-
+	
+	@ResponseBody
+	@GetMapping("fboardList")
+	public List<FreeBoardReplyVO> fboardList(int free_board_id) {
+		List<FreeBoardReplyVO>pv = freeBoardService.selectReplyList(free_board_id);
+		return pv;
+	}
+	// 댓글 달기(나중에 Ajax로 바꿀)
+	@PostMapping("fboardReplyOk")
+	@ResponseBody
+	public void fboardReplyOk(FreeBoardReplyVO freeBoardReplyVO) {
+		log.info("fboardReplyOk호출 : {}", freeBoardReplyVO);
+		freeBoardReplyVO.setUserid(getPrincipal());
+		freeBoardService.insertFboardReply(freeBoardReplyVO);
+	}
+	// 댓글 달기(나중에 Ajax로 바꿀)
+	@PostMapping("fboard_updateReplyOk")
+	@ResponseBody
+	public void fboard_updateReplyOk(String content, int fboard_reply_id, int free_board_id) {
+		log.info("fboard_reply_id 넘어오나 : {}", fboard_reply_id);
+		log.info("content 넘어오나 : {}", content);
+		FreeBoardReplyVO freeBoardReplyVO = new FreeBoardReplyVO();
+		freeBoardReplyVO.setFree_board_id(free_board_id);
+		freeBoardReplyVO.setFboard_reply_id(fboard_reply_id);
+		freeBoardReplyVO.setFboard_reply_content(content);
+		freeBoardReplyVO.setUserid(getPrincipal());
+		log.info("freeBoardReplyVO 인자 : {}", freeBoardReplyVO);
+		freeBoardService.updateReply(freeBoardReplyVO);
+	}
+	// 댓글 달기(나중에 Ajax로 바꿀)
+	@PostMapping("fboard_deleteReplyOk")
+	@ResponseBody
+	public void fboard_deleteReplyOk(int fboard_reply_id) {
+		log.info("fboard_reply_id 넘어오나 : {}", fboard_reply_id);
+		bookService.deleteReply(fboard_reply_id);
+	}
 	// 인증 정보를 얻어내는 method
 	private String getPrincipal() {
 		String username = "";
