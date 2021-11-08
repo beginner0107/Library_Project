@@ -76,6 +76,8 @@ public class MainController {
 			commVO.setP(Integer.parseInt(params.get("p")));
 			commVO.setS(Integer.parseInt(params.get("s")));
 			commVO.setB(Integer.parseInt(params.get("b")));
+			commVO.setKeyword(params.get("keyword").trim());
+			commVO.setType(params.get("type").trim());
 		}
 		PagingVO<BookVO> pv = bookService.selectList(commVO);
 		model.addAttribute("pv", pv);
@@ -171,6 +173,8 @@ public class MainController {
 			commVO.setP(Integer.parseInt(params.get("p")));
 			commVO.setS(Integer.parseInt(params.get("s")));
 			commVO.setB(Integer.parseInt(params.get("b")));
+			commVO.setKeyword(params.get("keyword"));
+			commVO.setType(params.get("type"));
 		}
 		PagingVO<GoodVO> pv = goodService.selectList(commVO);
 		model.addAttribute("pv", pv);
