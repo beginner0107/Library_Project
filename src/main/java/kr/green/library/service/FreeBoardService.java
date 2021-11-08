@@ -1,6 +1,9 @@
 package kr.green.library.service;
 
+import java.util.List;
+
 import kr.green.library.vo.CommVO;
+import kr.green.library.vo.FreeBoardReplyVO;
 import kr.green.library.vo.FreeBoardVO;
 import kr.green.library.vo.PagingVO;
 
@@ -19,4 +22,13 @@ public interface FreeBoardService {
 		PagingVO<FreeBoardVO> selectAdminList(CommVO commVO);
 		// 
 		void updateInappropriatePost(FreeBoardVO freeBoardVO);
+		
+		// 댓글
+		void insertFboardReply(FreeBoardReplyVO freeBoardReplyVO);
+		void updateReply(FreeBoardReplyVO freeBoardReplyVO);
+		void deleteReply(int fboard_reply_id);
+		FreeBoardReplyVO selectByFreplyId(int fboard_reply_id);
+		List<FreeBoardReplyVO>selectReplyList(int free_board_id);
+		void deleteAllReply(int free_board_id);
+		
 }

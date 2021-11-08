@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.green.library.dao.FreeBoardDAO;
+import kr.green.library.dao.FreeBoardReplyDAO;
 import kr.green.library.dao.FreeBoardUploadDAO;
 import kr.green.library.vo.CommVO;
+import kr.green.library.vo.FreeBoardReplyVO;
 import kr.green.library.vo.FreeBoardUploadVO;
 import kr.green.library.vo.FreeBoardVO;
 import kr.green.library.vo.PagingVO;
@@ -20,6 +22,8 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	private FreeBoardDAO freeBoardDAO;
 	@Autowired
 	private FreeBoardUploadDAO freeBoardUploadDAO;
+	@Autowired
+	private FreeBoardReplyDAO freeBoardReplyDAO;
 	@Override
 	public PagingVO<FreeBoardVO> selectList(CommVO commVO) {
 		PagingVO<FreeBoardVO> pagingVO = null;
@@ -154,6 +158,45 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	@Override
 	public void updateInappropriatePost(FreeBoardVO freeBoardVO) {
 		freeBoardDAO.updateInappropriatePost(freeBoardVO);
+	}
+
+
+	@Override
+	public void insertFboardReply(FreeBoardReplyVO freeBoardReplyVO) {
+		freeBoardReplyDAO.insertFboardReply(freeBoardReplyVO);
+	}
+
+
+	@Override
+	public void updateReply(FreeBoardReplyVO freeBoardReplyVO) {
+		freeBoardReplyDAO.updateReply(freeBoardReplyVO);
+	}
+
+
+	@Override
+	public void deleteReply(int fboard_reply_id) {
+		freeBoardReplyDAO.deleteReply(fboard_reply_id);
+	}
+
+
+	@Override
+	public FreeBoardReplyVO selectByFreplyId(int fboard_reply_id) {
+		FreeBoardReplyVO freeBoardReplyVO = freeBoardReplyDAO.selectByFreplyId(fboard_reply_id);
+		return freeBoardReplyVO;
+	}
+
+
+	@Override
+	public List<FreeBoardReplyVO> selectReplyList(int free_board_id) {
+		List<FreeBoardReplyVO> list = null;
+		list = freeBoardReplyDAO.selectReplyList(free_board_id);
+		return list;
+	}
+
+
+	@Override
+	public void deleteAllReply(int free_board_id) {
+		freeBoardReplyDAO.deleteAllReply(free_board_id);
 	}
 
 }
