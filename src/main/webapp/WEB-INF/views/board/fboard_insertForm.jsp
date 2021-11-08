@@ -17,6 +17,63 @@
 <!-- CDN 한글화 -->
 <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
+<style type="text/css">
+	table#main_content{width: 80%; margin: auto;}
+	th {border: 1px solid gray; background-color: #e3f2fd;padding: 5px; text-align: center;}
+	td {border: 1px solid gray; padding: 5px;}
+	td.title {border:none; padding: 5px; text-align: center; font-size: 18pt; }
+	td.info {border:none; padding: 5px; text-align: right; }
+	td.info2 {border: 1px solid gray; padding: 5px; text-align: center; }
+	.fileItem { margin-bottom: 3px;}
+	td.title2 {color : dodgerblue; size : 100px;}
+</style>
+</head>
+<body>
+	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
+		<div class="container mt-5">
+            <!--        중앙정렬-->
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Post content-->
+                  <form action="${pageContext.request.contextPath}/board/fboard_insertOk" method="post" enctype="multipart/form-data" onsubmit="return formCheck();" >
+                    <article>
+                        <!-- Post header-->
+                        <header class="mb-4">
+                            <!-- Post title-->
+                            <h1 class="fw-bolder mb-1"><input type="text" id="free_board_title" name="free_board_title" placeholder="제목"/></h1>
+                            <!-- Post categories -->
+                            <div class="badge bg-secondary text-decoration-none link-light">회원 아이디 : ${user}</div>
+                        </header>
+                        <!-- Post content-->
+                        <section class="mb-5">
+                            <p class="fs-5 mb-4"><textarea name="free_board_content" id="free_board_content"></textarea></p>
+                        </section>
+                        <div>
+                        <input type="button" value=" + " class="btn btn-outline-success btn-sm" style="margin-bottom: 5px;" onclick="addFile();"/>
+							<input type="button" value=" - " class="btn btn-outline-success btn-sm" style="margin-bottom: 5px;" onclick="removeFile();"/>
+							<span style="color:red;font-size: 9pt;">※ 이미지는 내용에 직접 첨부하세요!!!</span>
+							<input type="button" value=" x " class="btn btn-outline-success btn-sm" style="margin-bottom: 5px;" onclick="removeFile();"/>
+							<br />
+							<div id="fileBox">
+								<div id="fileItem1" class="fileItem"> <input type="file" name="upfile"/></div>
+							</div>
+                        </div>
+                        
+                        <br><br>
+                    </article>
+                    <table class="table">
+                    <tr>
+						<td colspan="4" class="info">
+							<input type="submit" value=" 저장하기 " class="btn btn-outline-success btn-sm" />
+							<input type="button" value=" 돌아가기 " class="btn btn-outline-success btn-sm" onclick="goList()"/>
+						</td>
+					</tr>
+                    </table>
+                 </form>
+             </div>
+             </div>
+            </div>
+	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 <script type="text/javascript">
 $(function(){
 	$('#free_board_content').summernote(
@@ -106,64 +163,5 @@ function goList(){
 	SendPost("${pageContext.request.contextPath }/board/freeBoard",{"p":${cv.currentPage },"s":${cv.pageSize },"b":${cv.blockSize }},"post");
 }
 </script>
-<style type="text/css">
-	table#main_content{width: 80%; margin: auto;}
-	th {border: 1px solid gray; background-color: #e3f2fd;padding: 5px; text-align: center;}
-	td {border: 1px solid gray; padding: 5px;}
-	td.title {border:none; padding: 5px; text-align: center; font-size: 18pt; }
-	td.info {border:none; padding: 5px; text-align: right; }
-	td.info2 {border: 1px solid gray; padding: 5px; text-align: center; }
-	.fileItem { margin-bottom: 3px;}
-	td.title2 {color : dodgerblue;}
-</style>
-</head>
-<body>
-	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
-	<%-- ${cv } --%>
-	<form action="${pageContext.request.contextPath}/board/fboard_insertOk" method="post" enctype="multipart/form-data" onsubmit="return formCheck();" >
-		<table id="main_content">
-			<tr>
-				<td colspan="4" class="title" >
-				자유게시판 새글쓰기
-					<%-- 페이지번호, 페이지 크기, 블록크기를 숨겨서 넘긴다.  --%>
-					<input type="hidden" name="p"  value="${cv.currentPage }"/>
-					<input type="hidden" name="s"  value="${cv.pageSize }"/>
-					<input type="hidden" name="b"  value="${cv.blockSize }"/>
-				</td>
-			</tr>
-			<tr>
-				<th class = "title2">제목</th>
-				<td colspan="3"> 
-					<input type="text" id="free_board_title" name="free_board_title" size="135" />
-				</td>
-			</tr>
-			<tr>
-				<th valign="top" class = "title2">내용</th>
-				<td colspan="3"> 
-					<textarea name="free_board_content" id="free_board_content" cols="135" rows="7"></textarea>
-				</td>
-			</tr>
-			<tr>
-				<th valign="top" class = "title2">자료</th>
-				<td colspan="3"> 
-					<input type="button" value=" + " class="btn btn-outline-success btn-sm" style="margin-bottom: 5px;" onclick="addFile();"/>
-					<input type="button" value=" - " class="btn btn-outline-success btn-sm" style="margin-bottom: 5px;" onclick="removeFile();"/>
-					<span style="color:red;font-size: 9pt;">※ 이미지는 내용에 직접 첨부하세요!!!</span>
-					<input type="button" value=" x " class="btn btn-outline-success btn-sm" style="margin-bottom: 5px;" onclick="removeFile();"/>
-					<br />
-					<div id="fileBox">
-						<div id="fileItem1" class="fileItem"> <input type="file" name="upfile"/></div>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="4" class="info">
-					<input type="submit" value=" 저장하기 " class="btn btn-outline-success btn-sm" />
-					<input type="button" value=" 돌아가기 " class="btn btn-outline-success btn-sm" onclick="goList()"/>
-				</td>
-			</tr>
-		</table>
-	</form>
-	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 </body>
 </html>
