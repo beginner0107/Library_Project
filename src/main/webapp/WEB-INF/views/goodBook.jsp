@@ -117,23 +117,23 @@
 					<tr>
 					<td style="border: none;text-align: center; padding-top: 20px;" colspan="6">
 					${pv.pageList }
-					</td>
+					</td>	
 				</tr>
 			</c:if>
 		</table>
-		<!-- 검색 영역 -->
+	   <!-- 검색 영역 -->
 	    <div class="search_wrap" style="text-align: center;">
-	    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/member_list" method="post">
+	    	<form id="searchForm" action="${pageContext.request.contextPath }/goodBook" method="post">
 	    	<div class="search_input">
 		   	  	<select name = "type">
-		    		<option value = "">--</option>
+		    		<option value = "">전체</option>
 		    		<option value = "I">ISBN</option>
 		    		<option value = "T">제목</option>
 		    		<option value = "A">작가</option>
 		    		<option value = "G">장르</option>
 		    	</select>
 	         <input type="text" name="keyword" id = "keyword"/>
-	         <button>검 색</button>                				
+	         <button class='btn btn-primary btn-block' onclick="search();">검 색</button>                				
 	   		</div>
 	    	</form>
 	    </div>
@@ -142,5 +142,12 @@
 	 </div>
 	<!-- Footer-->
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+<script type="text/javascript">
+function search(){
+	var keyword = $('#keyword').val();
+	keyword = $.trim(keyword);
+	$('#keyword').val(keyword);
+}
+</script>
 </body>
 </html>
