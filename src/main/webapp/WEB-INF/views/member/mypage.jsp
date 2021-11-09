@@ -8,7 +8,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>데모도서관</title>
+<title>온라인도서관</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon"
 	href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
@@ -233,7 +233,7 @@
 
                                 <div class="mt-4 mb-0">
                                     <div class="d-grid">
-                                        <input type="submit" class="btn btn-primary btn-block" value="연장하기" />
+                                        <input type="submit" class="btn btn-primary btn-block" value="연장하기" onclick = "extension();" />
                                     </div>
                                 </div>
 
@@ -252,5 +252,17 @@
     </div>
 	<!-- Footer-->
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
+<script type="text/javascript">
+	function extension(){
+		var extenstion_count = parseInt($("#extension_count").val());
+		//alert('실행됨?');
+		//alert(extenstion_count);
+		if(extenstion_count>3){
+			extension_count = 3;
+			$("#extension_count").val(extension_count);
+			alert('3일 연장 됩니다.');
+		}
+	}
+</script>
 </body>
 </html>
