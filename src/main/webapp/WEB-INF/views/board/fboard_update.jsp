@@ -139,7 +139,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <!-- Post content-->
-                  <form action="${pageContext.request.contextPath}/board/fboard_insertOk" method="post" enctype="multipart/form-data" onsubmit="return formCheck();" >
+                  <form action="${pageContext.request.contextPath}/board/updateOk" method="post" enctype="multipart/form-data" onsubmit="return formCheck();" >
                     <article>
                         <!-- Post header-->
                         <header class="mb-4">
