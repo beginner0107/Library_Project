@@ -92,6 +92,7 @@
                                         <div class="card-body">
                                                 <div class="form-group">
 	                                                    <textarea class="form-control" id="content" placeholder="댓글을 입력해주세요." rows="3" name="content" readonly="readonly"></textarea>
+	                                                    <span style="color: #aaa;" id="counter">(0 / 최대 200자)</span>
                                                 </div>
 	                                                     <div class="mt-5 mb-0">
                                                     <div class="d-grid">
@@ -195,6 +196,7 @@
 	            	loadReply();
 	         		// 댓글 초기화 해준다.
 	                 $("#content").val("");
+	                 $('#counter').html("(" + 0 + " / 최대200자)");
 	                return false;
 	        		}
 	            ,
@@ -241,6 +243,16 @@
 			});
 			
 			}
+		$('#content').keyup(function() {
+			var content = $(this).val();
+			$('#counter').html("(" + content.length + " / 최대200자)");
+			//글자수 실시간 카운팅 
+			if (content.length > 200) {
+				alert("최대 200자까지 입력가능합니다.");
+				$(this).val(content.substring(0, 200));
+				$('#counter').html("(200 / 최대 200자)");
+			}
+		});
 	});	
 	function loadReply(){
 		var isbn = $("#isbn").val();
@@ -282,6 +294,12 @@
 		}
 	function updateReplyOk(breply_id){
 		var content = $("#breply_content"+breply_id).val().trim();
+		if(content.length>200){
+			alert('200자를 넘을 수 없습니다.');
+			content = $("#breply_content"+breply_id).val().substring(0, 200);
+			$("#breply_content"+breply_id).val(content);
+			return false;
+		}
 		if(!content){
 			alert('댓글을 입력해 주세요');
 			return false;
