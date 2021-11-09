@@ -296,6 +296,7 @@
 	            success     :   function(){ // 객체로 받는다 . data -> bookReplyVO
 	        		alert('댓글 수정 성공!')
 	         		// 댓글 초기화 해준다.
+	         		loadReply();
 	                return false;
 	        		}
 	            ,
