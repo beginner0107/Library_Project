@@ -116,6 +116,8 @@ public class BookServiceImpl implements BookService {
 	// 도서 삭제
 	@Override
 	public void deleteBook(String isbn) {
+		bookImageDAO.deleteBookImage(isbn);
+		bookReplyDAO.deleteAllReply(isbn);
 		bookDAO.deleteBook(isbn);
 	}
 
