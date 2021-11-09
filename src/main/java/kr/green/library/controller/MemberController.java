@@ -264,6 +264,9 @@ public class MemberController {
 	@PostMapping("extension_book")
 	public String extension_book(RentVO rentVO) {
 		log.info("extension_book호출 : {} ", rentVO);
+		if(rentVO.getExtension_count()>3) {
+			rentVO.setExtension_count(3);
+		}
 		String isbn[] = rentVO.getIsbn().split(":");
 		rentVO.setIsbn(isbn[0].trim());
 		rentVO.setUserid(getPrincipal());
@@ -330,7 +333,7 @@ public class MemberController {
 	@ResponseBody
 	public void fboard_deleteReplyOk(int fboard_reply_id) {
 		log.info("fboard_reply_id 넘어오나 : {}", fboard_reply_id);
-		bookService.deleteReply(fboard_reply_id);
+		freeBoardService.deleteReply(fboard_reply_id);
 	}
 	// 인증 정보를 얻어내는 method
 	private String getPrincipal() {
