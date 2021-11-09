@@ -6,23 +6,25 @@ import java.util.List;
 import kr.green.library.vo.MemberVO;
 
 public interface MemberDAO {
-	// 저장하기 : 회원 가입
+	// 저장하기 : 회원 가입 
 	void insert(MemberVO memberVO);
-	// <!-- 아이디로 찾기 -->
+	// 아이디로 찾기  
 	MemberVO selectByUserid(String userid);
-	// <!-- 비밀번호 변경하기 -->
+	// 비밀번호 변경하기 
 	void updatePassword(HashMap<String, String> map);
-	// <!-- 사용여부 변경하기 -->
+	// 사용여부 변경하기 
 	void updateEnabled(HashMap<String, String> map);
-	// <!-- 동일한 아이디 개수세기 : 아이디 중복 확인 -->
+	// 동일한 아이디 개수세기 : 아이디 중복 확인 
 	int selectCountByUserid(String userid);
 	// 아이디, 이메일 넘겨서 찾기
 	MemberVO selectByEmailUserid(HashMap<String, String> map);
 	// 아이디 넘겨서 찾기
 	MemberVO selectByEmail(String email);
-	// 수정하기
+	// 수정하기 
 	void update(HashMap<String, String> map);
-	// 한 페이지 얻기
+	
+	// --- 관리자 ---
+	// 한 페이지 얻기 
 	List<MemberVO> selectList(HashMap<String, String> map);
 	// 전체 개수 구하기
 	int selectCount(HashMap<String, String>map);
