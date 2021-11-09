@@ -55,4 +55,7 @@
  	<select id="getBookReplyList" resultType="BookReplyVO">
  		select * from book_reply where isbn = #{isbn} order by regdate desc
  	</select>
+ 	<delete id="deleteAllReply" parameterType="String">
+ 		delete from book_reply where isbn = #{isbn}
+ 	</delete>
 </mapper>
