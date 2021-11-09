@@ -31,10 +31,14 @@ public class MyLoginSuccessHandler implements AuthenticationSuccessHandler{
 		log.info("{}의 onAuthenticationSuccess 호출 : {} ", this.getClass().getName(), userid);
 		MemberVO memberVO = memberDAO.selectByUserid(userid);
 		log.info("{}의 onAuthenticationSuccess 호출 : {} ", this.getClass().getName(), memberVO);
+		
+		
 		if(memberVO!=null) {
 			session.setAttribute("mvo", memberVO);
 		}
-		response.sendRedirect(request.getContextPath() + "/");
+		
+		//response.sendRedirect(request.getContextPath() + "/");
+		response.sendRedirect((String) request.getSession().getAttribute("redirectURI"));
 	}
 
 }
