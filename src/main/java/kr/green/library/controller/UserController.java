@@ -55,11 +55,15 @@ public class UserController {
 	public String login(
 			@RequestParam Map<String, String> param, // 모든 넘어오는정보를 맵으로 받기
 			@RequestParam(value = "error", required = false) String error,
-			Model model) {
+			Model model, HttpServletRequest request) {
 		log.info("param : {}, error : {}", param, error);
 		if (error!=null) {
 			model.addAttribute("error","아이디 또는 비밀번호가 틀렸습니다.");
 		}
+		String referer = request.getHeader("Referer");
+		log.info("referer : {}", referer);
+		request.getSession().setAttribute("redirectURI", referer);
+		
 		return "user/login";
 	}
 	
