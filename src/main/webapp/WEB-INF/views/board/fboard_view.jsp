@@ -185,8 +185,8 @@
 			
 			freeBoardReplyVO.free_board_id = $("#free_board_id").val();
 			freeBoardReplyVO.fboard_reply_content = $("#content").val();
-			alert(freeBoardReplyVO.free_board_id);
-			alert(freeBoardReplyVO.fboard_reply_content);
+			//alert(freeBoardReplyVO.free_board_id);
+			//alert(freeBoardReplyVO.fboard_reply_content);
 			//ajax 호출
 	        $.ajax({
 	            url         :   "${pageContext.request.contextPath}/member/fboardReplyOk",
@@ -290,7 +290,7 @@
 		var content = $("#replyContent"+reply_id).val().trim();
 		var fboard_reply_id = parseInt(reply_id);
 		var free_board_id = parseInt($("#free_board_id").val());
-		alert(content);
+		//alert(content);
 		if(!content){
 			alert('댓글을 입력해 주세요');
 			return false;
@@ -317,6 +317,7 @@
 	}
 	function deleteReplyOk(reply_id){
 			var fboard_reply_id = parseInt(reply_id);
+			console.log(fboard_reply_id);
 			var user = "${user}";
 			
 			//ajax 호출
