@@ -126,7 +126,7 @@
 						</c:if>
 					</td>
 					<td>
-						<a href="#" onclick='SendPost("${pageContext.request.contextPath }/board/fboard_view",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize },"idx":${vo.free_board_id },"m":"view","h":"true"},"post")'>
+						<a href="#" onclick='SendPost("${pageContext.request.contextPath }/board/fboard_view",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize },"idx":${vo.free_board_id },"m":"view"},"post")'>
 						자세히
 						</a>
 					</td>
@@ -149,14 +149,14 @@
 	</table>	
 	<!-- 검색 영역 -->
 	    <div class="search_wrap" style="text-align: center;">
-	    	<form id="searchForm" action="${pageContext.request.contextPath }/fboard_search" method="post">
+	    	<form id="searchForm" action="${pageContext.request.contextPath }/freeBoard" method="post">
 	    	<div class="search_input">
 		   	  	<select name = "type">
-		    		<option value = "">전체</option>
-		    		<option value = "I">ISBN</option>
+		    		<option value = "">--</option>
 		    		<option value = "T">제목</option>
-		    		<option value = "A">작가</option>
-		    		<option value = "G">장르</option>
+		    		<option value = "C">내용</option>
+		    		<option value = "U">작성자</option>
+		    		<option value = "TC">제목+내용</option>
 		    	</select>
 	         <input type="text" name="keyword" id = "keyword"/>
 	         <button class='btn btn-primary btn-block' onclick="search();">검 색</button>                				
@@ -167,5 +167,8 @@
     </div>
     </div>
 <c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
+<script type="text/javascript">
+	document.oncontextmenu = function() { return false; };
+</script>
 </body>
 </html>
