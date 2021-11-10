@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.green.library.service.MemberService;
+import kr.green.library.vo.CommVO;
 import kr.green.library.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -60,10 +61,11 @@ public class UserController {
 		if (error!=null) {
 			model.addAttribute("error","아이디 또는 비밀번호가 틀렸습니다.");
 		}
+		/*
 		String referer = request.getHeader("Referer");
 		log.info("referer : {}", referer);
 		request.getSession().setAttribute("redirectURI", referer);
-		
+		*/
 		return "user/login";
 	}
 	
