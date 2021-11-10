@@ -127,7 +127,7 @@
 	    	<form id="searchForm" action="${pageContext.request.contextPath }/unified_search" method="post">
 	    	<div class="search_input">
 		   	  	<select name = "type">
-		    		<option value = "">전체</option>
+		    		<option value = "">--</option>
 		    		<option value = "I">ISBN</option>
 		    		<option value = "T">제목</option>
 		    		<option value = "A">작가</option>

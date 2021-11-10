@@ -119,11 +119,10 @@
 	    	<form id="searchForm" action="${pageContext.request.contextPath }/fboard_search" method="post">
 	    	<div class="search_input">
 		   	  	<select name = "type">
-		    		<option value = "">전체</option>
-		    		<option value = "I">ISBN</option>
-		    		<option value = "T">제목</option>
-		    		<option value = "A">작가</option>
-		    		<option value = "G">장르</option>
+		    		<option value = "">--</option>
+		    		<option value = "I">제목</option>
+		    		<option value = "T">내용</option>
+		    		<option value = "A">제목+내용</option>
 		    	</select>
 	         <input type="text" name="keyword" id = "keyword"/>
 	         <button class='btn btn-primary btn-block' onclick="search();">검 색</button>                				
