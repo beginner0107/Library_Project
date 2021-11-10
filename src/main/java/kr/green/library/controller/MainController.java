@@ -185,7 +185,8 @@ public class MainController {
 	
 	
 	@RequestMapping("/library_Introduce")
-	public String library_introduece() {
+	public String library_introduece(Model model) {
+		model.addAttribute("user", getPrincipal());
 		return "library_Introduce";
 	}
 	@RequestMapping("/notice")
