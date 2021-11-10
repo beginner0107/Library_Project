@@ -123,19 +123,20 @@
 			</tr>
 		</c:if>
 	</table>
-	<!-- 검색 영역 -->
+ 	<!-- 검색 영역 -->
     <div class="search_wrap" style="text-align: center;">
     	<form id="searchForm" action="${pageContext.request.contextPath }/admin/member_list" method="post">
     	<div class="search_input">
 	   	  	<select name = "type">
-	    		<option value = "">--</option>
-	    		<option value = "I">아이디</option>
-	    		<option value = "N">이름</option>
-	    		<option value = "E">이메일</option>
-	    		<option value = "R">등급</option>
+				<option value = "">--</option>
+	    		<option value = "T">제목</option>
+	    		<option value = "I">ISBN</option>
+	    		<option value = "A">작가</option>
+	    		<option value = "P">출판사</option>
+	    		<option value = "G">장르</option>
 	    	</select>
          <input type="text" name="keyword" id = "keyword"/>
-         <button class='btn btn-primary btn-block'>검 색</button>                				
+         <button style="background-color: #0d6efd; color: white; border-radius: 5px; font-size: 10pt">검 색</button>                				
    		</div>
     	</form>
     </div>

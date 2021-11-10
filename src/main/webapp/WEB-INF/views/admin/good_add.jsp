@@ -165,21 +165,22 @@
 			</c:if>
 		</table>
 		<!-- 검색 영역 -->
-	    <div class="search_wrap" style="text-align: center;">
-	    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/member_list" method="post">
-	    	<div class="search_input">
-		   	  	<select name = "type">
-		    		<option value = "">--</option>
-		    		<option value = "I">ISBN</option>
-		    		<option value = "T">제목</option>
-		    		<option value = "A">작가</option>
-		    		<option value = "G">장르</option>
-		    	</select>
-	         <input type="text" name="keyword" id = "keyword"/>
-	         <button>검 색</button>                				
-	   		</div>
-	    	</form>
-	    </div>
+   	 <div class="search_wrap" style="text-align: center;">
+    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/member_list" method="post">
+    	<div class="search_input">
+	   	  	<select name = "type">
+				<option value = "">--</option>
+	    		<option value = "T">제목</option>
+	    		<option value = "I">ISBN</option>
+	    		<option value = "A">작가</option>
+	    		<option value = "P">출판사</option>
+	    		<option value = "G">장르</option>
+	    	</select>
+         <input type="text" name="keyword" id = "keyword"/>
+         <button style="background-color: #0d6efd; color: white; border-radius: 5px; font-size: 10pt">검 색</button>                				
+   		</div>
+    	</form>
+    </div>
 
 	<!--                추천 도서 추가 파트-->
 	<div class="container px-4 px-lg-5">

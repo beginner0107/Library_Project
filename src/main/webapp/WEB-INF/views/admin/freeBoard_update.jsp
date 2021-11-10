@@ -7,61 +7,26 @@
 <head>
 <meta charset="UTF-8">
 <title>여기에는 제목</title>
+<!--  엑시콘사용 : 다운로드받은 폴더를 넣고 CSS파일을 읽는다. -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/axicon/axicon.min.css" />
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
-<script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script   src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<!-- Bootstrap icons-->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<script	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<!-- CDN 한글화 -->
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <!-- Google fonts-->
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
-<!-- 다운로드 아이콘 -->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
 <script type="text/javascript">
    $(function(){
    
    });
 </script>
 <style type="text/css">
-		#result_card img{
-		max-width: 100%;
-	    height: auto;
-	    display: block;
-	    padding: 5px;
-	    margin-top: 10px;
-	    margin: auto;	
-	}
-	#result_card {
-		position: relative;
-	}
-	.imgDeleteBtn{
-	    position: absolute;
-	    top: 0;
-	    right: 5%;
-	    background-color: #ef7d7d;
-	    color: wheat;
-	    font-weight: 900;
-	    width: 30px;
-	    height: 30px;
-	    border-radius: 50%;
-	    line-height: 26px;
-	    text-align: center;
-	    border: none;
-	    display: block;
-	    cursor: pointer;	
-	}
 	.table {
       border-collapse: collapse;
       border-top: 3px solid #168;
@@ -92,7 +57,15 @@
 <body>
 <c:import url = "/WEB-INF/views/include/admin_top_menu.jsp"/>	
 <!-- ${pv } -->
-<table class="table" style="width: 70%;">
+<!-- Page Content-->
+	<div class="container px-4 px-lg-5">
+		<!-- Heading Row-->
+		<main>
+		<div id="layoutSidenav_content">
+				<div class="container-fluid px-4">
+					<h1 class="mt-4">자유게시판 관리</h1>
+					<br>
+	<table class="table">
 		<tr>
 			<td colspan="6" class="title">자유 게시판 - 목록보기</td>
 		</tr>
@@ -168,23 +141,22 @@
 			</td>
 		</tr>
 	</table>	
-	<!-- 검색 영역 -->
- 	<!-- 검색 영역 -->
-    <div class="search_wrap" style="text-align: center;">
-    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/member_list" method="post">
-    	<div class="search_input">
-	   	  	<select name = "type">
-	    		<option value = "">--</option>
-	    		<option value = "I">아이디</option>
-	    		<option value = "N">이름</option>
-	    		<option value = "E">이메일</option>
-	    		<option value = "R">등급</option>
-	    	</select>
-         <input type="text" name="keyword" id = "keyword"/>
-         <button style="background-color: #0d6efd; color: white; border-radius: 5px; font-size: 10pt">검 색</button>                				
-   		</div>
-    	</form>
-    </div>
+<!-- 검색 영역 -->
+	    <div class="search_wrap" style="text-align: center;">
+	    	<form id="searchForm" action="${pageContext.request.contextPath }/fboard_search" method="post">
+	    	<div class="search_input">
+		   	  	<select name = "type">
+		    		<option value = "">전체</option>
+		    		<option value = "I">ISBN</option>
+		    		<option value = "T">제목</option>
+		    		<option value = "A">작가</option>
+		    		<option value = "G">장르</option>
+		    	</select>
+	         <input type="text" name="keyword" id = "keyword"/>
+	         <button class='btn btn-primary btn-block' onclick="search();">검 색</button>                				
+	   		</div>
+	    	</form>
+	    </div>
     <div class="container px-4 px-lg-5">
 				<div class="row justify-content-center">
 					<div class="card shadow-lg border-5 rounded-lg mt-5">
@@ -221,6 +193,10 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+	</main>
+	</div>
 <c:import url="/WEB-INF/views/include/admin_bottom_info.jsp"/>
 </body>
 </html>
