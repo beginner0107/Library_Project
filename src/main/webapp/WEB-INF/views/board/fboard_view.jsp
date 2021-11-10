@@ -39,7 +39,12 @@
 		SendPost("${pageContext.request.contextPath}/board/fboard_update", {"p":${cv.currentPage},"s":${cv.pageSize},"b":${cv.blockSize},"idx":${cv.idx}});
 	}
 	function goDelete(){
-		SendPost("${pageContext.request.contextPath}/board/fboard_delete", {"p":${cv.currentPage},"s":${cv.pageSize},"b":${cv.blockSize},"idx":${cv.idx}});
+		var fboard = confirm('삭제하시겠습니까?');
+		if(fboard){
+			SendPost("${pageContext.request.contextPath}/board/fboard_delete", {"p":${cv.currentPage},"s":${cv.pageSize},"b":${cv.blockSize},"idx":${cv.idx}});
+		}else{
+			return false;
+		}
 	}
 </script>
 <style type="text/css">
@@ -157,7 +162,16 @@
 			//$('textarea[name=breply_content'+breply_id+']').attr("readonly","readonly");
 			loadReply();
 		}
-
+		$(document).keydown(function (e) {
+            if (e.which === 116) {
+                if (typeof event == "object") {
+                    event.keyCode = 0;
+                }
+                return false;
+            } else if (e.which === 82 && e.ctrlKey) {
+                return false;
+            }
+		}); 
 	</script>
 	<script type="text/javascript">
 	$(function() {
@@ -167,7 +181,12 @@
 		$("#content").click(function(){
 			var userid = '${user}';
 			if(userid == 'anonymousUser'){
-				alert('로그인 해야 이용 가능합니다');
+			var login = confirm('로그인 하시겠습니까?');
+			if(login){
+				var root = '${pageContext.request.contextPath}';
+				location.href = ''+root+'/user/login'	
+			}
+				
 			}else{
 				$("#content").attr("readonly", false);
 			}
@@ -209,6 +228,7 @@
 		})
 		function loadReply(){
 			var free_board_id = parseInt($("#free_board_id").val());
+			
 			$.ajax({
 				type : "GET",
 				url : "${pageContext.request.contextPath}/member/fboardList",
@@ -316,28 +336,34 @@
 		}
 	}
 	function deleteReplyOk(reply_id){
-			var fboard_reply_id = parseInt(reply_id);
-			console.log(fboard_reply_id);
-			var user = "${user}";
+			var deleteReply = confirm('삭제하시겠습니까?');
+			if(deleteReply){
+				var fboard_reply_id = parseInt(reply_id);
+				console.log(fboard_reply_id);
+				var user = "${user}";
+				
+				//ajax 호출
+		        $.ajax({
+		            url         :   "${pageContext.request.contextPath}/member/fboard_deleteReplyOk",
+		            contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+		            type        :   "post",
+		            data        :   {fboard_reply_id : fboard_reply_id},
+		            success     :   function(){ // 객체로 받는다 . data -> bookReplyVO
+		        		alert('댓글 삭제 성공!')
+		         		// 댓글 초기화 해준다.
+		                loadReply();
+		                return false;
+		        		}
+		            ,
+		            error : function(request, status, error){
+		                console.log("왜 오류가 날까");
+		                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		            }
+		        });
+			}else{
+				return false;
+			}
 			
-			//ajax 호출
-	        $.ajax({
-	            url         :   "${pageContext.request.contextPath}/member/fboard_deleteReplyOk",
-	            contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
-	            type        :   "post",
-	            data        :   {fboard_reply_id : fboard_reply_id},
-	            success     :   function(){ // 객체로 받는다 . data -> bookReplyVO
-	        		alert('댓글 삭제 성공!')
-	         		// 댓글 초기화 해준다.
-	                loadReply();
-	                return false;
-	        		}
-	            ,
-	            error : function(request, status, error){
-	                console.log("왜 오류가 날까");
-	                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	            }
-	        });
 	}
 	</script>
 </body>
