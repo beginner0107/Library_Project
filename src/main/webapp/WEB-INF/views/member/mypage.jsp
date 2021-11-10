@@ -148,8 +148,6 @@
 		    		<option value = "">--</option>
 		    		<option value = "I">ISBN</option>
 		    		<option value = "T">제목</option>
-		    		<option value = "A">작가</option>
-		    		<option value = "G">장르</option>
 		    	</select>
 	         <input type="text" name="keyword" id = "keyword"/>
 	         <button class='btn btn-primary btn-block'>검 색</button>                				
