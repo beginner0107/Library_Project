@@ -101,6 +101,8 @@ public class MemberController {
 			commVO.setP(Integer.parseInt(params.get("p")));
 			commVO.setS(Integer.parseInt(params.get("s")));
 			commVO.setB(Integer.parseInt(params.get("b")));
+			commVO.setKeyword(params.get("keyword"));
+			commVO.setType(params.get("type"));
 		}
 		String userid = getPrincipal();
 		PagingVO<RentVO> pv = rentService.rentListByUserid(commVO, userid);
@@ -122,6 +124,8 @@ public class MemberController {
 			commVO.setP(Integer.parseInt(params.get("p")));
 			commVO.setS(Integer.parseInt(params.get("s")));
 			commVO.setB(Integer.parseInt(params.get("b")));
+			commVO.setKeyword(params.get("keyword"));
+			commVO.setType(params.get("type"));
 		}
 		String userid = getPrincipal();
 		PagingVO<RentVO> pv = rentService.selectBorrowedList(commVO, userid);
