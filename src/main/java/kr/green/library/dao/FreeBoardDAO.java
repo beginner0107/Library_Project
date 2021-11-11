@@ -17,9 +17,9 @@ public interface FreeBoardDAO {
 	// 현재 저장한 free_board_id값 알아내기
 	int selectSeq();
 	// 전체 개수 얻기
-	int selectCount();
+	int selectCount(HashMap<String, String>map);
 	// 1페이지 얻기 
-	List<FreeBoardVO> selectList(HashMap<String, Integer> map);
+	List<FreeBoardVO> selectList(HashMap<String, String> map);
 	int selectAdminCount();
 	
 	// --- 관리자 --- 
