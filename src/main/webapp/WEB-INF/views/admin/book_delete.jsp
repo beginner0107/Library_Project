@@ -166,7 +166,7 @@
 		</table>
 		<!-- 검색 영역 -->
 	    <div class="search_wrap" style="text-align: center;">
-	    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/member_list" method="post">
+	    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/book_delete" method="post">
 	    	<div class="search_input">
 		   	  	<select name = "type">
 		    		<option value = "">--</option>

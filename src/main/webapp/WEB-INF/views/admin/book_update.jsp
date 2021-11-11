@@ -166,7 +166,7 @@
 		</table>
 		<!-- 검색 영역 -->
 	    <div class="search_wrap" style="text-align: center;">
-	    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/member_list" method="post">
+	    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/book_update" method="post">
 	    	<div class="search_input">
 		   	  	<select name = "type">
 		    		<option value = "">--</option>
@@ -425,16 +425,6 @@
 				src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 			<!-- Core theme JS-->
 			<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
-
-
-			<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"
-				crossorigin="anonymous"></script>
-			<script src="${pageContext.request.contextPath }/resources/js/dataTables.js"></script>
-
-				
-				
-        </div>
-    </div>
 </body>
 
 </html>
