@@ -20,7 +20,7 @@ public interface RentService {
 	
 	int selectReturnAvailable(RentVO rentVO);
 	
-	PagingVO<RentVO> selectOverdueBookList(CommVO commVO);
+	PagingVO<RentVO> selectOverdueBookList(CommVO commVO, String userid);
 	
 	PagingVO<RentVO> selectBorrowedList(CommVO commVO, String userid);
 }
