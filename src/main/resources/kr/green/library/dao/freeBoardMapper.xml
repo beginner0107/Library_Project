@@ -7,6 +7,19 @@
  	<!-- 1. 개수얻기 -->
  	<select id="selectCount" resultType="int">
  		select count(*) from free_board where black = 'Y'	
+ 		<if test = "type == 'T'.toString()">
+	 		 and (free_board_title like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = "type == 'C'.toString()">
+	 		 and (free_board_content like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = "type == 'I'.toString()">
+	 		 and (userid like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = "type == 'TC'.toString()">
+	 		 and (free_board_title like '%'||#{keyword}||'%'
+	 		 		or free_board_content like '%' || #{keyword}||'%')
+	 	</if>	
  	</select>
  	<!-- 2. 1개 얻기 -->
  	<select id="selectByBoardId" parameterType="int" resultType="freeBoardVO">
@@ -20,7 +33,21 @@
 	 		(select 
 	 			rownum rnum, R.*
 	 		from
-	 			(select * from free_board where black = 'Y' order by free_board_id desc) R
+	 			(select * from free_board where black = 'Y'
+	 			<if test = 'type == "T"'>
+	 				and (free_board_title like '%'||#{keyword}||'%')
+	 			</if>
+	 			<if test = 'type == "C"'>
+	 				and (free_board_content like '%'||#{keyword}||'%')
+	 			</if>
+	 			<if test = 'type == "I"'>
+	 				and (userid like '%'||#{keyword}||'%')
+	 			</if>
+	 			<if test = 'type == "TC"'>
+	 				and (free_board_title like '%'||#{keyword}||'%'
+                    or free_board_content like '%' || #{keyword}||'%')
+	 			</if>
+	 			 order by free_board_id desc) R
 	 		where
 	 			<![CDATA[
 	 				rownum <= #{endNo}
@@ -34,7 +61,20 @@
  	
  	<!-- 1. 개수얻기 -->
  	<select id="selectAdminCount" resultType="int">
- 		select count(*) from free_board	
+ 		select count(*) from free_board
+ 		<if test = "type == 'T'.toString()">
+	 		 where (free_board_title like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = "type == 'C'.toString()">
+	 		 where (free_board_content like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = "type == 'I'.toString()">
+	 		 where (userid like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = "type == 'TC'.toString()">
+	 		 where (free_board_title like '%'||#{keyword}||'%'
+	 		 		or free_board_content like '%' || #{keyword}||'%')
+	 	</if>	
  	</select>
  	<!-- 3. 1페이지 얻기 -->
  	<select id="selectAdminList" parameterType="hashmap" resultType="freeBoardVO">
