@@ -169,6 +169,8 @@ public class AdminController {
 			commVO.setP(Integer.parseInt(params.get("p")));
 			commVO.setS(Integer.parseInt(params.get("s")));
 			commVO.setB(Integer.parseInt(params.get("b")));
+			commVO.setType(params.get("type"));
+			commVO.setKeyword(params.get("keyword"));
 		}
 		PagingVO<BookVO> pv = bookService.selectList(commVO);
 		model.addAttribute("pv", pv);
@@ -198,6 +200,8 @@ public class AdminController {
 			commVO.setP(Integer.parseInt(params.get("p")));
 			commVO.setS(Integer.parseInt(params.get("s")));
 			commVO.setB(Integer.parseInt(params.get("b")));
+			commVO.setKeyword(params.get("keyword"));
+			commVO.setType(params.get("type"));
 		}
 		PagingVO<BookVO> pv = bookService.selectList(commVO);
 		model.addAttribute("pv", pv);
@@ -213,6 +217,8 @@ public class AdminController {
 			commVO.setP(Integer.parseInt(params.get("p")));
 			commVO.setS(Integer.parseInt(params.get("s")));
 			commVO.setB(Integer.parseInt(params.get("b")));
+			commVO.setKeyword(params.get("keyword"));
+			commVO.setType(params.get("type"));
 		}
 		PagingVO<BookVO> pv = bookService.selectList(commVO);
 		String isbn = request.getParameter("isbn");
@@ -333,8 +339,10 @@ public class AdminController {
 			commVO.setP(Integer.parseInt(params.get("p")));
 			commVO.setS(Integer.parseInt(params.get("s")));
 			commVO.setB(Integer.parseInt(params.get("b")));
+			commVO.setKeyword(params.get("keyword"));
+			commVO.setType(params.get("type"));
 		}
-		PagingVO<RentVO> pv = rentService.selectOverdueBookList(commVO);
+		PagingVO<RentVO> pv = rentService.selectOverdueBookList(commVO, getPrincipal());
 		model.addAttribute("pv", pv);
 		model.addAttribute("cv", commVO);
 		model.addAttribute("user", getPrincipal());
@@ -375,6 +383,8 @@ public class AdminController {
 			commVO.setP(Integer.parseInt(params.get("p")));
 			commVO.setS(Integer.parseInt(params.get("s")));
 			commVO.setB(Integer.parseInt(params.get("b")));
+			commVO.setKeyword(params.get("keyword"));
+			commVO.setType(params.get("type"));
 		}
 		PagingVO<NoticeVO> pv = noticeService.selectList(commVO);
 		model.addAttribute("pv", pv);
@@ -398,6 +408,8 @@ public class AdminController {
 			commVO.setP(Integer.parseInt(params.get("p")));
 			commVO.setS(Integer.parseInt(params.get("s")));
 			commVO.setB(Integer.parseInt(params.get("b")));
+			commVO.setKeyword(params.get("keyword"));
+			commVO.setType(params.get("type"));
 		}
 		PagingVO<NoticeVO> pv = noticeService.selectList(commVO);
 		model.addAttribute("pv", pv);
