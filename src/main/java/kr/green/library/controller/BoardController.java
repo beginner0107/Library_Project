@@ -53,6 +53,8 @@ public class BoardController {
 			commVO.setP(Integer.parseInt(params.get("p")));
 			commVO.setS(Integer.parseInt(params.get("s")));
 			commVO.setB(Integer.parseInt(params.get("b")));
+			commVO.setKeyword(params.get("keyword"));
+			commVO.setType(params.get("type"));
 		}
 		PagingVO<FreeBoardVO> pv = freeBoardService.selectList(commVO);
 		model.addAttribute("pv", pv);
@@ -156,11 +158,17 @@ public class BoardController {
 		}
 
 		FreeBoardVO freeBoardVO = freeBoardService.selectByBoardId(commVO.getIdx());
-		if(freeBoardVO.getUserid().equals(getPrincipal())) {
-			model.addAttribute("prohibition", "prohibition");
+		try {
+			if(freeBoardVO.getUserid().equals(getPrincipal())) {
+				model.addAttribute("prohibition", "prohibition");
+			}
+		} catch (Exception e) {
+			//System.out.println("여기 나니?");
+			e.printStackTrace();
 		}
 		model.addAttribute("fv", freeBoardVO);
 		model.addAttribute("cv", commVO);
+		log.info("cv : {}", commVO);
 		model.addAttribute("user", getPrincipal());
 		return "board/fboard_view";
 	}
@@ -193,6 +201,7 @@ public class BoardController {
 	@RequestMapping(value = "/fboard_update",method = RequestMethod.POST)
 	public String updatePost(@ModelAttribute CommVO commVO,Model model) {
 		FreeBoardVO freeBoardVO= freeBoardService.selectByBoardId(commVO.getIdx());
+		model.addAttribute("user", getPrincipal());
 		model.addAttribute("fv", freeBoardVO);
 		model.addAttribute("cv", commVO);
 		return "board/fboard_update";
@@ -214,7 +223,7 @@ public class BoardController {
 				e.printStackTrace();
 			}
 		}
-
+		
 		log.info("{}의 imageUpload 호출 : {}", this.getClass().getName(), filePath);
 		return filePath;
 	}
