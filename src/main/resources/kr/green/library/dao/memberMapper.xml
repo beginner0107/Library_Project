@@ -115,15 +115,18 @@
 	 			rownum rnum, R.*
 	 		from
 	 			(select * from member where rank = -1
-	 			 <if test = 'type == "I"'>
-	 			 	and userid = #{keyword}
-		 		 </if>
-		 		 <if test = 'type == "N"'>
-		 		 	and username = #{keyword}
-		 		 </if>
-		 		 <if test = 'type == "E"'>
-		 		 	and email = #{keyword}
-		 		 </if>
+	 			<if test = 'type == "I"'>
+	 				and (userid like '%'||#{keyword}||'%')
+	 			</if>
+	 			<if test = 'type == "N"'>
+	 				and (username like '%'||#{keyword}||'%')
+	 			</if>
+	 			<if test = 'type == "E"'>
+	 				and (email like '%'||#{keyword}||'%')
+	 			</if>
+	 			<if test = 'type == "R"'>
+	 				and (rank like '%'||#{keyword}||'%')
+	 			</if>
 		 			 order by regdate desc) R
 	 		where
 	 			<![CDATA[
@@ -138,14 +141,17 @@
 	<!-- 전체 개수 얻기 -->
 	<select id="selectBlackCount" parameterType="hashmap" resultType="int">
  		select count(*) from member where rank = -1
- 		<if test = "type == 'I'.toString()">
- 			and userid = #{keyword}
+ 		<if test = 'type == "I"'>
+	 		and (userid like '%'||#{keyword}||'%')
 	 	</if>
-	 	<if test = "type == 'N'.toString()">
-	 		and username = #{keyword}
+	 	<if test = 'type == "N"'>
+	 		and (username like '%'||#{keyword}||'%')
 	 	</if>
-	 	<if test = "type == 'E'.toString()">
-	 		and email = #{keyword}
+	 	<if test = 'type == "E"'>
+	 		and (email like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = 'type == "R"'>
+	 		and (rank like '%'||#{keyword}||'%')
 	 	</if>
  	</select>
  	
