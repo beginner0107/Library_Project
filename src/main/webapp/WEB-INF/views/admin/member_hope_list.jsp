@@ -106,14 +106,12 @@
 		</table>
 		<!-- 검색 영역 -->
 	    <div class="search_wrap" style="text-align: center;">
-	    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/member_list" method="post">
+	    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/member_hope_list" method="post">
 	    	<div class="search_input">
 		   	  	<select name = "type">
 		    		<option value = "">--</option>
-		    		<option value = "I">아이디</option>
-		    		<option value = "N">이름</option>
-		    		<option value = "E">이메일</option>
-		    		<option value = "R">등급</option>
+		    		<option value = "I">ISBN</option>
+		    		<option value = "T">도서 제목</option>
 		    	</select>
 	         <input type="text" name="keyword" id = "keyword"/>
 	         <button class='btn btn-primary btn-block'>검 색</button>                				
