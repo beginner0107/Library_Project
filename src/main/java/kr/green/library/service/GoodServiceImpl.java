@@ -26,8 +26,11 @@ public class GoodServiceImpl implements GoodService {
 	public PagingVO<GoodVO> selectList(CommVO commVO) {
 		PagingVO<GoodVO> pagingVO = null;
 		try {
+			HashMap<String, String>totalMap = new HashMap<>();
+			totalMap.put("type", commVO.getType());
+			totalMap.put("keyword", commVO.getKeyword());
 			// 전체 개수 구하기
-			int totalCount = goodDAO.selectCount();
+			int totalCount = goodDAO.selectCount(totalMap);
 			// 페이지 계산
 			pagingVO = new PagingVO<>(commVO.getCurrentPage(), commVO.getPageSize(), commVO.getBlockSize(), totalCount,commVO.getType(), commVO.getKeyword());
 			// 글을 읽어오기
