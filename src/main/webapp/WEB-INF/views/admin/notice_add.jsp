@@ -24,33 +24,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <style type="text/css">
-	#result_card img{
-		max-width: 100%;
-	    height: auto;
-	    display: block;
-	    padding: 5px;
-	    margin-top: 10px;
-	    margin: auto;	
-	}
-	#result_card {
-		position: relative;
-	}
-	.imgDeleteBtn{
-	    position: absolute;
-	    top: 0;
-	    right: 5%;
-	    background-color: #ef7d7d;
-	    color: wheat;
-	    font-weight: 900;
-	    width: 30px;
-	    height: 30px;
-	    border-radius: 50%;
-	    line-height: 26px;
-	    text-align: center;
-	    border: none;
-	    display: block;
-	    cursor: pointer;	
-	}
 	.table {
       border-collapse: collapse;
       border-top: 3px solid #168;
@@ -156,7 +129,7 @@
 	<!-- 검색 영역 -->
  	<!-- 검색 영역 -->
     <div class="search_wrap" style="text-align: center;">
-    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/member_list" method="post">
+    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/notice_add" method="post">
     	<div class="search_input">
 	   	  	<select name = "type">
 	    		<option value = "">--</option>
@@ -165,7 +138,7 @@
 	    		<option value = "TC">제목+내용</option>
 	    	</select>
          <input type="text" name="keyword" id = "keyword"/>
-         <button style="background-color: #0d6efd; color: white; border-radius: 5px; font-size: 10pt">검 색</button>                				
+           <button class='btn btn-primary btn-block'>검 색</button>                				
    		</div>
     	</form>
     </div>
