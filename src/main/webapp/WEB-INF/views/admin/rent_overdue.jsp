@@ -20,33 +20,6 @@
 	});
 </script>
 <style type="text/css">
-	#result_card img{
-		max-width: 100%;
-	    height: auto;
-	    display: block;
-	    padding: 5px;
-	    margin-top: 10px;
-	    margin: auto;	
-	}
-	#result_card {
-		position: relative;
-	}
-	.imgDeleteBtn{
-	    position: absolute;
-	    top: 0;
-	    right: 5%;
-	    background-color: #ef7d7d;
-	    color: wheat;
-	    font-weight: 900;
-	    width: 30px;
-	    height: 30px;
-	    border-radius: 50%;
-	    line-height: 26px;
-	    text-align: center;
-	    border: none;
-	    display: block;
-	    cursor: pointer;	
-	}
 	.table {
       border-collapse: collapse;
       border-top: 3px solid #168;
@@ -147,17 +120,16 @@
 		</table>
 		<!-- 검색 영역 -->
 	    <div class="search_wrap" style="text-align: center;">
-	    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/member_list" method="post">
+	    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/rent_overdue" method="post">
 	    	<div class="search_input">
 		   	  	<select name = "type">
 		    		<option value = "">--</option>
 		    		<option value = "I">ISBN</option>
-		    		<option value = "T">제목</option>
-		    		<option value = "A">작가</option>
-		    		<option value = "G">장르</option>
+		    		<option value = "T">책 제목</option>
+		    		<option value = "U">회원 아이디</option>
 		    	</select>
 	         <input type="text" name="keyword" id = "keyword"/>
-	         <button>검 색</button>                				
+	         <button class='btn btn-primary btn-block'>검 색</button>                				     				
 	   		</div>
 	    	</form>
 	    </div>
