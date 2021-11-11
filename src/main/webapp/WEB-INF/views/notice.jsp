@@ -66,7 +66,7 @@
 					$(function(){
 						$("#listCount").change(function(){
 							var pageSize = $(this).val();
-							SendPost("${pageContext.request.contextPath }/admin/notice_add", {"p":${cv.currentPage},"s":pageSize,"b":${cv.blockSize}});
+							SendPost("${pageContext.request.contextPath }/admin/notice", {"p":${cv.currentPage},"s":pageSize,"b":${cv.blockSize}});
 						});	
 					});
 				</script>
@@ -116,13 +116,13 @@
 	</table>	
 	<!-- 검색 영역 -->
 	    <div class="search_wrap" style="text-align: center;">
-	    	<form id="searchForm" action="${pageContext.request.contextPath }/fboard_search" method="post">
+	    	<form id="searchForm" action="${pageContext.request.contextPath }/notice" method="post">
 	    	<div class="search_input">
 		   	  	<select name = "type">
 		    		<option value = "">--</option>
-		    		<option value = "I">제목</option>
-		    		<option value = "T">내용</option>
-		    		<option value = "A">제목+내용</option>
+		    		<option value = "T">제목</option>
+		    		<option value = "C">내용</option>
+		    		<option value = "TC">제목+내용</option>
 		    	</select>
 	         <input type="text" name="keyword" id = "keyword"/>
 	         <button class='btn btn-primary btn-block' onclick="search();">검 색</button>                				
