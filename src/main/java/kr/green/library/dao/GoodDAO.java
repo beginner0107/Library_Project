@@ -7,7 +7,7 @@ import kr.green.library.vo.GoodVO;
 
 public interface GoodDAO {
 	void insert(GoodVO goodVO);
-	int selectCount();
+	int selectCount(HashMap<String, String>map);
 	List<GoodVO>selectList(HashMap<String, String>map);
 	void delete(GoodVO goodVO);
 	
