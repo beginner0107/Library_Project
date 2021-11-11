@@ -11,7 +11,7 @@ public interface BookDAO {
 	// 한 페이지 얻기 도서 정보 보기
 	List<BookVO> selectList(HashMap<String, String> map);
 	// 개수 세기 페이징 하기 위해
-	int selectCount();
+	int selectCount(HashMap<String, String>map);
 	// 하나 가져 오기 -> 수정, 삭제 
 	BookVO selectByIsbn(String isbn);
 	// 도서 정보 수정
