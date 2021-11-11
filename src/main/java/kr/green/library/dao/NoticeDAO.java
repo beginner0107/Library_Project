@@ -8,7 +8,7 @@ import kr.green.library.vo.NoticeVO;
 public interface NoticeDAO {
 	void insert(NoticeVO noticeVO);
 	
-	int selectCount();
+	int selectCount(HashMap<String, String>map);
 	
 	List<NoticeVO>selectList(HashMap<String, String>map);
 	
