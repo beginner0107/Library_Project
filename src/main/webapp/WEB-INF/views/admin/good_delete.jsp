@@ -7,15 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <title>여기에는 제목</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon"
-	href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
@@ -23,41 +20,15 @@
 <!--    회원 정의 추가용-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
+<!-- 글자제한 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript">
 	$(function() {
 
 	});
 </script>
 <style type="text/css">
-	#result_card img{
-		max-width: 100%;
-	    height: auto;
-	    display: block;
-	    padding: 5px;
-	    margin-top: 10px;
-	    margin: auto;	
-	}
-	#result_card {
-		position: relative;
-	}
-	.imgDeleteBtn{
-	    position: absolute;
-	    top: 0;
-	    right: 5%;
-	    background-color: #ef7d7d;
-	    color: wheat;
-	    font-weight: 900;
-	    width: 30px;
-	    height: 30px;
-	    border-radius: 50%;
-	    line-height: 26px;
-	    text-align: center;
-	    border: none;
-	    display: block;
-	    cursor: pointer;	
-	}
 	.table {
       border-collapse: collapse;
       border-top: 3px solid #168;
@@ -153,7 +124,7 @@
 		</table>
 		<!-- 검색 영역 -->
 	    <div class="search_wrap" style="text-align: center;">
-	    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/member_list" method="post">
+	    	<form id="searchForm" action="${pageContext.request.contextPath }/admin/good_delete" method="post">
 	    	<div class="search_input">
 		   	  	<select name = "type">
 		    		<option value = "">--</option>
@@ -163,7 +134,7 @@
 		    		<option value = "G">장르</option>
 		    	</select>
 	         <input type="text" name="keyword" id = "keyword"/>
-	         <button>검 색</button>                				
+	         <button class='btn btn-primary btn-block'>검 색</button>           				
 	   		</div>
 	    	</form>
 	    </div>
@@ -206,7 +177,7 @@
 								</div>
 							</div>
 
-							<div class="mt-4 mb-0">
+							<div class="mt-5 mb-0">
 								<div class="d-grid">
 									<input type="submit" class="btn btn-primary btn-block"
 										value="추천 도서 게시물을 삭제합니다." />
