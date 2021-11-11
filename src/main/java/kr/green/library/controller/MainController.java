@@ -198,6 +198,8 @@ public class MainController {
 			commVO.setP(Integer.parseInt(params.get("p")));
 			commVO.setS(Integer.parseInt(params.get("s")));
 			commVO.setB(Integer.parseInt(params.get("b")));
+			commVO.setType(params.get("type"));
+			commVO.setKeyword(params.get("keyword"));
 		}
 		PagingVO<NoticeVO> pv = noticeService.selectList(commVO);
 		model.addAttribute("pv", pv);
