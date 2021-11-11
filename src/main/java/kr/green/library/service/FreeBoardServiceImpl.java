@@ -29,13 +29,18 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		PagingVO<FreeBoardVO> pagingVO = null;
 		try {
 			// 전체 개수 구하기
-			int totalCount = freeBoardDAO.selectCount();
+			HashMap<String, String>totalMap = new HashMap<>();
+			totalMap.put("keyword", commVO.getKeyword());
+			totalMap.put("type", commVO.getType());
+			int totalCount = freeBoardDAO.selectCount(totalMap);
 			// 페이지 계산
-			pagingVO = new PagingVO<>(commVO.getCurrentPage(), commVO.getPageSize(), commVO.getBlockSize(), totalCount);
+			pagingVO = new PagingVO<>(commVO.getCurrentPage(), commVO.getPageSize(), commVO.getBlockSize(), totalCount, commVO.getType(), commVO.getKeyword());
 			// 글을 읽어오기
-			HashMap<String, Integer> map = new HashMap<String, Integer>();
-			map.put("startNo", pagingVO.getStartNo());
-			map.put("endNo", pagingVO.getEndNo());
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("startNo", pagingVO.getStartNo()+"");
+			map.put("endNo", pagingVO.getEndNo()+"");
+			map.put("keyword", pagingVO.getKeyword());
+			map.put("type", pagingVO.getType());
 			List<FreeBoardVO> list = freeBoardDAO.selectList(map);
 			// 해당글들의 첨부파일 정보를 넣어준다.
 			if (list != null && list.size() > 0) {
