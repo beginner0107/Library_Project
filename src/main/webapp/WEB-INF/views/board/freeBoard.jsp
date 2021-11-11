@@ -76,7 +76,7 @@
 					$(function(){
 						$("#listCount").change(function(){
 							var pageSize = $(this).val();
-							SendPost("${pageContext.request.contextPath }/board/freeBoard", {"p":${cv.currentPage},"s":pageSize,"b":${cv.blockSize}});
+							SendPost("${pageContext.request.contextPath }/board/freeBoard", {"p":${cv.currentPage},"s":pageSize,"b":${cv.blockSize},"keyword":'${cv.keyword}',"type":'${cv.type}'});
 						});	
 					});
 				</script>
@@ -85,7 +85,7 @@
 					<option value="10" ${cv.pageSize==10 ? " selected='selected' " : "" }>10개</option>
 					<option value="20" ${cv.pageSize==20 ? " selected='selected' " : "" }>20개</option>
 					<option value="30" ${cv.pageSize==30 ? " selected='selected' " : "" }>30개</option>
-					<option value="40" ${cv.pageSize==50 ? " selected='selected' " : "" }>50개</option>
+					<option value="50" ${cv.pageSize==50 ? " selected='selected' " : "" }>50개</option>
 				</select>씩 보기	
 			</td>
 		</tr>
@@ -149,13 +149,13 @@
 	</table>	
 	<!-- 검색 영역 -->
 	    <div class="search_wrap" style="text-align: center;">
-	    	<form id="searchForm" action="${pageContext.request.contextPath }/freeBoard" method="post">
+	    	<form id="searchForm" action="${pageContext.request.contextPath }/board/freeBoard" method="post">
 	    	<div class="search_input">
 		   	  	<select name = "type">
 		    		<option value = "">--</option>
 		    		<option value = "T">제목</option>
 		    		<option value = "C">내용</option>
-		    		<option value = "U">작성자</option>
+		    		<option value = "I">작성자</option>
 		    		<option value = "TC">제목+내용</option>
 		    	</select>
 	         <input type="text" name="keyword" id = "keyword"/>
