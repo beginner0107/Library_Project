@@ -26,13 +26,18 @@ public class NoticeServiceImpl implements NoticeService {
 		PagingVO<NoticeVO> pagingVO = null;
 		try {
 			// 전체 개수 구하기
-			int totalCount = noticeDAO.selectCount();
+			HashMap<String, String>totalMap = new HashMap<>();
+			totalMap.put("type", commVO.getType());
+			totalMap.put("keyword", commVO.getKeyword());
+			int totalCount = noticeDAO.selectCount(totalMap);
 			// 페이지 계산
-			pagingVO = new PagingVO<>(commVO.getCurrentPage(), commVO.getPageSize(), commVO.getBlockSize(), totalCount);
+			pagingVO = new PagingVO<>(commVO.getCurrentPage(), commVO.getPageSize(), commVO.getBlockSize(), totalCount, commVO.getType(), commVO.getKeyword());
 			// 글을 읽어오기
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("startNo", pagingVO.getStartNo()+"");
 			map.put("endNo", pagingVO.getEndNo()+"");
+			map.put("type", pagingVO.getType());
+			map.put("keyword", pagingVO.getKeyword());
 			// 완성된 리스트를 페이징 객체에 넣는다.
 			List<NoticeVO>list = noticeDAO.selectList(map);
 			pagingVO.setList(list);
