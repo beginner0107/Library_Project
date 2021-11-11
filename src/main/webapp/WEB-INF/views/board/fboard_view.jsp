@@ -28,25 +28,6 @@
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
-
-<script>
-	//-----------------------------------------------------------------------------------------------------------
-	// 돌아가기버튼 클릭시 사용할 함수
-	function goBack(){
-	SendPost("${pageContext.request.contextPath}/board/freeBoard", {"p":${cv.currentPage},"s":${cv.pageSize},"b":${cv.blockSize}});
-	}
-	function goUpdate(){
-		SendPost("${pageContext.request.contextPath}/board/fboard_update", {"p":${cv.currentPage},"s":${cv.pageSize},"b":${cv.blockSize},"idx":${cv.idx}});
-	}
-	function goDelete(){
-		var fboard = confirm('삭제하시겠습니까?');
-		if(fboard){
-			SendPost("${pageContext.request.contextPath}/board/fboard_delete", {"p":${cv.currentPage},"s":${cv.pageSize},"b":${cv.blockSize},"idx":${cv.idx}});
-		}else{
-			return false;
-		}
-	}
-</script>
 <style type="text/css">
 	table#main_content{width: 80%; margin: auto;}
 	th {border: 1px solid gray; background-color: #e3f2fd;padding: 5px; text-align: center;}
@@ -143,9 +124,24 @@
 				</div>
 				</div>
                 </div>
-              
+              ${cv.keyword } / ${cv.type }
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 	<script type="text/javascript">
+	// 돌아가기버튼 클릭시 사용할 함수
+	function goBack(){
+	SendPost("${pageContext.request.contextPath}/board/freeBoard", {"p":${cv.currentPage},"s":${cv.pageSize},"b":${cv.blockSize}});
+	}
+	function goUpdate(){
+		SendPost("${pageContext.request.contextPath}/board/fboard_update", {"p":${cv.currentPage},"s":${cv.pageSize},"b":${cv.blockSize},"idx":${cv.idx}});
+	}
+	function goDelete(){
+		var fboard = confirm('삭제하시겠습니까?');
+		if(fboard){
+			SendPost("${pageContext.request.contextPath}/board/fboard_delete", {"p":${cv.currentPage},"s":${cv.pageSize},"b":${cv.blockSize},"idx":${cv.idx}});
+		}else{
+			return false;
+		}
+	}
 		function updateReply(fboard_reply_id){
 			var content = $("#replyContent"+fboard_reply_id).val();
 			console.log(content);
