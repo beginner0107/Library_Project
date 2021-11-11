@@ -50,9 +50,12 @@ public class BookServiceImpl implements BookService {
 		PagingVO<BookVO>pagingVO = null;
 		try {
 			// 전체 개수 구하기
-			int totalCount = bookDAO.selectCount();
+			HashMap<String, String>totalMap = new HashMap<>();
+			totalMap.put("keyword", commVO.getKeyword());
+			totalMap.put("type", commVO.getType());
+			int totalCount = bookDAO.selectCount(totalMap);
 			// 페이지 계산
-			pagingVO = new PagingVO<>(totalCount, totalCount, totalCount, totalCount, commVO.getType(), commVO.getKeyword());
+			pagingVO = new PagingVO<>(commVO.getCurrentPage(), commVO.getPageSize(), commVO.getBlockSize(), totalCount, commVO.getType(), commVO.getKeyword());
 			// 글을 읽어오기
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("startNo", pagingVO.getStartNo()+"");
