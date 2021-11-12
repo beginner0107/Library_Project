@@ -165,7 +165,11 @@
 		$("#content").click(function(){
 			var userid = '${user}';
 			if(userid == 'anonymousUser'){
-				alert('로그인 해야 이용 가능합니다');
+				var login = confirm('로그인 하시겠습니까?');
+				if(login){
+				var root = '${pageContext.request.contextPath}';
+				location.href = ''+root+'/user/login'	
+				}
 			}else{
 				$("#content").attr("readonly", false);
 			}
@@ -326,26 +330,29 @@
 		}
 	}
 	function deleteReplyOk(breply_id){
-			var user = "${user}";
-			
-			//ajax 호출
-	        $.ajax({
-	            url         :   "${pageContext.request.contextPath}/member/book_detail_deleteReplyOk",
-	            contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
-	            type        :   "post",
-	            data        :   {breply_id : breply_id},
-	            success     :   function(){ // 객체로 받는다 . data -> bookReplyVO
-	        		alert('댓글 삭제 성공!')
-	         		// 댓글 초기화 해준다.
-	                loadReply();
-	                return false;
-	        		}
-	            ,
-	            error : function(request, status, error){
-	                console.log("왜 오류가 날까");
-	                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	            }
-	        });
+			var deleteReply = confirm('삭제하시겠습니까?');
+			if(deleteReply){
+				var user = "${user}";
+				
+				//ajax 호출
+		        $.ajax({
+		            url         :   "${pageContext.request.contextPath}/member/book_detail_deleteReplyOk",
+		            contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+		            type        :   "post",
+		            data        :   {breply_id : breply_id},
+		            success     :   function(){ // 객체로 받는다 . data -> bookReplyVO
+		        		alert('댓글 삭제 성공!')
+		         		// 댓글 초기화 해준다.
+		                loadReply();
+		                return false;
+		        		}
+		            ,
+		            error : function(request, status, error){
+		                console.log("왜 오류가 날까");
+		                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		            }
+		        });
+			}
 	}
 	// 대여가 가능한지 가능 하지 않은지 체크
 	function rentOk(){
