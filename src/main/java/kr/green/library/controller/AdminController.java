@@ -342,7 +342,7 @@ public class AdminController {
 			commVO.setKeyword(params.get("keyword"));
 			commVO.setType(params.get("type"));
 		}
-		PagingVO<RentVO> pv = rentService.selectOverdueBookList(commVO, getPrincipal());
+		PagingVO<RentVO> pv = rentService.selectOverdueBookList(commVO);
 		model.addAttribute("pv", pv);
 		model.addAttribute("cv", commVO);
 		model.addAttribute("user", getPrincipal());
