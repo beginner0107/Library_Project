@@ -76,6 +76,14 @@
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 <script type="text/javascript">
 $(function(){
+	$("#free_board_title").keyup(function() {
+		var content = $("#free_board_title").val();
+		if(content.length>40){
+			content = content.substring(0, 40);
+			$("#free_board_title").val(content);
+			alert('40글자 제한이 있습니다.');
+		}
+	});
 	$('#free_board_content').summernote(
 			{
 				lang : 'ko-KR', // default: 'en-US'
