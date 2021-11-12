@@ -10,8 +10,6 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>온라인도서관</title>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
 <!-- Google fonts-->
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
@@ -51,21 +49,21 @@
 									<div class="card-body">
 										<form
 											action="${pageContext.request.contextPath }/member/requestOk"
-											method="POST">
+											method="POST" onsubmit="return spaceCheck();" >
 
 											<!--                                    ISBN10 & 제목-->
 											<div class="row mb-3">
 												<div class="col-md-6">
 													<div class="form-floating mb-3 mb-md-0">
 														<input class="form-control" id="request_isbn" type="text"
-															placeholder="ISBN 코드를 입력해주세요." name="request_isbn" /> <label
+															placeholder="ISBN 코드를 입력해주세요." name="request_isbn" required="required" pattern="[0-9]+"/> <label
 															for="request_isbn">ISBN 코드</label>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-floating">
 														<input class="form-control" id="request_title" type="text"
-															placeholder="제목 명을 입력해주세요." name="request_title" /> <label
+															placeholder="제목 명을 입력해주세요." name="request_title" required="required"/> <label
 															for="request_title">도서 제목</label>
 													</div>
 												</div>
@@ -75,11 +73,9 @@
 											<!--                                    링크-->
 											<div class="form-floating mb-3">
 												<input class="form-control" id="request_link" type="text"
-													placeholder="해당 도서에 대한 링크를 입력해주세요." name="request_link" />
+													placeholder="해당 도서에 대한 링크를 입력해주세요." name="request_link"/>
 												<label for="request_link">도서 링크</label>
 											</div>
-
-
 
 											<div class="mt-5 mb-0">
 												<div class="d-grid">
@@ -98,5 +94,56 @@
 		</div>
 	</div>
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+<script type="text/javascript">
+	$(function() {
+		$("#request_isbn").on("keyup", function() {
+			var isbn = $("#request_isbn").val().trim();
+			if(isbn.length>15){
+				alert('15글자를 넘어갈 수 없습니다.');
+				$("#request_isbn").val(isbn.substring(0,15));
+			}
+		})
+		$("#request_title").on("keyup", function() {
+			var title = $("#request_title").val().trim();
+			if(title.length>210){
+				alert('210글자를 넘어갈 수 없습니다.');
+				$("#request_title").val(title.substring(0,210));
+			}
+		})
+		$("#request_link").on("keyup", function() {
+			var link = $("#request_link").val().trim();
+			if(link.length>210){
+				alert('210글자를 넘어갈 수 없습니다.');
+				$("#request_link").val(link.substring(0,210));
+			}
+		})
+	});
+	function spaceCheck(){
+		var isbn = $("#request_isbn").val().replaceAll(" ", "");
+		if(!isbn&&isbn.trim().length==0){
+			alert('ISBN코드 입력창의 내용이 비어있습니다.');
+			$("#request_isbn").val("");
+			$("#request_isbn").focus();
+			return false;
+		}
+		
+		
+		var title = $("#request_title").val().replaceAll(" ", "");
+		if(!title&&title.trim().length==0){
+			alert('도서 제목 입력창의 내용이 비어있습니다.');
+			$("#request_title").val("");
+			$("#request_title").focus();
+			return false;
+		}
+		
+		
+		var link = $("#request_link").val().replaceAll(" ", "");
+		if(!link&&link.trim().length==0){
+			$("#request_link").val("");
+		}
+		return true;
+		
+	}
+</script>
 </body>
 </html>
