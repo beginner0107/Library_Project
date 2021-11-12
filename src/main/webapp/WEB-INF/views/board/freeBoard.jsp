@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>여기에는 제목</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/axicon/axicon.min.css" />
 <!-- Google fonts-->
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
@@ -133,19 +135,19 @@
 				</tr>		
 			</c:forEach>
 		</c:if>
-		<c:if test="${user != 'anonymousUser' }">
-		<tr>
-			<td class="info" colspan="5" style="text-align: right; border-top:none;">
-				<button type="button" class="btn btn-outline-success btn-sm" 
-			        onclick='SendPost("${pageContext.request.contextPath }/board/fboard_insertForm",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize }},"post")'>글쓰기</button>
-			</td>
-		</tr>
-		</c:if>
 		<tr>
 			<td style="border: none;text-align: center;" colspan="5">
 				${pv.pageList }
 			</td>
 		</tr>
+		<c:if test="${user != 'anonymousUser' }">
+		<tr>
+			<td class="info" colspan="5" style="text-align: right; border:none">
+				<button type="button" class="btn btn-outline-success btn-sm" 
+			        onclick='SendPost("${pageContext.request.contextPath }/board/fboard_insertForm",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize }},"post")'>글쓰기</button>
+			</td>
+		</tr>
+		</c:if>
 	</table>	
 	<!-- 검색 영역 -->
 	    <div class="search_wrap" style="text-align: center;">
@@ -169,6 +171,11 @@
 <c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
 <script type="text/javascript">
 	document.oncontextmenu = function() { return false; };
+	function search(){
+		var keyword = $('#keyword').val();
+		keyword = $.trim(keyword);
+		$('#keyword').val(keyword);
+	}
 </script>
 </body>
 </html>
