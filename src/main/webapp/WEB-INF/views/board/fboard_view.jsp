@@ -14,7 +14,6 @@
 <title>Library</title>
 <!--  엑시콘사용 : 다운로드받은 폴더를 넣고 CSS파일을 읽는다. -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/axicon/axicon.min.css" />
-
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -28,6 +27,7 @@
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
+
 <style type="text/css">
 	table#main_content{width: 80%; margin: auto;}
 	th {border: 1px solid gray; background-color: #e3f2fd;padding: 5px; text-align: center;}
@@ -124,7 +124,6 @@
 				</div>
 				</div>
                 </div>
-              ${cv.keyword } / ${cv.type }
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 	<script type="text/javascript">
 	// 돌아가기버튼 클릭시 사용할 함수
