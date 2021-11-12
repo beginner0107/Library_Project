@@ -28,6 +28,6 @@ public interface RentDAO {
 	int rentListCount(HashMap<String, String>map);
 	// 회원이 대여했던 도서들의 목록
 	List<RentVO>selectBorrowedList(HashMap<String, String>map);
-	int borrowedCount(String userid);
+	int borrowedCount(HashMap<String, String> totalMap);
 	
 }
