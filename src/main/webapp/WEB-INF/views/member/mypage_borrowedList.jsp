@@ -8,10 +8,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>데모도서관</title>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon"
-	href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
+<title>도서관</title>
 <!-- Bootstrap icons-->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
@@ -22,6 +19,7 @@
 	rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
 <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
 <style type="text/css">
@@ -97,7 +95,7 @@
 					<option value="10" ${cv.pageSize==10 ? " selected='selected' " : "" }>10개</option>
 					<option value="20" ${cv.pageSize==20 ? " selected='selected' " : "" }>20개</option>
 					<option value="30" ${cv.pageSize==30 ? " selected='selected' " : "" }>30개</option>
-					<option value="40" ${cv.pageSize==50 ? " selected='selected' " : "" }>50개</option>
+					<option value="50" ${cv.pageSize==50 ? " selected='selected' " : "" }>50개</option>
 				</select>씩 보기	
 			</td>
 		</tr>
@@ -147,7 +145,7 @@
 		   	  	<select name = "type">
 		    		<option value = "">--</option>
 		    		<option value = "I">ISBN</option>
-		    		<option value = "T">제목</option>
+		    		<option value = "T">도서 제목</option>
 		    	</select>
 	         <input type="text" name="keyword" id = "keyword"/>
 	         <button class='btn btn-primary btn-block'>검 색</button>                				
