@@ -8,7 +8,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>온라인도서관</title>
+<title>도서관</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon"
 	href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
@@ -22,6 +22,7 @@
 	rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
 <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
 <style type="text/css">
@@ -182,7 +183,7 @@
                                     </select>
                                 </div>
 
-                                <div class="mt-4 mb-0">
+                                <div class="mt-5 mb-0">
                                     <div class="d-grid">
                                         <input type="submit" class="btn btn-primary btn-block" value="반납하기" />
                                     </div>
@@ -229,7 +230,7 @@
                                     </select>
                                 </div>
 
-                                <div class="mt-4 mb-0">
+                                <div class="mt-5 mb-0">
                                     <div class="d-grid">
                                         <input type="submit" class="btn btn-primary btn-block" value="연장하기" onclick = "extension();" />
                                     </div>
