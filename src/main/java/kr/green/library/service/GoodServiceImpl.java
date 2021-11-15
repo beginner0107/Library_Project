@@ -19,6 +19,9 @@ public class GoodServiceImpl implements GoodService {
 	
 	@Override
 	public void insert(GoodVO goodVO) {
+//		goodVO.setIsbn(goodVO.getIsbn().trim());
+//		goodVO.setGood_title(goodVO.getGood_title().trim());
+//		goodVO.setGood_content(goodVO.getGood_content().trim());
 		goodDAO.insert(goodVO);
 	}
 
