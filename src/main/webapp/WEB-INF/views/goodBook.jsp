@@ -130,7 +130,7 @@
 		    		<option value = "T">제목</option>
 		    		<option value = "I">ISBN</option>
 		    	</select>
-	         <input type="text" name="keyword" id = "keyword"/>
+	         <input type="text" name="keyword" id = "keyword" maxlength="50"/>
 	         <button class='btn btn-primary btn-block' onclick="search();">검 색</button>                				
 	   		</div>
 	    	</form>
