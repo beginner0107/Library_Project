@@ -124,7 +124,7 @@
 		    		<option value = "C">내용</option>
 		    		<option value = "TC">제목+내용</option>
 		    	</select>
-	         <input type="text" name="keyword" id = "keyword"/>
+	         <input type="text" name="keyword" id = "keyword" maxlength="50"/>
 	         <button class='btn btn-primary btn-block' onclick="search();">검 색</button>                				
 	   		</div>
 	    	</form>
