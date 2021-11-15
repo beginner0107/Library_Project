@@ -3,45 +3,18 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html lang="ko">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Library</title>
-	 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
-    <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title>Library</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
+<script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
 <style type="text/css">
-	#result_card img{
-		max-width: 100%;
-	    height: auto;
-	    display: block;
-	    padding: 5px;
-	    margin-top: 10px;
-	    margin: auto;	
-	}
-	#result_card {
-		position: relative;
-	}
-	.imgDeleteBtn{
-	    position: absolute;
-	    top: 0;
-	    right: 5%;
-	    background-color: #ef7d7d;
-	    color: wheat;
-	    font-weight: 900;
-	    width: 30px;
-	    height: 30px;
-	    border-radius: 50%;
-	    line-height: 26px;
-	    text-align: center;
-	    border: none;
-	    display: block;
-	    cursor: pointer;	
-	}
 	.table {
       border-collapse: collapse;
       border-top: 3px solid #168;
@@ -199,14 +172,18 @@
                          </div>
                          </div>
                          <br><br>
-        <c:import url="/WEB-INF/views/include/admin_bottom_info.jsp" />
-			<!-- Bootstrap core JS-->
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-			<!-- Core theme JS-->
-			<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
-			<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
-			<script src="${pageContext.request.contextPath }/resources/js/dataTables.js"></script>
-
+<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp" />
+<script type="text/javascript">
+$(function(){
+	var inputs = document.getElementsByTagName('input');
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].type == 'text') {
+            inputs[i].onchange = function() {
+            this.value = this.value.trim();
+			}
+		}
+	}
+});
+</script>
 </body>
-
 </html>
