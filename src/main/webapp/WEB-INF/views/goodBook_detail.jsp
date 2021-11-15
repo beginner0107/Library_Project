@@ -35,7 +35,7 @@
         <div class="container mt-5">
             <!--        중앙정렬-->
             <div class="row justify-content-center">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <!-- Post content-->
                     <article>
                         <!-- Post header-->
