@@ -77,10 +77,10 @@
 <script type="text/javascript">
 $(function(){
 	$("#free_board_title").keyup(function() {
-		var content = $("#free_board_title").val();
-		if(content.length>40){
-			content = content.substring(0, 40);
-			$("#free_board_title").val(content);
+		var title = $("#free_board_title").val();
+		if(title.length>40){
+			title = title.substring(0, 40);
+			$("#free_board_title").val(title);
 			alert('40글자 제한이 있습니다.');
 		}
 	});
