@@ -22,6 +22,10 @@ public interface MemberDAO {
 	MemberVO selectByEmail(String email);
 	// 수정하기 
 	void update(HashMap<String, String> map);
+	// 정상적으로 반납
+	void updateNomalReturn(String userid);
+	// 연체
+	void updateOverdueReturn(String userid);
 	
 	// --- 관리자 ---
 	// 한 페이지 얻기 
