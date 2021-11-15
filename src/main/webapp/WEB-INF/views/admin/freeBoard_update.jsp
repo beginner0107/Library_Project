@@ -6,26 +6,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여기에는 제목</title>
-<!--  엑시콘사용 : 다운로드받은 폴더를 넣고 CSS파일을 읽는다. -->
+<title>[자유게시판 관리]</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/axicon/axicon.min.css" />
-<script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-<script	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-<!-- CDN 한글화 -->
-<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <!-- Google fonts-->
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
-<script type="text/javascript">
-   $(function(){
-   
-   });
-</script>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
+<!-- Bootstrap icons-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+<script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <style type="text/css">
 	.table {
       border-collapse: collapse;
@@ -56,7 +52,6 @@
 </head>
 <body>
 <c:import url = "/WEB-INF/views/include/admin_top_menu.jsp"/>	
-<!-- ${pv } -->
 <!-- Page Content-->
 	<div class="container px-4 px-lg-5">
 		<!-- Heading Row-->
@@ -85,7 +80,7 @@
 					<option value="10" ${cv.pageSize==10 ? " selected='selected' " : "" }>10개</option>
 					<option value="20" ${cv.pageSize==20 ? " selected='selected' " : "" }>20개</option>
 					<option value="30" ${cv.pageSize==30 ? " selected='selected' " : "" }>30개</option>
-					<option value="40" ${cv.pageSize==50 ? " selected='selected' " : "" }>50개</option>
+					<option value="50" ${cv.pageSize==50 ? " selected='selected' " : "" }>50개</option>
 				</select>씩 보기	
 			</td>
 		</tr>
@@ -164,7 +159,7 @@
 							<h3 class="text-center font-weight-light my-4">게시글 공개 여부 수정</h3>
 						</div>
 						<div class="card-body">
-							<form action="${pageContext.request.contextPath }/admin/fboard_blackOk" method="POST">
+							<form action="${pageContext.request.contextPath }/admin/fboard_blackOk" method="POST" onsubmit="return idCheck()">
 
 								<div class="form-floating mb-3">
 									<input class="form-control" id="free_board_id" type="text"
@@ -198,5 +193,26 @@
 	</main>
 	</div>
 <c:import url="/WEB-INF/views/include/admin_bottom_info.jsp"/>
+<script type="text/javascript">
+function idCheck(){
+	var id = $("#free_board_id").val();
+	if(!id && id.trim().length==0){
+		alert('고유번호를 입력하지 않았습니다.');
+		$("#free_board_id").val("");
+		$("#free_board_id").focus();
+		return false;
+	}
+}
+$(function(){
+	var inputs = document.getElementsByTagName('input');
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].type == 'text') {
+            inputs[i].onchange = function() {
+            this.value = this.value.trim();
+			}
+		}
+	}
+});
+</script>
 </body>
 </html>
