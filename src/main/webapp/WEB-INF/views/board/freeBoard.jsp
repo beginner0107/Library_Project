@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여기에는 제목</title>
+<title>[자유게시판]</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/axicon/axicon.min.css" />
 <!-- Google fonts-->
@@ -160,8 +160,8 @@
 		    		<option value = "I">작성자</option>
 		    		<option value = "TC">제목+내용</option>
 		    	</select>
-	         <input type="text" name="keyword" id = "keyword"/>
-	         <button class='btn btn-primary btn-block' onclick="search();">검 색</button>                				
+	         <input type="text" name="keyword" id = "keyword" maxlength="50"/>
+	         <button class='btn btn-primary btn-block' onclick="search();" >검 색</button>                				
 	   		</div>
 	    	</form>
 	    </div>
@@ -176,6 +176,8 @@
 		keyword = $.trim(keyword);
 		$('#keyword').val(keyword);
 	}
+
+});
 </script>
 </body>
 </html>
