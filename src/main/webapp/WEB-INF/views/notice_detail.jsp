@@ -18,9 +18,6 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <!-- 다운로드 아이콘 -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
@@ -37,7 +34,7 @@ body{font-family: 맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;}
         <div class="container mt-5">
             <!--        중앙정렬-->
             <div class="row justify-content-center">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <!-- Post content-->
                     <article>
                         <!-- Post header-->
