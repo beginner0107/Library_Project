@@ -7,9 +7,9 @@
 	<!-- 저장하기 : 회원 가입 -->
 	<insert id="insert" parameterType="MemberVO">
 		insert into member
-		(userid,username,password,email,phone, uuid ,enabled,regdate, rank, nomal_return, rent_available)
+		(userid,username,password,email,phone, uuid ,enabled,regdate, rank, nomal_return, rent_available, overdue_return)
 		values
-		(#{userid}, #{username}, #{password}, #{email}, #{phone}, #{uuid},0,SYSDATE, 0, 0, 3)
+		(#{userid}, #{username}, #{password}, #{email}, #{phone}, #{uuid},0,SYSDATE, 0, 0, 3, 0)
 	</insert>
 	
 	<!-- 아이디로 찾기 -->
@@ -115,15 +115,18 @@
 	 			rownum rnum, R.*
 	 		from
 	 			(select * from member where rank = -1
-	 			 <if test = 'type == "I"'>
-	 			 	and userid = #{keyword}
-		 		 </if>
-		 		 <if test = 'type == "N"'>
-		 		 	and username = #{keyword}
-		 		 </if>
-		 		 <if test = 'type == "E"'>
-		 		 	and email = #{keyword}
-		 		 </if>
+	 			<if test = 'type == "I"'>
+	 				and (userid like '%'||#{keyword}||'%')
+	 			</if>
+	 			<if test = 'type == "N"'>
+	 				and (username like '%'||#{keyword}||'%')
+	 			</if>
+	 			<if test = 'type == "E"'>
+	 				and (email like '%'||#{keyword}||'%')
+	 			</if>
+	 			<if test = 'type == "R"'>
+	 				and (rank like '%'||#{keyword}||'%')
+	 			</if>
 		 			 order by regdate desc) R
 	 		where
 	 			<![CDATA[
@@ -138,14 +141,17 @@
 	<!-- 전체 개수 얻기 -->
 	<select id="selectBlackCount" parameterType="hashmap" resultType="int">
  		select count(*) from member where rank = -1
- 		<if test = "type == 'I'.toString()">
- 			and userid = #{keyword}
+ 		<if test = 'type == "I"'>
+	 		and (userid like '%'||#{keyword}||'%')
 	 	</if>
-	 	<if test = "type == 'N'.toString()">
-	 		and username = #{keyword}
+	 	<if test = 'type == "N"'>
+	 		and (username like '%'||#{keyword}||'%')
 	 	</if>
-	 	<if test = "type == 'E'.toString()">
-	 		and email = #{keyword}
+	 	<if test = 'type == "E"'>
+	 		and (email like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = 'type == "R"'>
+	 		and (rank like '%'||#{keyword}||'%')
 	 	</if>
  	</select>
  	
@@ -154,7 +160,16 @@
 		update 
 			member 
 		set
+			<if test="rank == -1">
 			rank = #{rank}, rent_available = 0
+			</if>
+			<if test="rank == 0">
+			rank = #{rank}, rent_available = 3, overdue_return = 0
+			</if>
+			<!-- 0에서 1로 바뀌는 쿼리는 잘 쓰지 않을 것임 -->
+			<if test="rank == 1">
+			rank = #{rank}, rent_available = 10
+			</if>
 		where
 			userid=#{userid}
 	</update>
@@ -172,10 +187,14 @@
 		update 
 			member 
 		set
-			rent_available = rent_available+1, NOMAL_RETURN = nomal_return+1
+			rent_available = rent_available+1
 		where
 			userid=#{userid}
 	</update>
+	<!-- 정상 반납 횟수 증가 -->
+	
+	<!-- 연체된 도서일 경우 회원의 연체 횟수 증가 -->
+	
 	<!-- 수정하기 : 정상적으로 반납한 횟수가 10회시 자동으로 등급 +1 (나중에 작업할 것 : 연체 횟수가 3회가 넘으면 랭크가 -1이므로 등급 변동 X) -->
 	<!-- 수정하기 : 대여하면 대여가능 횟수 -1, 일반회원 3, 블랙 0, vip 5권 대여 가능-->
 	<update id="updateRankDown"  parameterType="String">
@@ -190,4 +209,17 @@
 	UPDATE MEMBER SET RANK = 1, rent_available = rent_available+7  WHERE USERID = #{userid}
 	]]>
 	</update>
+	<!-- 정상적인 반납 -->
+	<update id="updateNomalReturn" parameterType="String">
+	<![CDATA[
+	UPDATE MEMBER SET nomal_return = nomal_return+1 WHERE USERID = #{userid}
+	]]>
+	</update>
+	<!-- 연체 반납 -->
+	<update id="updateOverdueReturn" parameterType="String">
+	<![CDATA[
+	UPDATE MEMBER SET overdue_return = overdue_return+1 WHERE USERID = #{userid}
+	]]>
+	</update>
+	
 </mapper>
