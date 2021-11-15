@@ -139,6 +139,7 @@ public class AdminController {
 		return "admin/member_black_list";
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/rankOk", method = RequestMethod.POST)
 	public String member_blackOk(Model model, @RequestParam Map<String, String> params, HttpServletRequest request,
 			@ModelAttribute CommVO commVO) {
@@ -308,20 +309,9 @@ public class AdminController {
 	
 	@PostMapping("goodDeleteOk")
 	public String goodDeleteOk(GoodVO goodVO) {
-		int existence = goodService.selectByGoodIdTitle(goodVO);
-		if(existence==0) {
-			return "redirect:/admin/good_deleteFail";
-		}
 		goodService.delete(goodVO);
 		return "redirect:/admin/good_delete";
 	}
-	@RequestMapping(value = "/good_deleteFail", produces = "text/html; charset=utf8")
-	@ResponseBody
-	public String good_deleteFail() {
-		String good_deleteFail = "<script>alert('NO와 제목을 잘못 입력하셨습니다.'); location.href='good_delete'</script>";
-		return good_deleteFail;
-	}
-	
 	@PostMapping("goodAddOk")
 	public String goodAddOk(GoodVO goodVO) {
 		
@@ -350,6 +340,7 @@ public class AdminController {
 	}
 	
 	// 자유게시판 부적절한 게시물 올린 회원 글 비공개 처리
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/freeBoard_update")
 	public String freeBoard_update(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
@@ -370,6 +361,9 @@ public class AdminController {
 	@PostMapping("fboard_blackOk")
 	public String fboard_blackOk(FreeBoardVO freeBoardVO) {
 		log.info("freeBoardVO : {}", freeBoardVO);
+		if(!freeBoardVO.getBlack().equals("Y") || !freeBoardVO.getBlack().equals("N")) {
+			return "redirect:/admin/freeBoard_update";
+		}
 		freeBoardService.updateInappropriatePost(freeBoardVO);
 		return "redirect:/admin/freeBoard_update";
 	}
