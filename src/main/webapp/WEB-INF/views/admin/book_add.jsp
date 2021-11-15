@@ -3,17 +3,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html lang="ko">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Library</title>
-	 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
-    <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>도서관</title>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
+<script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 <style type="text/css">
 	#result_card img{
 		max-width: 100%;
@@ -178,18 +178,18 @@
                                 <h3 class="text-center font-weight-light my-4">도서 추가</h3>
                             </div>
                             <div class="card-body">
-                                <form action="${pageContext.request.contextPath }/admin/bookAddOk" method="POST" enctype="multipart/form-data" >
+                                <form action="${pageContext.request.contextPath }/admin/bookAddOk" method="POST" enctype="multipart/form-data"  onsubmit="return bookAddCheck();">
 
                                     <!--                                    ISBN & 장르-->
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3 mb-md-0">
-                                                <input class="form-control" id="isbn" type="text" placeholder="ISBN 코드를 입력해주세요." name="isbn" /> <label for="isbn">ISBN 코드</label>
+                                                <input class="form-control" id="isbn" type="text" placeholder="ISBN 코드를 입력해주세요." name="isbn" required="required" pattern="[0-9]+" maxlength="20"/> <label for="isbn">ISBN 코드</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input class="form-control" id="genre" type="text" placeholder="장르를 입력해주세요." name="genre" /> <label for="genre">장르</label>
+                                                <input class="form-control" id="genre" type="text" placeholder="장르를 입력해주세요." name="genre" maxlength="20"/> <label for="genre">장르</label>
                                             </div>
                                         </div>
                                     </div>
@@ -199,35 +199,31 @@
                                     <div class="row mb-3">
                                         <div class="col-md-4">
                                             <div class="form-floating mb-3 mb-md-0">
-                                                <input class="form-control" id="title" type="text" placeholder="제목 명을 입력해주세요." name="title" /> <label for="title">제목</label>
+                                                <input class="form-control" id="title" type="text" placeholder="제목 명을 입력해주세요." name="title" maxlength="20"/> <label for="title">제목</label>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-floating mb-3 mb-md-0">
-                                                <input class="form-control" id="author" type="text" placeholder="저자 명을 입력해주세요." name="author" /> <label for="author">저자</label>
+                                                <input class="form-control" id="author" type="text" placeholder="저자 명을 입력해주세요." name="author" maxlength="20"/> <label for="author">저자</label>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-floating mb-3 mb-md-0">
-                                                <input class="form-control" id="publisher" type="text" placeholder="출판사 명을 입력해주세요." name="publisher" /> <label for="publisher">출판사</label>
+                                                <input class="form-control" id="publisher" type="text" placeholder="출판사 명을 입력해주세요." name="publisher" maxlength="20"/> <label for="publisher">출판사</label>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!--                                    권수-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="count" type="number" placeholder="권수를 입력해주세요." name="count" /> <label for="count">권수</label>
+                                        <input class="form-control" id="count" type="number" placeholder="권수를 입력해주세요." name="count" maxlength="3" oninput="numberMaxLength(this)"/> <label for="count">권수</label>
                                     </div>
                                     
-                                    <!--                                    줄거리-->
-                                    <!-- <div class="form-floating mb-3">
-                                        <input class="form-control" id="inputBookSummary" type="text" placeholder="줄거리를 입력해주세요." name="inputBookSummary" /> <label for="inputBookSummary">한줄 줄거리</label>
-                                    </div> -->
                                     <div class="form-group">
 										<textarea class="form-control" id="content"
 											placeholder="줄거리를 입력해주세요." rows="10" name="content"></textarea>
+											<span style="color: #aaa;" id="counter">(0 / 최대 2000자)</span>
 									</div>
-									<div id="content">(0 / 1000)</div>
 									 <!--책 이미지-->
                                     	<div class="form_section">
 			                    			<div class="form_section_title">
@@ -236,12 +232,6 @@
 			                    			<div class="form_section_content">
 												<input type="file" id ="fileItem" name='uploadFile' style="height: 30px;">
 												<div id="uploadResult">
-												<!-- 
-												<div id="result_card">
-													<div class="imgDeleteBtn">x</div>
-													<img src="library/display?fileName=test.png">
-												</div>
-												 -->																		
 												</div>
 			                    			</div>
 			                    		</div>  
@@ -372,12 +362,88 @@
             </main>
             </div>
             </div>
-           	<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp" />
-			<!-- Bootstrap core JS-->
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-			<!-- Core theme JS-->
-			<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
-				
+<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp" />
+
+<script type="text/javascript">
+	$(function(){
+		$('#content').keyup(function() {
+			var content = $(this).val();
+			$('#counter').html("(" + content.length + " / 최대2000자)");
+			//글자수 실시간 카운팅 
+			if (content.length > 2000) {
+				alert("최대 2000자까지 입력가능합니다.");
+				$(this).val(content.substring(0, 2000));
+				$('#counter').html("(2000 / 최대 2000자)");
+			}
+		}); 
+	});
+	function numberMaxLength(e){
+	      if(e.value.length > e.maxLength){
+	          e.value = e.value.slice(0, e.maxLength);
+	      }
+	}
+	function bookAddCheck(){
+		var isbn = $("#isbn").val().trim();
+		if(!isbn && isbn.length==0){
+			alert("isbn에는 공백이 올 수 없습니다.");
+			$("#isbn").val("");
+			$("#isbn").focus();
+			return false;
+		}
+		var genre = $("#genre").val().trim();
+		if(!genre && genre.length==0){
+			alert("장르에는 공백이 올 수 없습니다.");
+			$("#genre").val("");
+			$("#genre").focus();
+			return false;
+		}
+		var title = $("#title").val().trim();
+		if(!title && title.length==0){
+			alert("도서 제목에는 공백이 올 수 없습니다.");
+			$("#title").val("");
+			$("#title").focus();
+			return false;
+		}
+		var author = $("#author").val().trim();
+		if(!author && author.length==0){
+			alert("저자에는 공백이 올 수 없습니다.");
+			$("#author").val("");
+			$("#author").focus();
+			return false;
+		}
+		var count = $("#count").val().trim();
+		if(!count&&count.length==0||count=="0"||count<1){
+			alert("권수를 입력해주세요");
+			$("#count").val("");
+			$("#count").focus();
+			return false;
+		}
+		
+		var publisher = $("#publisher").val().trim();
+		if(!publisher && publisher.length==0){
+			alert("출판사에는 공백이 올 수 없습니다.");
+			$("#publisher").val("");
+			$("#publisher").focus();
+			return false;
+		}
+		var content = $("#content").val().trim();
+		if(!content && content.length==0){
+			alert("내용에는 공백이 올 수 없습니다.");
+			$("#content").val("");
+			$("#content").focus();
+			return false;
+		}
+		$("#input[name=isbn]").val(isbn);
+		$("#input[name=genre]").val(genre);
+		$("#input[name=title]").val(title);
+		$("#input[name=author]").val(author);
+		$("#input[name=count]").val(count);
+		$("#input[name=publisher]").val(publisher);
+		$("#input[name=content]").val(content);
+		
+		return true;
+	}
+</script>		
 </body>
 
 </html>
