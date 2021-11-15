@@ -136,7 +136,7 @@
 			</c:if>
 		</table>
 		<!-- 검색 영역 -->
-   	 <div class="search_wrap" style="text-align: center;">
+    <div class="search_wrap" style="text-align: center;">
     	<form id="searchForm" action="${pageContext.request.contextPath }/admin/good_add" method="post">
     	<div class="search_input">
 	   	  	<select name = "type">
@@ -152,50 +152,95 @@
    		</div>
     	</form>
     </div>
-
-	<!--                추천 도서 추가 파트-->
-	<div class="container px-4 px-lg-5">
-		<div class="row justify-content-center">
-			<div class="card shadow-lg border-5 rounded-lg mt-5">
-				<div class="card-header">
-					<h3 class="text-center font-weight-light my-4">추천 도서 추가</h3>
+			<!--추천 도서 추가 파트-->
+			<div class="container px-4 px-lg-5">
+				<div class="row justify-content-center">
+					<div class="card shadow-lg border-5 rounded-lg mt-5">
+						<div class="card-header">
+							<h3 class="text-center font-weight-light my-4">추천 도서 추가</h3>
+						</div>
+						<div class="card-body">
+							<form action="${pageContext.request.contextPath }/admin/goodAddOk" method="POST" onsubmit="return goodAddCheck();">
+		
+								<div class="form-floating mb-3">
+									<input class="form-control" id="isbn" type="text"
+										placeholder="추천 도서 게시물의 ISBN 입력해주세요." name="isbn" /> <label
+										for="isbn">추천 도서 게시물의 ISBN</label>
+								</div>
+		
+								<div class="form-floating mb-3">
+									<input class="form-control" id="good_title" type="text"
+										placeholder="추천 도서 제목을 입력해주세요." name="good_title" /> <label
+										for="good_title">추천 도서를 멋지게 설명할 주제 제목</label>
+								</div>
+		
+								<div class="form-group">
+									<textarea class="form-control" id="good_content"
+										placeholder="추천 도서 내용을 입력해주세요." rows="10"
+										name="good_content"></textarea>
+								</div>
+								<span style="color: #aaa;" id="counter">(0 / 최대 2000자)</span>
+		
+								<div class="mt-5 mb-0">
+									<div class="d-grid">
+										<input type="submit" class="btn btn-primary btn-block"
+											value="추천 도서를 추가합니다." />
+									</div>
+								</div>
+							</form>
+						</div>
+						</div>
+					</div>
 				</div>
-				<div class="card-body">
-					<form action="${pageContext.request.contextPath }/admin/goodAddOk" method="POST">
-
-						<div class="form-floating mb-3">
-							<input class="form-control" id="isbn" type="text"
-								placeholder="추천 도서 게시물의 ISBN 입력해주세요." name="isbn" /> <label
-								for="isbn">추천 도서 게시물의 ISBN</label>
-						</div>
-
-						<div class="form-floating mb-3">
-							<input class="form-control" id="good_title" type="text"
-								placeholder="추천 도서 제목을 입력해주세요." name="good_title" /> <label
-								for="good_title">추천 도서를 멋지게 설명할 주제 제목</label>
-						</div>
-
-						<div class="form-group">
-							<textarea class="form-control" id="good_content"
-								placeholder="추천 도서 내용을 입력해주세요." rows="10"
-								name="good_content"></textarea>
-						</div>
-						<div id="inputGoodContentCount">(0 / 1000)</div>
-
-						<div class="mt-5 mb-0">
-							<div class="d-grid">
-								<input type="submit" class="btn btn-primary btn-block"
-									value="추천 도서를 추가합니다." />
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
+			</main>
 		</div>
 	</div>
-	</main>
-	</div>
-	</div>
-	<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp"/>
+<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp"/>
+<script type="text/javascript">
+$(function(){
+	$('#good_content').keyup(function() {
+		var content = $(this).val();
+		$('#counter').html("(" + content.length + " / 최대2000자)");
+		//글자수 실시간 카운팅 
+		if (content.length > 2000) {
+			alert("최대 2000자까지 입력가능합니다.");
+			$(this).val(content.substring(0, 2000));
+			$('#counter').html("(2000 / 최대 2000자)");
+		}
+	}); 
+	var inputs = document.getElementsByTagName('input');
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].type == 'text') {
+            inputs[i].onchange = function() {
+            this.value = this.value.trim();
+            }
+        }
+    }
+});
+function goodAddCheck(){
+	var isbn = $("#isbn").val().trim();
+	if(!isbn && isbn.length==0){
+		alert("isbn에는 공백이 올 수 없습니다.");
+		$("#isbn").val("");
+		$("#isbn").focus();
+		return false;
+	}
+	var good_title = $("#good_title").val().trim();
+	if(!good_title && good_title.length==0){
+		alert("장르에는 공백이 올 수 없습니다.");
+		$("#good_title").val("");
+		$("#good_title").focus();
+		return false;
+	}
+	var good_content = $("#good_content").val().trim();
+	if(!good_content && good_content.length==0){
+		alert("도서 제목에는 공백이 올 수 없습니다.");
+		$("#good_content").val("");
+		$("#good_content").focus();
+		return false;
+	}
+	return true;
+}
+</script>
 </body>
 </html>
