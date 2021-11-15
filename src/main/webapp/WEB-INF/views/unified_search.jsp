@@ -133,7 +133,7 @@
 		    		<option value = "A">작가</option>
 		    		<option value = "G">장르</option>
 		    	</select>
-	         <input type="text" name="keyword" id = "keyword"/>
+	         <input type="text" name="keyword" id = "keyword" maxlength="50"/>
 	         <button class='btn btn-primary btn-block' onclick="search();">검 색</button>                				
 	   		</div>
 	    	</form>
@@ -150,6 +150,15 @@
 			keyword = $.trim(keyword);
 			$('#keyword').val(keyword);
 		}
+		$(function(){
+			$("#keyword").keyup(function() {
+				var keyword = $('#keyword').val();
+				if(keyword.length>50){
+					keyword = keyword.substring(0, 50);
+					$("#keyword").val(keyword);
+				}
+			});
+		});
 	</script>
 </body>
 </html>
