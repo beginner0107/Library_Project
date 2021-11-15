@@ -20,6 +20,16 @@
 	 			rownum rnum, R.*
 	 		from
 	 			(select * from notice
+	 			<if test = "type == 'T'.toString()">
+			 		 where (notice_title like '%'||#{keyword}||'%')
+			 	</if>
+			 	<if test = "type == 'C'.toString()">
+			 		 where (notice_content like '%'||#{keyword}||'%')
+			 	</if>
+			 	<if test = "type == 'TC'.toString()">
+			 		 where (notice_title like '%'||#{keyword}||'%'
+			 		 		or notice_content like '%' || #{keyword}||'%')
+			 	</if>	
 	 			 order by notice_regdate desc) R
 	 		where
 	 			<![CDATA[
@@ -34,6 +44,16 @@
  	<!-- 전체 개수 얻기 -->
 	<select id="selectCount" resultType="int">
  		select count(*) from notice
+ 		<if test = "type == 'T'.toString()">
+	 		 where (notice_title like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = "type == 'C'.toString()">
+	 		 where (notice_content like '%'||#{keyword}||'%')
+	 	</if>
+	 	<if test = "type == 'TC'.toString()">
+	 		 where (notice_title like '%'||#{keyword}||'%'
+	 		 		or notice_content like '%' || #{keyword}||'%')
+	 	</if>	
  	</select>
  	
  	<!-- 공지사항 삭제하기 -->
