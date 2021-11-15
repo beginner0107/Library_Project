@@ -1,15 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>[공지사항 삭제]</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
 <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
@@ -17,12 +14,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
-<!--    회원 정의 추가용-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<!-- 글자제한 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <style type="text/css">
 	.table {
       border-collapse: collapse;
@@ -126,7 +117,6 @@
 			</td>
 		</tr>
 	</table>	
-	<!-- 검색 영역 -->
  	<!-- 검색 영역 -->
     <div class="search_wrap" style="text-align: center;">
     	<form id="searchForm" action="${pageContext.request.contextPath }/admin/notice_delete" method="post">
@@ -152,7 +142,7 @@
 								<h3 class="text-center font-weight-light my-4">공지 사항 삭제</h3>
 							</div>
 							<div class="card-body">
-								<form action="${pageContext.request.contextPath }/admin/noticeDeleteOk" method="POST">
+								<form action="${pageContext.request.contextPath }/admin/noticeDeleteOk" method="POST" onsubmit="return noticeDeleteCheck()">
 
 									<!--                                    NO확인-->
 									<div class="row mb-3">
@@ -185,6 +175,31 @@
 
 			</main>
 		</div>
-	<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp" />
+<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp" />
+<script type="text/javascript">
+function noticeDeleteCheck(){
+	var notice_id = $("#notice_id").val().trim();
+	var notice_id2 = $("#notice_id2").val().trim();
+	if(notice_id != notice_id2){
+		alert("번호가 일치하지 않습니다.");
+		$("#notice_id").val("");
+		$("#notice_id2").val("");
+		$("#notice_id").focus();
+		return false;
+	}
+	if(!notice_id && notice_id.length==0){
+		alert("No가 비어있습니다");
+		$("#notice_id").val("");
+		$("#notice_id").focus();
+		return false;
+	}
+	if(!notice_id2 && notice_id2.length==0){
+		alert("No 확인이 비어있습니다");
+		$("#notice_id2").val("");
+		$("#notice_id2").focus();
+		return false;
+	}
+}
+</script>
 </body>
 </html>
