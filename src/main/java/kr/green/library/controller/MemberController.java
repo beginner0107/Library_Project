@@ -1,5 +1,7 @@
 package kr.green.library.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -7,9 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -17,12 +16,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
+
+import com.fasterxml.jackson.core.format.DataFormatDetector;
 
 import kr.green.library.service.BookService;
 import kr.green.library.service.FreeBoardService;
@@ -32,7 +32,6 @@ import kr.green.library.service.RequestService;
 import kr.green.library.vo.BookReplyVO;
 import kr.green.library.vo.CommVO;
 import kr.green.library.vo.FreeBoardReplyVO;
-import kr.green.library.vo.FreeBoardVO;
 import kr.green.library.vo.MemberVO;
 import kr.green.library.vo.PagingVO;
 import kr.green.library.vo.RentVO;
@@ -115,6 +114,7 @@ public class MemberController {
 	}
 
 	// 대여했던 도서들의 목록을 볼 수 있는 페이지
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "mypage_borrowedList")
 	public String mypage_borrowedList(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
@@ -204,16 +204,21 @@ public class MemberController {
 	@ResponseBody
 	public String rentOk(String isbn, String title) {
 		String message = "";
-		MemberVO memberVO = memberService.selectByUserid(getPrincipal());
-		RentVO vo = rentService.rentAvailable(isbn, getPrincipal());
-		int overdueBook = rentService.selectOverdueBook(getPrincipal());
-		if (overdueBook == 3) { // 연체한 도서의 개수가 3이라면 회원의 등급을 -1 감소시키고 대여 가능한 도서의 개수도 0으로 바꿔준다.
+		MemberVO memberVO = memberService.selectByUserid(getPrincipal()); // 등급을 확인하기 위해
+		RentVO vo = rentService.rentAvailable(isbn, getPrincipal()); // 이미 대여한 도서인지 확인
+		/* --> 문제점 : 등급을 -1에서 0 혹은 1로 수정해도 도서를 빌릴 수 없음. 이것 때문에 overdue_return 변수 생성
+		 * overdue_return : 회원의 연체한 횟수를 memberVO에 넣어두고 다닌다. 
+		int overdueBook = rentService.selectOverdueBook(getPrincipal()); 
+		if (overdueBook >= 3) { // 연체한 도서의 개수가 3이라면 회원의 등급을 -1 감소시키고 대여 가능한 도서의 개수도 0으로 바꿔준다.
 			memberService.updateRankDown(getPrincipal()); // 회원의 랭크와 회원의 대여 가능 횟수가 0이므로 대여가 불가능
 			message = "OVERDUE";
 			return message;
 		}
-		// 회원의 랭크가 -1이거나 회원의 대여 가능 횟수가 이라면 다시 book_detail 페이지로 리다이렉트
-		if (vo != null && vo.getReturn_date() == null || memberVO.getRank() == -1
+		*/
+		// 회원의 랭크가 -1이거나 
+		// 회원의 대여 가능 횟수가 0
+		// 회원의 연체 횟수가 3보다 크다면 다시 book_detail 페이지로 리다이렉트
+		if (vo != null && vo.getReturn_date() == null && memberVO.getOverdue_return()>3 || memberVO.getRank() == -1
 				|| memberVO.getRent_available() == 0) {
 			message = "IMPOSSIBILITY";//대여한 도서와 연체한 도서를 확인해주세요
 			return message;
@@ -240,7 +245,7 @@ public class MemberController {
 	public String return_bookOk(RentVO rentVO, Model model) throws NullPointerException {
 		log.info("return_bookOk호출 : {}", rentVO);
 		// 반납 할 때 return_date가 기록되어 있다면 반납이 이루어지면 안된다.
-		String isbn[] = rentVO.getIsbn().split(":");
+		String[] isbn = rentVO.getIsbn().split(":");
 		rentVO.setIsbn(isbn[0].trim());
 		rentVO.setUserid(getPrincipal());
 		// nullpointException을 피하기 위해 빌린 도서인 경우 1을 리턴 받고 아닌 경우 0을 리턴 받도록 설정
@@ -253,11 +258,41 @@ public class MemberController {
 			rentService.updateReturnDate(rentVO);
 			// 책의 수량을 증가시키고
 			bookService.updateReturnCount(rentVO.getIsbn());
-			// 회원의 대여 가능 횟수를 증가시킨다.
-			memberService.updateIncreaseRent(getPrincipal());
-			// 회원이 정상적으로 반납한 횟수가 10이고 블랙리스트가 아닌 경우
+			// 회원정보를 가지고 온다.
 			MemberVO memberVO = memberService.selectByUserid(getPrincipal());
-			if (memberVO.getNomal_return() == 10 && memberVO.getRank() != -1) {
+			// 그 책이 연체 되었던 책인지 아닌지 확인
+			RentVO dbRentVO = rentService.selectOverdueCheck(rentVO.getIsbn(), getPrincipal());
+			log.info("dbRentVO : {}", dbRentVO);
+			boolean overdue = false;
+			SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String return_date = null;
+			String return_due_date = null;
+			try {
+				return_date = dataFormat.format(dbRentVO.getReturn_date());
+				return_due_date = dataFormat.format(dbRentVO.getReturn_due_date());
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			int compare = return_date.compareTo(return_due_date);
+			if(compare>0) {
+				overdue = true; // overdue_return +1
+				memberService.updateOverdueReturn(getPrincipal());
+				memberVO.setOverdue_return(memberVO.getOverdue_return()+1);
+			}else if(compare<=0) {
+				overdue = false; // nomal_return +1
+				memberService.updateNomalReturn(getPrincipal());
+				memberVO.setNomal_return(memberVO.getNomal_return()+1);
+			}
+			// 연체 횟수를 확인 후 연체 횟수가 3이면 회원의 등급이 -1로 수정 딱 1회 시행
+			if(memberVO.getOverdue_return()==3) {
+				memberService.updateRankDown(getPrincipal());
+				memberVO.setRank(-1);
+			}
+			if(memberVO.getRank() != -1) {
+				memberService.updateIncreaseRent(getPrincipal());
+			}
+			// 회원이 정상적으로 반납한 횟수가 10이고 블랙리스트가 아닌 경우 딱 1회 실행
+			if (memberVO.getNomal_return() == 10 && memberVO.getRank() == 0) {
 				memberService.updateRankUp(getPrincipal());
 			}
 			return "redirect:/member/mypage";
