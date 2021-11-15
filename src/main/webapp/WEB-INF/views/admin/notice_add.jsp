@@ -6,10 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>[공지사항 추가]</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
 <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
@@ -20,9 +18,6 @@
 <!--    회원 정의 추가용-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<!-- 글자제한 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <style type="text/css">
 	.table {
       border-collapse: collapse;
@@ -87,7 +82,7 @@
 					<option value="10" ${cv.pageSize==10 ? " selected='selected' " : "" }>10개</option>
 					<option value="20" ${cv.pageSize==20 ? " selected='selected' " : "" }>20개</option>
 					<option value="30" ${cv.pageSize==30 ? " selected='selected' " : "" }>30개</option>
-					<option value="40" ${cv.pageSize==50 ? " selected='selected' " : "" }>50개</option>
+					<option value="50" ${cv.pageSize==50 ? " selected='selected' " : "" }>50개</option>
 				</select>씩 보기	
 			</td>
 		</tr>
@@ -126,7 +121,6 @@
 			</td>
 		</tr>
 	</table>	
-	<!-- 검색 영역 -->
  	<!-- 검색 영역 -->
     <div class="search_wrap" style="text-align: center;">
     	<form id="searchForm" action="${pageContext.request.contextPath }/admin/notice_add" method="post">
@@ -153,11 +147,11 @@
 								<h3 class="text-center font-weight-light my-4">공지 사항 추가</h3>
 							</div>
 							<div class="card-body">
-								<form action="${pageContext.request.contextPath }/admin/noticeAddOk" method="POST">
+								<form action="${pageContext.request.contextPath }/admin/noticeAddOk" method="POST" onsubmit="return noticeCheck();">
 
 									<div class="form-floating mb-3">
 										<input class="form-control" id="notice_title" type="text"
-											placeholder="공지 사항 제목을 입력해주세요." name="notice_title" /> <label
+											placeholder="공지 사항 제목을 입력해주세요." name="notice_title" maxlength="50"/> <label
 											for="notice_title">공지 사항 제목</label>
 									</div>
 
@@ -165,7 +159,7 @@
 										<textarea class="form-control" id="notice_content"
 											placeholder="공지 사항 내용을 입력해주세요." rows="10" name="notice_content"></textarea>
 									</div>
-									<div id="notice_content">(0 / 1000)</div>
+									<span style="color: #aaa;" id="counter">(0 / 최대 2000자)</span>
 
 									<div class="mt-5 mb-0">
 										<div class="d-grid">
@@ -181,6 +175,38 @@
 
 			</main>
 		</div>
-	<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp" />
+<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp" />
+<script type="text/javascript">
+$(function(){
+	$('#notice_content').keyup(function() {
+		var content = $(this).val();
+		$('#counter').html("(" + content.length + " / 최대2000자)");
+		//글자수 실시간 카운팅 
+		if (content.length > 2000) {
+			alert("최대 2000자까지 입력가능합니다.");
+			$(this).val(content.substring(0, 2000));
+			$('#counter').html("(2000 / 최대 2000자)");
+		}
+	}); 
+});
+function noticeCheck(){
+	var title = $("#notice_title").val().trim();
+	if(!title&& title.length==0){
+		alert("공지사항 제목에는 공백이 올 수 없습니다.");
+		$("#title").val("");
+		$("#title").focus();
+		return false;
+	}
+	var content = $("#notice_content").val().trim();
+	if(!content&& content.length==0){
+		alert("내용을 입력하세요");
+		$("#content").val("");
+		$("#content").focus();
+		return false;
+	}
+	$("#input[name=notice_title]").val(title);
+	$("#input[name=notice_content]").val(content);
+}
+</script>
 </body>
 </html>
