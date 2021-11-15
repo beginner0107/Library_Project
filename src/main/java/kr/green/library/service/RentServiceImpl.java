@@ -142,6 +142,14 @@ public class RentServiceImpl implements RentService{
 
 		return pagingVO;
 	}
+	@Override
+	public RentVO selectOverdueCheck(String isbn, String userid) {
+		HashMap<String, String>map = new HashMap<>();
+		map.put("isbn", isbn);
+		map.put("userid", userid);
+		RentVO rentVO = rentDAO.selectOverdueCheck(map);
+		return rentVO;
+	}
 	
 
 }

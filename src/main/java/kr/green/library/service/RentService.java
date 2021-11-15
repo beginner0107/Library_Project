@@ -23,4 +23,6 @@ public interface RentService {
 	PagingVO<RentVO> selectOverdueBookList(CommVO commVO);
 	
 	PagingVO<RentVO> selectBorrowedList(CommVO commVO, String userid);
+	
+	RentVO selectOverdueCheck(String isbn, String userid);
 }
