@@ -51,10 +51,16 @@
 	<update id="updateReturnDate" parameterType="hashmap" >
 		UPDATE rent SET RETURN_DATE = sysdate WHERE rent_id = (SELECT rent_id FROM rent WHERE isbn = #{isbn} AND RETURN_DATE IS NULL and userid = #{userid})
 	</update>
-	<!-- 연체한 도서의 개수 카운트(빌릴 때 연체한 도서의 개수가 3이 넘으면 빌려지지 않는다) -->
+	<!-- 연체한 도서의 개수 카운트(빌릴 때 연체한 도서의 개수가 3이 넘으면 빌려지지 않는다) 문제점 : 등급을 수정해도 이 조건 때문에 빌려지지 않음 -->
 	<select id="selectOverdueBook" parameterType="String" resultType="int">
 	<![CDATA[
 		SELECT (SELECT count(*) FROM RENT r WHERE userid = #{userid} AND RETURN_DUE_DATE <RETURN_DATE) + (SELECT count(*) FROM rent WHERE userid = #{userid} AND  SYSDATE >RETURN_DUE_DATE AND RETURN_DATE IS NULL) FROM DUAL 
+	]]>
+	</select>
+	<!-- 그 책이 연체 되었는지 확인 -->
+	<select id="selectOverdueCheck" parameterType="hashmap" resultType="RentVO">
+	<![CDATA[
+		SELECT * from(SELECT * FROM rent WHERE userid = #{userid} AND ISBN =#{isbn} ORDER BY RENT_DATE DESC) WHERE rownum=1
 	]]>
 	</select>
 	<!-- 대여도서 연장하면 도서 반납 예정일이 변한다. 도서 반납 예정일을 추가한다.-->
