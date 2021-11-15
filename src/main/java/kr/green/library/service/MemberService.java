@@ -25,6 +25,11 @@ public interface MemberService {
 	void update(MemberVO memberVO);
 	// 비밀번호 일치하는지 일치하지 않는지 확인
 	boolean checkPw(String userid, String password);
+	// 정상적으로 반납
+	void updateNomalReturn(String userid);
+	// 연체
+	void updateOverdueReturn(String userid);
+	
 	
 	// 관리자 
 	// 목록 보기

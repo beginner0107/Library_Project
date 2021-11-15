@@ -241,6 +241,16 @@ public class MemberServiceImpl implements MemberService {
 	public void updateRankUp(String userid) {
 		memberDAO.updateRankUp(userid);
 	}
+
+	@Override
+	public void updateNomalReturn(String userid) {
+		memberDAO.updateNomalReturn(userid);
+	}
+
+	@Override
+	public void updateOverdueReturn(String userid) {
+		memberDAO.updateOverdueReturn(userid);
+	}
 	
 
 }
