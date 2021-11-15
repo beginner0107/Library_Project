@@ -29,5 +29,7 @@ public interface RentDAO {
 	// 회원이 대여했던 도서들의 목록
 	List<RentVO>selectBorrowedList(HashMap<String, String>map);
 	int borrowedCount(HashMap<String, String> totalMap);
+	// 그 책이 연체 되었는지 확인
+	RentVO selectOverdueCheck(HashMap<String, String>map);
 	
 }
