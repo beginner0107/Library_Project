@@ -227,7 +227,7 @@ public class BoardController {
 		log.info("{}의 imageUpload 호출 : {}", this.getClass().getName(), filePath);
 		return filePath;
 	}
-	@RequestMapping(value = "/updateOK",method = RequestMethod.POST)
+	@RequestMapping(value = "/updateOk",method = RequestMethod.POST)
 	public String updateOKPost(@ModelAttribute CommVO commVO,
 			@ModelAttribute FreeBoardVO freeBoardVO, 
 			MultipartHttpServletRequest request, Model model,
