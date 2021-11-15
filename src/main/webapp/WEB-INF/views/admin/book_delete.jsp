@@ -5,15 +5,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
     <title>Library</title>
-	 <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
+	<!-- Bootstrap core JS-->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+	 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
     <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
@@ -24,33 +19,6 @@
 
 </script>
 <style type="text/css">
-	#result_card img{
-		max-width: 100%;
-	    height: auto;
-	    display: block;
-	    padding: 5px;
-	    margin-top: 10px;
-	    margin: auto;	
-	}
-	#result_card {
-		position: relative;
-	}
-	.imgDeleteBtn{
-	    position: absolute;
-	    top: 0;
-	    right: 5%;
-	    background-color: #ef7d7d;
-	    color: wheat;
-	    font-weight: 900;
-	    width: 30px;
-	    height: 30px;
-	    border-radius: 50%;
-	    line-height: 26px;
-	    text-align: center;
-	    border: none;
-	    display: block;
-	    cursor: pointer;	
-	}
 	.table {
       border-collapse: collapse;
       border-top: 3px solid #168;
@@ -188,13 +156,13 @@
 								<h3 class="text-center font-weight-light my-4">도서 삭제</h3>
 							</div>
 							<div class="card-body">
-								<form action="${pageContext.request.contextPath }/admin/bookDeleteOk" method="POST">
+								<form action="${pageContext.request.contextPath }/admin/bookDeleteOk" method="POST" onsubmit="return bookDeleteCheck();">
 
 									<!--                                    ISBN10-->
 									<div class="form-floating mb-3">
 										<input class="form-control" id="isbn" type="text"
-											placeholder="ISBN 코드를 입력하십시오." name="isbn" /> <label
-											for="isbn">ISBN10 코드</label>
+											placeholder="ISBN 코드를 입력하십시오." name="isbn" required="required" pattern="[0-9]+" maxlength="20"/> <label
+											for="isbn">ISBN 코드</label>
 									</div>
 
 
@@ -203,22 +171,22 @@
 										<div class="col-md-6">
 											<div class="form-floating mb-3 mb-md-0">
 												<input class="form-control" id="title" type="text"
-													placeholder="제목 명을 입력하십시오." name="title" /> <label for="title">제목</label>
+													placeholder="제목 명을 입력하십시오." name="title" maxlength="20" required="required"/> <label for="title">제목</label>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-floating mb-3 mb-md-0">
 												<input class="form-control" id="title2"
-													type="text" placeholder="제목이 맞는지 확인하십시오." name="title2" /> <label
+													type="text" placeholder="제목이 맞는지 확인하십시오." name="title2" maxlength="20" required="required"/> <label
 													for="title2">제목 확인</label>
 											</div>
 										</div>
 									</div>
 
-									<div class="mt-4 mb-0">
+									<div class="mt-5 mb-0">
 										<div class="d-grid">
 											<input type="submit" class="btn btn-primary btn-block"
-												value="도서를 삭제합니다." />
+												value="도서를 삭제합니다." required="required"/>
 										</div>
 									</div>
 								</form>
@@ -230,13 +198,43 @@
             </main>
              </div>
   		  </div>
-           	<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp" />
-			<!-- Bootstrap core JS-->
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-			<!-- Core theme JS-->
-			<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
-			<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
-			<script src="${pageContext.request.contextPath }/resources/js/dataTables.js"></script>
+<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp" />
+<script type="text/javascript">
+function bookDeleteCheck(){
+	var isbn = $("#isbn").val().trim();
+	if(!isbn && isbn.length==0){
+		alert("isbn에는 공백이 올 수 없습니다.");
+		$("#isbn").val("");
+		$("#isbn").focus();
+		return false;
+	}
+	var title = $("#title").val().trim();
+	var title2 = $("#title2").val().trim();
+	if(title != title2){
+		alert("제목이 일치하지 않습니다.");
+		$("#title").val("");
+		$("#title2").val("");
+		$("#title").focus();
+		return false;
+	}
+	if(!title && title.length==0){
+		alert("도서 제목에는 공백이 올 수 없습니다.");
+		$("#title").val("");
+		$("#title").focus();
+		return false;
+	}
+	if(!title2 && title2.length==0){
+		alert("도서 제목 확인에는 공백이 올 수 없습니다.");
+		$("#title2").val("");
+		$("#title2").focus();
+		return false;
+	}
+	
+	$("#input[name=isbn]").val(isbn);
+	$("#input[name=title]").val(title);
+	
+	return true;
+}
+</script>
 </body>
-
 </html>
