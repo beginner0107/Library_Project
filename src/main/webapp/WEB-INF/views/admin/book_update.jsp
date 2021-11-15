@@ -3,20 +3,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html lang="ko">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Library</title>
-	 <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title>Library</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
 <script>
 	if(window.history.replaceState){
 		window.history.replaceState(null, null, window.location.href);
@@ -191,7 +188,7 @@
                                 <h3 class="text-center font-weight-light my-4">도서 수정</h3>
                             </div>
                             <div class="card-body">
-                                <form action="${pageContext.request.contextPath }/admin/bookUpdateOk" method="POST" enctype="multipart/form-data" >
+                                <form action="${pageContext.request.contextPath }/admin/bookUpdateOk" method="POST" enctype="multipart/form-data" onsubmit="return bookUpdateCheck();">
 
                                     <!--                                    ISBN & 장르-->
                                     <div class="row mb-3">
@@ -229,13 +226,8 @@
 
                                     <!--                                    권수-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="count" type="number" placeholder="권수를 입력해주세요." name="count" value="${bvo.count }"/> <label for="count">권수</label>
+                                        <input class="form-control" id="count" type="number" placeholder="권수를 입력해주세요." name="count" maxlength="3" value = "${bvo.count }" oninput="numberMaxLength(this)"/> <label for="count">권수</label>
                                     </div>
-                                    
-                                    <!--                                    줄거리-->
-                                    <!-- <div class="form-floating mb-3">
-                                        <input class="form-control" id="inputBookSummary" type="text" placeholder="줄거리를 입력해주세요." name="inputBookSummary" /> <label for="inputBookSummary">한줄 줄거리</label>
-                                    </div> -->
                                     <div class="form-group">
 										<textarea class="form-control" id="content"
 											placeholder="줄거리를 입력해주세요." rows="10" name="content">${bvo.content }</textarea>
@@ -249,12 +241,6 @@
 			                    			<div class="form_section_content">
 												<input type="file" id ="fileItem" name='uploadFile' style="height: 30px;" >
 												<div id="uploadResult">
-												<!-- 
-												<div id="result_card">
-													<div class="imgDeleteBtn">x</div>
-													<img src="library/display?fileName=test.png">
-												</div>
-												 -->																		
 												</div>
 			                    			</div>
 			                    		</div>  
@@ -389,7 +375,7 @@
 		</div>
 		</div>
           <c:import url="/WEB-INF/views/include/admin_bottom_info.jsp"/>
-	<script type="text/javascript">
+<script type="text/javascript">
 	$(function() {
 	let isbn = '<c:out value="${bvo.isbn}"/>';
 	let uploadResult = $("#uploadResult");
@@ -418,13 +404,69 @@
 		
 		});
 	});	
-	</script>
+	function numberMaxLength(e){
+	      if(e.value.length > e.maxLength){
+	          e.value = e.value.slice(0, e.maxLength);
+	      }
+	}
+	
+	function bookUpdateCheck(){
+		var isbn = $("#isbn").val().trim();
+		if(!isbn && isbn.length==0){
+			alert("isbn에는 공백이 올 수 없습니다.");
+			$("#isbn").val("");
+			$("#isbn").focus();
+			return false;
+		}
+		var genre = $("#genre").val().trim();
+		if(!genre && genre.length==0){
+			alert("장르에는 공백이 올 수 없습니다.");
+			$("#genre").val("");
+			$("#genre").focus();
+			return false;
+		}
+		var title = $("#title").val().trim();
+		if(!title && title.length==0){
+			alert("도서 제목에는 공백이 올 수 없습니다.");
+			$("#title").val("");
+			$("#title").focus();
+			return false;
+		}
+		var author = $("#author").val().trim();
+		if(!author && author.length==0){
+			alert("저자에는 공백이 올 수 없습니다.");
+			$("#author").val("");
+			$("#author").focus();
+			return false;
+		}
+		var count = $("#count").val().trim();
+		if(!count&&count.length==0||count=="0"||count<1){
+			alert("권수를 입력해주세요");
+			$("#count").val("");
+			$("#count").focus();
+			return false;
+		}
+		
+		var publisher = $("#publisher").val().trim();
+		if(!publisher && publisher.length==0){
+			alert("출판사에는 공백이 올 수 없습니다.");
+			$("#publisher").val("");
+			$("#publisher").focus();
+			return false;
+		}
+		var content = $("#content").val().trim();
+		if(!content && content.length==0){
+			alert("내용에는 공백이 올 수 없습니다.");
+			$("#content").val("");
+			$("#content").focus();
+			return false;
+		}
+		
+		return true;
+	}
+</script>
  
-			<!-- Bootstrap core JS-->
-			<script
-				src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-			<!-- Core theme JS-->
-			<script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
+
 </body>
 
 </html>
