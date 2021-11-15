@@ -27,4 +27,5 @@ public class MemberVO {
 	private int rank;
 	private int nomal_return;
 	private int rent_available;
+	private int overdue_return;
 }
