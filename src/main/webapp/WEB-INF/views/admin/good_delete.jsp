@@ -8,8 +8,6 @@
 <meta charset="UTF-8">
 <title>여기에는 제목</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
 <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
@@ -17,17 +15,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="${pageContext.request.contextPath }/resources/js/scripts.js"></script>
-<!--    회원 정의 추가용-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<!-- 글자제한 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script type="text/javascript">
-	$(function() {
-
-	});
-</script>
 <style type="text/css">
 	.table {
       border-collapse: collapse;
@@ -92,7 +79,7 @@
 			</tr>
 			<c:if test="${empty pv.list}">
 			<tr>
-				<td colspan="5" class="info2">조건에 맞는 회원이 존재하지 않습니다.</td>
+				<td colspan="5" class="info2">조건에 맞는 추천도서가 존재하지 않습니다.</td>
 			</tr>
 			</c:if>
 			<c:if test="${not empty pv.list }">
@@ -150,7 +137,7 @@
 						<h3 class="text-center font-weight-light my-4">추천 도서 게시물 삭제</h3>
 					</div>
 					<div class="card-body">
-						<form action="${pageContext.request.contextPath }/admin/goodDeleteOk" method="POST">
+						<form action="${pageContext.request.contextPath }/admin/goodDeleteOk" method="POST" onsubmit="return goodDeleteCheck()">
 
 							<div class="form-floating mb-3">
 								<input class="form-control" id="good_id" type="text"
@@ -169,10 +156,10 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-floating mb-3 mb-md-0">
-										<input class="form-control" id="good_titleConfirm"
+										<input class="form-control" id="good_title2"
 											type="text" placeholder="제목이 맞는지 확인하십시오."
-											name="good_titleConfirm" /> <label
-											for="good_titleConfirm">제목 확인</label>
+											name="good_title2" /> <label
+											for="good_title2">제목 확인</label>
 									</div>
 								</div>
 							</div>
@@ -188,6 +175,43 @@
 				</div>
 			</div>
 		</div>
-	<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp"/>
+<c:import url="/WEB-INF/views/include/admin_bottom_info.jsp"/>
+<script type="text/javascript">
+function goodDeleteCheck(){
+	var good_id = $("#good_id").val().trim();
+	if(!good_id && good_id.length==0){
+		alert("No에는 공백이 올 수 없습니다.");
+		$("#good_id").val("");
+		$("#good_id").focus();
+		return false;
+	}
+	var title = $("#good_title").val().trim();
+	var title2 = $("#good_title2").val().trim();
+	if(title != title2){
+		alert("제목이 일치하지 않습니다.");
+		$("#good_title").val("");
+		$("#good_title2").val("");
+		$("#good_title").focus();
+		return false;
+	}
+	if(!title && title.length==0){
+		alert("제목을 입력해주세요");
+		$("#good_title").val("");
+		$("#good_title").focus();
+		return false;
+	}
+	if(!title2 && title2.length==0){
+		alert("제목 확인을 입력하지 않았습니다.");
+		$("#good_title2").val("");
+		$("#good_title2").focus();
+		return false;
+	}
+	
+	$("#input[name=good_id]").val(good_id);
+	$("#input[name=good_title]").val(title);
+	
+	return true;
+}
+</script>
 </body>
 </html>
