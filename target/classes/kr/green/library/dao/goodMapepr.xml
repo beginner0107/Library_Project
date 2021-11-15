@@ -15,13 +15,7 @@
 	 		 where (isbn like '%'||#{keyword}||'%')
 	 	</if>
 	 	<if test = "type == 'T'.toString()">
-	 		 where (title like '%'||#{keyword}||'%')
-	 	</if>
-	 	<if test = "type == 'A'.toString()">
-	 		 where (author like '%'||#{keyword}||'%')
-	 	</if>
-	 	<if test = "type == 'G'.toString()">
-	 		 where (genre like '%'||#{keyword}||'%')
+	 		 where (good_title like '%'||#{keyword}||'%')
 	 	</if>
  	</select>
  	<!-- 3. 1페이지 얻기 -->
@@ -37,13 +31,7 @@
 	 				where (isbn like '%'||#{keyword}||'%')
 	 			</if>
 	 			<if test = 'type == "T"'>
-	 				where (title like '%'||#{keyword}||'%')
-	 			</if>
-	 			<if test = 'type == "A"'>
-	 				where (author like '%'||#{keyword}||'%')
-	 			</if>
-	 			<if test = 'type == "G"'>
-	 				where (genre like '%'||#{keyword}||'%')
+	 				where (good_title like '%'||#{keyword}||'%')
 	 			</if>
 	 			order by good_id desc) R
 	 		where
