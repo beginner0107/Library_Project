@@ -30,7 +30,7 @@ public class MailService {
 				helper.setSubject(memberVO.getUsername() + "님 회원가입을 축하합니다.");
 				StringBuffer sb = new StringBuffer();
 				sb.append(memberVO.getUsername() + "님 회원가입을 축하합니다.<br>");
-				sb.append("<a href='http://" + InetAddress.getLocalHost().getHostAddress() + ":17950/library/user/authOk");
+				sb.append("<a href='http://" + InetAddress.getLocalHost().getHostAddress() + ":8080/library/user/authOk");
 				sb.append("?userid=" + memberVO.getUserid() + "&uuid=" + memberVO.getUuid() + "'>인증</a><br>");
 				helper.setText(sb.toString(),true); // 두번째 인수가 html사용여부
 			}
@@ -54,8 +54,6 @@ public class MailService {
 				StringBuffer sb = new StringBuffer();
 				sb.append(memberVO.getUsername() + "님의 임시 비밀번호는 ");
 				sb.append(uuid + " 입니다.<br>");
-				sb.append("<a href='http://" + InetAddress.getLocalHost().getHostAddress() + ":17950/library/user/login");
-				sb.append(">로그인 페이지</a><br>");
 				helper.setText(sb.toString(),true); // 두번째 인수가 html사용여부
 			}
 		};
