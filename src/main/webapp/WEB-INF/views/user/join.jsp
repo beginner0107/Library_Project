@@ -132,7 +132,7 @@ $(function() {
 												placeholder="010-1234-5678" required/> 
 											<label for="phone">전화번호 입력</label>
 										</div>
-										<div class="mt-4 mb-0">
+										<div class="mt-5 mb-0">
 											<div class="d-grid">
 												<input type="submit" class="btn btn-primary btn-block" value="가입" />
 											</div>
