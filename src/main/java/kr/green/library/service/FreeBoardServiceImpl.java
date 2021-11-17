@@ -114,6 +114,7 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	@Override
 	public void delete(FreeBoardVO freeBoardVO, String uploadPath) {
 		// 삭제
+		freeBoardReplyDAO.deleteAllReply(freeBoardVO.getFree_board_id());
 		freeBoardDAO.delete(freeBoardVO.getFree_board_id());
 		// 첨부파일의 목록을 읽어온다
 		List<FreeBoardUploadVO> list = freeBoardUploadDAO.selectList(freeBoardVO.getFree_board_id());
