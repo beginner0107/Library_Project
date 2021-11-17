@@ -26,6 +26,11 @@
 <title>Insert title here</title>
 <style type="text/css">
 body{font-family: 맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;}
+pre{
+    padding:10px;
+    overflow: auto;
+    white-space: pre-wrap; /* pre tag내에 word wrap */
+}  
 </style>
 </head>
 <body>
@@ -53,7 +58,14 @@ body{font-family: 맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;}
                 </div>
             </div>
         </div>
-	<!-- Footer-->
+ 	 	<div style="text-align: right; margin-right: 50px;">
+        	<input type="button" value=" 돌아가기 " class="btn btn-outline-success btn-sm" onclick="goBack()" />
+        </div>	<!-- Footer-->
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
+<script type="text/javascript">
+function goBack(){
+	SendPost("${pageContext.request.contextPath}/notice", {"p":${cv.currentPage},"s":${cv.pageSize},"b":${cv.blockSize}});
+	}
+</script>
 </body>
 </html>
