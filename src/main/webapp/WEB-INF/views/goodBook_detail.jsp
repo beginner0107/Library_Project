@@ -28,6 +28,13 @@
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
+<style type="text/css">
+pre{
+    padding:10px;
+    overflow: auto;
+    white-space: pre-wrap; /* pre tag내에 word wrap */
+}  
+</style>
 </head>
 <body>
 <!-- Navigation-->
@@ -54,7 +61,15 @@
                 </div>
             </div>
         </div>
+        <div style="text-align: right; margin-right: 50px;">
+        <input type="button" value=" 돌아가기 " class="btn btn-outline-success btn-sm" onclick="goBack()" />
+        </div>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
-${gvo }
+<script type="text/javascript">
+function goBack(){
+	SendPost("${pageContext.request.contextPath}/goodBook", {"p":${cv.currentPage},"s":${cv.pageSize},"b":${cv.blockSize}});
+	}
+</script>
 </body>
 </html>
