@@ -84,6 +84,7 @@ public class AdminController {
 		return "admin/admin";
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/member_list")
 	public String member_list(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
@@ -102,6 +103,7 @@ public class AdminController {
 		return "admin/member_list";
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/member_hope_list")
 	public String member_hope_list(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
@@ -120,6 +122,7 @@ public class AdminController {
 		return "admin/member_hope_list";
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/member_black_list")
 	public String member_black_list(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
@@ -161,6 +164,7 @@ public class AdminController {
 		return "admin/member_black_list";
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/book_add")
 	public String book_add(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
@@ -192,6 +196,7 @@ public class AdminController {
 		return "redirect:/admin/book_add";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/book_delete")
 	public String book_delete(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
@@ -209,6 +214,7 @@ public class AdminController {
 		model.addAttribute("cv", commVO);
 		return "admin/book_delete";
 	}
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/book_update")
 	public String book_update(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
@@ -267,12 +273,12 @@ public class AdminController {
 		log.info("bookDeleteOk 호출 : {} {}", isbn, title);
 		BookVO vo = bookService.selectByIsbnTitle(isbn, title);
 		if(vo!=null) {
-			bookService.deleteBookImage(isbn);
 			bookService.deleteBook(isbn);
 		}
 		return "redirect:/admin/book_delete";
 	}
 	// 사서 추천 도서
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/good_add")
 	public String good_add(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
@@ -290,6 +296,7 @@ public class AdminController {
 		return "admin/good_add";
 	}
 	// 사서 추천 도서
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/good_delete")
 	public String good_delete(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
@@ -320,6 +327,7 @@ public class AdminController {
 	}
 	
 	// 연체 도서 리스트
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/rent_overdue")
 	public String rent_overdue(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
@@ -368,6 +376,7 @@ public class AdminController {
 		return "redirect:/admin/freeBoard_update";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/notice_add")
 	public String notice_add(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
@@ -393,6 +402,7 @@ public class AdminController {
 		noticeService.insert(noticeVO);
 		return "redirect:/admin/notice_add";
 	}
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/notice_delete")
 	public String notice_delete(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {
@@ -418,6 +428,7 @@ public class AdminController {
 		return "redirect:/admin/notice_delete";
 	}
 	/* 첨부 파일 업로드 */
+	@SuppressWarnings("deprecation")
 	@PostMapping(value="/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<BookImageVO>> uploadAjaxActionPOST(MultipartFile[] uploadFile) {
 		log.info("uploadAjaxActionPOST..........");
