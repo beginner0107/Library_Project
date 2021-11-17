@@ -77,7 +77,10 @@
                     <table class="table">
                     <tr>
                     	<td style="text-align: right; border: none">
-                     <input type="button" value=" 돌아가기 " class="btn btn-outline-success btn-sm" onclick="goBack()" />
+    	                 <input type="button" value=" 돌아가기 " class="btn btn-outline-success btn-sm" onclick="goBack()" />
+                     <c:if test="${user == 'admin' }">
+	                     <input type="button" value="관리자 페이지로 돌아가기 " class="btn btn-outline-success btn-sm" onclick="goAdminBack()" />
+                     </c:if>
 						<c:if test="${user!='anonymousUser' && prohibition!=null }">
 							<input type="button" value=" 수정하기 " class="btn btn-outline-success btn-sm" onclick="goUpdate()"/>
 							<input type="button" value=" 삭제하기 " class="btn btn-outline-success btn-sm" onclick="goDelete()"/>
@@ -128,6 +131,9 @@
 	// 돌아가기버튼 클릭시 사용할 함수
 	function goBack(){
 	SendPost("${pageContext.request.contextPath}/board/freeBoard", {"p":${cv.currentPage},"s":${cv.pageSize},"b":${cv.blockSize}});
+	}
+	function goAdminBack(){
+	SendPost("${pageContext.request.contextPath}/admin/freeBoard_update", {"p":${cv.currentPage},"s":${cv.pageSize},"b":${cv.blockSize}});
 	}
 	function goUpdate(){
 		SendPost("${pageContext.request.contextPath}/board/fboard_update", {"p":${cv.currentPage},"s":${cv.pageSize},"b":${cv.blockSize},"idx":${cv.idx}});

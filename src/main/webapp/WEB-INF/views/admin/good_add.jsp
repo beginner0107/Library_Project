@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여기에는 제목</title>
+<title>관리자 - 사서추천도서 추가</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />

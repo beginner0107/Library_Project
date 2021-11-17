@@ -5,12 +5,8 @@
 <html lang="ko">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Library</title>
+    <title>관리자 - 연체도서목록</title>
 	 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
     <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>

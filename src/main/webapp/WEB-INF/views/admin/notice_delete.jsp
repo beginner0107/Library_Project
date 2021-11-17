@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>[공지사항 삭제]</title>
+<title>관리자 - 공지사항 삭제</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />

@@ -4,12 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
-<title>회원가입</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title>온라인 도서관 - 회원정보 수정</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
 <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />

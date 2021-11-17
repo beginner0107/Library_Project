@@ -5,43 +5,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Library</title>
+    <title>관리자 - 회원 목록</title>
 	 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
     <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <style type="text/css">
-	#result_card img{
-		max-width: 100%;
-	    height: auto;
-	    display: block;
-	    padding: 5px;
-	    margin-top: 10px;
-	    margin: auto;	
-	}
-	#result_card {
-		position: relative;
-	}
-	.imgDeleteBtn{
-	    position: absolute;
-	    top: 0;
-	    right: 5%;
-	    background-color: #ef7d7d;
-	    color: wheat;
-	    font-weight: 900;
-	    width: 30px;
-	    height: 30px;
-	    border-radius: 50%;
-	    line-height: 26px;
-	    text-align: center;
-	    border: none;
-	    display: block;
-	    cursor: pointer;	
-	}
 	.table {
       border-collapse: collapse;
       border-top: 3px solid #168;

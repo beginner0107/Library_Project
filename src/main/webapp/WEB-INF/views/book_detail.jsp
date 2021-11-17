@@ -7,7 +7,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>도서관</title>
+<title>온라인도서관 - 도서상세보기</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
 <!-- Google fonts-->
@@ -375,10 +375,6 @@
 	            	}
 	            	if(message == "IMPOSSIBILITY"){
 	            		alert('대여한 도서와 연체한 도서를 확인해주세요');
-	            		return false;
-	            	}
-	            	if(message == "OVERDUE"){
-	            		alert('연체한 도서 3회 이상으로 관리자에게 문의하세요');
 	            		return false;
 	            	}
 	        	}

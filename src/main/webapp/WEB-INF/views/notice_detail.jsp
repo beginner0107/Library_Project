@@ -3,6 +3,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>온라인도서관 - 공지사항</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
 <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -22,8 +24,6 @@
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
-<meta charset="UTF-8">
-<title>Insert title here</title>
 <style type="text/css">
 body{font-family: 맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;}
 pre{

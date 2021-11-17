@@ -81,10 +81,10 @@
 	
 	<!-- ************* 로그인 성공시 처리해야할 내용을 빈으로 등록 ************ -->
 	<bean id="myLoginSuccessHandler"
-		class="kr.green.library.service.MyLoginSuccessHandler"></bean>
+		class="kr.green.library.util.MyLoginSuccessHandler"></bean>
 	<!-- ************* 로그아웃 성공시 처리해야할 내용을 빈으로 등록 ************ -->
 	<bean id="myLogoutSuccessHandler"
-		class="kr.green.library.service.MyLogoutSuccessHandler"></bean>
+		class="kr.green.library.util.MyLogoutSuccessHandler"></bean>
 	
 	<!-- Security 권한 설정 -->
     <security:http auto-config="true" >

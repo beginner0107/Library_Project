@@ -4,13 +4,11 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
-<title>온라인도서관- 도서 검색</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title>온라인도서관 - 도서 검색</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
+<title>도서관</title>
 <!-- Google fonts-->
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
@@ -124,7 +122,7 @@
 		</table>
 		<!-- 검색 영역 -->
 	    <div class="search_wrap" style="text-align: center;">
-	    	<form id="searchForm" action="${pageContext.request.contextPath }/unified_search" method="post">
+	    	<form id="searchForm" action="${pageContext.request.contextPath }/unified_search" method="post" onsubmit="return keywordCheck();">
 	    	<div class="search_input">
 		   	  	<select name = "type">
 		    		<option value = "">--</option>
@@ -159,6 +157,11 @@
 				}
 			});
 		});
+		function keywordCheck(){
+			var keyword = $('#keyword').val();
+			alert(keyword);
+			
+		}
 	</script>
 </body>
 </html>

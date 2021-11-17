@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>도서관</title>
+<title>관리자 - 도서추가</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />

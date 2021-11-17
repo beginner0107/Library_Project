@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<title>Library</title>
+<title>관리자 - 회원등급 관리</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />

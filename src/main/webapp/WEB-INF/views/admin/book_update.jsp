@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<title>Library</title>
+<title>관리자 - 도서수정</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
 <!-- Core theme CSS (includes Bootstrap)-->

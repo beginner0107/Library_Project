@@ -8,22 +8,12 @@
    if (request.getProtocol().equals("HTTP/1.1")) 
 	   response.setHeader("Cache-Control", "no-cache"); %>
 <meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
-<title>도서관</title>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon"
-	href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title>관리자 Main</title>
 <!-- Bootstrap icons-->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-	rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
 <!-- Google fonts-->
-<link
-	href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic"
-	rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
 <!-- Bootstrap core JS-->

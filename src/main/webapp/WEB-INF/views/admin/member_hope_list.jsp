@@ -5,9 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Library</title>
+    <title>관리자 - 회원희망도서 목록</title>
 	 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />

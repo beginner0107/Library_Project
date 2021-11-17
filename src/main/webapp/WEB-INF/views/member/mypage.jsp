@@ -4,11 +4,8 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
-<title>도서관</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title>온라인 도서관 - 내서재</title>
 <!-- Google fonts-->
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
@@ -95,7 +92,7 @@
 					<option value="10" ${cv.pageSize==10 ? " selected='selected' " : "" }>10개</option>
 					<option value="20" ${cv.pageSize==20 ? " selected='selected' " : "" }>20개</option>
 					<option value="30" ${cv.pageSize==30 ? " selected='selected' " : "" }>30개</option>
-					<option value="40" ${cv.pageSize==50 ? " selected='selected' " : "" }>50개</option>
+					<option value="50" ${cv.pageSize==50 ? " selected='selected' " : "" }>50개</option>
 				</select>씩 보기	
 			</td>
 		</tr>
@@ -131,15 +128,15 @@
 					</td>
 				</tr>
 			</c:forEach>
-		</c:if>
 		<tr>
 			<td style="border: none;text-align: center;" colspan="5">
 				${pv.pageList }
 			</td>
 		</tr>
+		</c:if>
 	</table>	
 	<!-- 검색 영역 -->
-	    <div class="search_wrap" style="text-align: center;">
+	   <div class="search_wrap" style="text-align: center;">
 	    	<form id="searchForm" action="${pageContext.request.contextPath }/member/mypage" method="post">
 	    	<div class="search_input">
 		   	  	<select name = "type">
@@ -152,22 +149,18 @@
 	   		</div>
 	    	</form>
 	    </div>
-                </div>
+       </div>
                 
                 <div class="row gx-5 justify-content-center">
                 <!-- 반납-->
                 <div class="col-lg-6 col-xl-6">
                     <div class="card mb-5 mb-xl-0">
                         <div class="card-body p-10">
-
                             <div class="mb-3">
                                 <span class="display-4 fw-bold"> 반납하기
                                 </span>
-
                             </div>
-                            
-                            
-                            <form action="${pageContext.request.contextPath }/member/return_bookOk" method="POST">
+                            <form action="${pageContext.request.contextPath }/member/return_bookOk" method="POST" onsubmit="return check();">
                           		
 								${mvo.username }님 안녕하세요.<br/><br/>
 								<label for="">반납하고자 하는 책의 ISBN</label>	
@@ -196,15 +189,11 @@
                 <div class="col-lg-6 col-xl-6">
                     <div class="card mb-5 mb-xl-0">
                         <div class="card-body p-10">
-
                             <div class="mb-3">
                                 <span class="display-4 fw-bold"> 연장하기
                                 </span>
-
                             </div>
-                            
-                            
-                            <form action="${pageContext.request.contextPath }/member/extension_book" method="POST">
+                            <form action="${pageContext.request.contextPath }/member/extension_book" method="POST" onsubmit="return check();">
                           		
 								${mvo.username }님 안녕하세요.<br/><br/>
 								<label for="">연장하고자 하는 책의 ISBN</label>	
@@ -232,31 +221,29 @@
                                         <input type="submit" class="btn btn-primary btn-block" value="연장하기" onclick = "extension();" />
                                     </div>
                                 </div>
-
                             </form>
-                            
-                            
                         </div>
                     </div>
                 </div>
             </div>
-                
-                
-
             </main>
        </div>
     </div>
-	<!-- Footer-->
-	<c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
+<!-- Footer-->
+<c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
 <script type="text/javascript">
 	function extension(){
 		var extenstion_count = parseInt($("#extension_count").val());
-		//alert('실행됨?');
-		//alert(extenstion_count);
 		if(extenstion_count>3){
 			extension_count = 3;
 			$("#extension_count").val(extension_count);
 			alert('3일 연장 됩니다.');
+		}
+	}
+	function check(){
+		var isbn = $("#isbn").val();
+		if(!isbn || isbn.trim().length() ==0){
+			return false;
 		}
 	}
 </script>
