@@ -12,4 +12,6 @@ public interface BookImageDAO {
 	List<BookImageVO> selectImage(String isbn);
 	// 삭제하기 - 수정할 때 이용 
 	void deleteBookImage(String isbn);
+	// 어제자 날짜 이미지 리스트
+	public List<BookImageVO> checkFileList();
 }
