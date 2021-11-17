@@ -68,7 +68,7 @@
 	 		from
 	 			(select * from member
 	 			<if test = 'type == "I"'>
-	 				where (userid like '%'||#{keyword}||'%')
+	 				where (userid like #{keyword})
 	 			</if>
 	 			<if test = 'type == "N"'>
 	 				where (username like '%'||#{keyword}||'%')
