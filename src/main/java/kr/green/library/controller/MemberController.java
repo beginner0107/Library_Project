@@ -171,7 +171,7 @@ public class MemberController {
 
 	// 책 대여
 	@PostMapping("book_rentOk")
-	public String book_rentOk(RedirectAttributes rs, @ModelAttribute RentVO rentVO, Model model) {
+	public String book_rentOk(RedirectAttributes rs, @ModelAttribute RentVO rentVO, Model model, HttpServletRequest request) {
 		log.info("RentVO : {}", rentVO.toString());
 		rs.addAttribute("isbn", rentVO.getIsbn());
 		RentVO vo = rentService.rentAvailable(rentVO.getIsbn(), getPrincipal());
@@ -202,7 +202,7 @@ public class MemberController {
 
 	@PostMapping("rentOk")
 	@ResponseBody
-	public String rentOk(String isbn, String title) {
+	public String rentOk(String isbn, String title, HttpServletRequest request) {
 		String message = "";
 		MemberVO memberVO = memberService.selectByUserid(getPrincipal()); // 등급을 확인하기 위해
 		RentVO vo = rentService.rentAvailable(isbn, getPrincipal()); // 이미 대여한 도서인지 확인
@@ -218,7 +218,7 @@ public class MemberController {
 		// 회원의 랭크가 -1이거나 
 		// 회원의 대여 가능 횟수가 0
 		// 회원의 연체 횟수가 3보다 크다면 다시 book_detail 페이지로 리다이렉트
-		if (vo != null && vo.getReturn_date() == null && memberVO.getOverdue_return()>3 || memberVO.getRank() == -1
+		if (vo != null && vo.getReturn_date() == null || memberVO.getOverdue_return()>3 || memberVO.getRank() == -1
 				|| memberVO.getRent_available() == 0) {
 			message = "IMPOSSIBILITY";//대여한 도서와 연체한 도서를 확인해주세요
 			return message;
@@ -242,7 +242,7 @@ public class MemberController {
 	
 	// 책을 반납하는/..
 	@PostMapping("return_bookOk")
-	public String return_bookOk(RentVO rentVO, Model model) throws NullPointerException {
+	public String return_bookOk(RentVO rentVO, Model model, HttpServletRequest request) throws NullPointerException {
 		log.info("return_bookOk호출 : {}", rentVO);
 		// 반납 할 때 return_date가 기록되어 있다면 반납이 이루어지면 안된다.
 		String[] isbn = rentVO.getIsbn().split(":");
@@ -263,7 +263,6 @@ public class MemberController {
 			// 그 책이 연체 되었던 책인지 아닌지 확인
 			RentVO dbRentVO = rentService.selectOverdueCheck(rentVO.getIsbn(), getPrincipal());
 			log.info("dbRentVO : {}", dbRentVO);
-			boolean overdue = false;
 			SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String return_date = null;
 			String return_due_date = null;
@@ -275,12 +274,10 @@ public class MemberController {
 			}
 			int compare = return_date.compareTo(return_due_date);
 			if(compare>0) {
-				overdue = true; // overdue_return +1
-				memberService.updateOverdueReturn(getPrincipal());
+				memberService.updateOverdueReturn(getPrincipal());// overdue_return +1
 				memberVO.setOverdue_return(memberVO.getOverdue_return()+1);
 			}else if(compare<=0) {
-				overdue = false; // nomal_return +1
-				memberService.updateNomalReturn(getPrincipal());
+				memberService.updateNomalReturn(getPrincipal());// nomal_return +1
 				memberVO.setNomal_return(memberVO.getNomal_return()+1);
 			}
 			// 연체 횟수를 확인 후 연체 횟수가 3이면 회원의 등급이 -1로 수정 딱 1회 시행
