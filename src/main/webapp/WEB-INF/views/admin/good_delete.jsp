@@ -61,7 +61,7 @@
 				</div>
 					<!--                    도서 목록-->
 					<div class="card mb-4">
-						<div class="card-body">현재 추천하고자 하는 도서가 존재하는지 미리 확인하세요!</div>
+						<div class="card-body">현재 삭제하고자 하는 사서 추천 도서가 존재하는지 미리 확인하세요!</div>
 					</div>
 		<table class="table" style="width: 90%;">
 			<tr>
