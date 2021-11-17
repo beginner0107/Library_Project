@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import kr.green.library.service.FreeBoardService;
 import kr.green.library.vo.CommVO;
+import kr.green.library.vo.FreeBoardReplyVO;
 import kr.green.library.vo.FreeBoardUploadVO;
 import kr.green.library.vo.FreeBoardVO;
 import kr.green.library.vo.PagingVO;
@@ -281,13 +283,43 @@ public class BoardController {
 		redirectAttributes.addFlashAttribute("map", map);
 		return "redirect:/board/fboard_view";
 	}
-	
+	@ResponseBody
+	@GetMapping("fboardList")
+	public List<FreeBoardReplyVO> fboardList(int free_board_id) {
+		List<FreeBoardReplyVO>pv = freeBoardService.selectReplyList(free_board_id);
+		return pv;
+	}
+	// 댓글 달기(나중에 Ajax로 바꿀)
+	@PostMapping("fboardReplyOk")
+	@ResponseBody
+	public void fboardReplyOk(FreeBoardReplyVO freeBoardReplyVO) {
+		log.info("fboardReplyOk호출 : {}", freeBoardReplyVO);
+		freeBoardReplyVO.setUserid(getPrincipal());
+		freeBoardService.insertFboardReply(freeBoardReplyVO);
+	}
+	// 댓글 달기(나중에 Ajax로 바꿀)
+	@PostMapping("fboard_updateReplyOk")
+	@ResponseBody
+	public void fboard_updateReplyOk(String content, int fboard_reply_id, int free_board_id) {
+		log.info("fboard_reply_id 넘어오나 : {}", fboard_reply_id);
+		log.info("content 넘어오나 : {}", content);
+		FreeBoardReplyVO freeBoardReplyVO = new FreeBoardReplyVO();
+		freeBoardReplyVO.setFree_board_id(free_board_id);
+		freeBoardReplyVO.setFboard_reply_id(fboard_reply_id);
+		freeBoardReplyVO.setFboard_reply_content(content);
+		freeBoardReplyVO.setUserid(getPrincipal());
+		log.info("freeBoardReplyVO 인자 : {}", freeBoardReplyVO);
+		freeBoardService.updateReply(freeBoardReplyVO);
+	}
+	// 댓글 달기(나중에 Ajax로 바꿀)
+	@PostMapping("fboard_deleteReplyOk")
+	@ResponseBody
+	public void fboard_deleteReplyOk(int fboard_reply_id) {
+		log.info("fboard_reply_id 넘어오나 : {}", fboard_reply_id);
+		freeBoardService.deleteReply(fboard_reply_id);
+	}
 	
 
-	// 사서추천도서 게시판
-	// 공지사항 게시판
-	// 희망도서 게시판
-	// 자유 게시판(첨부파일)
 	
 	// 인증 정보를 얻어내는 method
 	private String getPrincipal() {
