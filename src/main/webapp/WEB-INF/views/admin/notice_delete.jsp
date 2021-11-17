@@ -59,7 +59,7 @@
 
 					<!--                    공지 사항 목록-->
 					<div class="card mb-4">
-						<div class="card-body">현재 추가 하고자 하는 공지 사항이 존재하는지 미리 확인하세요!</div>
+						<div class="card-body">현재 삭제 하고자 하는 공지 사항이 존재하는지 미리 확인하세요!</div>
 					</div>
 									<table class="table">
 		<tr>
@@ -78,7 +78,7 @@
 					<option value="10" ${cv.pageSize==10 ? " selected='selected' " : "" }>10개</option>
 					<option value="20" ${cv.pageSize==20 ? " selected='selected' " : "" }>20개</option>
 					<option value="30" ${cv.pageSize==30 ? " selected='selected' " : "" }>30개</option>
-					<option value="40" ${cv.pageSize==50 ? " selected='selected' " : "" }>50개</option>
+					<option value="50" ${cv.pageSize==50 ? " selected='selected' " : "" }>50개</option>
 				</select>씩 보기	
 			</td>
 		</tr>
