@@ -9,8 +9,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
 <title>Library</title>
 <!--  엑시콘사용 : 다운로드받은 폴더를 넣고 CSS파일을 읽는다. -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/axicon/axicon.min.css" />
@@ -27,6 +25,7 @@
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
 
 <style type="text/css">
 	table#main_content{width: 80%; margin: auto;}
@@ -203,7 +202,7 @@
 			//alert(freeBoardReplyVO.fboard_reply_content);
 			//ajax 호출
 	        $.ajax({
-	            url         :   "${pageContext.request.contextPath}/member/fboardReplyOk",
+	            url         :   "${pageContext.request.contextPath}/board/fboardReplyOk",
 	            contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
 	            type        :   "post",
 	            data        :   freeBoardReplyVO,
@@ -226,7 +225,7 @@
 			
 			$.ajax({
 				type : "GET",
-				url : "${pageContext.request.contextPath}/member/fboardList",
+				url : "${pageContext.request.contextPath}/board/fboardList",
 				data : {free_board_id : free_board_id},
 				dataType : "json",
 				success : function(data){
@@ -266,7 +265,7 @@
 		var free_board_id = parseInt($("#free_board_id").val());
 		$.ajax({
 			type : "GET",
-			url : "${pageContext.request.contextPath}/member/fboardList",
+			url : "${pageContext.request.contextPath}/board/fboardList",
 			data : {free_board_id : free_board_id},
 			dataType : "json",
 			success : function(data){
@@ -312,7 +311,7 @@
 		}else{
 			//ajax 호출
 	        $.ajax({
-	            url         :   "${pageContext.request.contextPath}/member/fboard_updateReplyOk",
+	            url         :   "${pageContext.request.contextPath}/board/fboard_updateReplyOk",
 	            contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
 	            type        :   "post",
 	            data        :   {content : content, fboard_reply_id : fboard_reply_id, free_board_id : free_board_id},
@@ -324,7 +323,7 @@
 	        		}
 	            ,
 	            error : function(request, status, error){
-	                console.log("왜 오류가 날까");
+	                //console.log("왜 오류가 날까");
 	                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	            }
 	        });
@@ -339,7 +338,7 @@
 				
 				//ajax 호출
 		        $.ajax({
-		            url         :   "${pageContext.request.contextPath}/member/fboard_deleteReplyOk",
+		            url         :   "${pageContext.request.contextPath}/board/fboard_deleteReplyOk",
 		            contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
 		            type        :   "post",
 		            data        :   {fboard_reply_id : fboard_reply_id},
