@@ -54,11 +54,11 @@
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<input type="submit" value="로그아웃">
 		</form> 
-	 -->	
+	  -->	
 	 <!-- Navigation-->
     <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
         <div class="container">
-            <a class="btn" style="background-color: #e3f2fd; color: dodgerblue;" href="${pageContext.request.contextPath }/unified_search">자료 검색</a>
+            <a class="btn" style="background-color: #e3f2fd; color: dodgerblue;" href="${pageContext.request.contextPath }/unified_search">도서 검색</a>
 
             <div class="dropdown show">
                 <a class="btn dropdown-toggle" style="background-color: #e3f2fd; color: dodgerblue;" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
