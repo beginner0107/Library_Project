@@ -339,41 +339,6 @@ public class MemberController {
 		return requestSuccess;
 	}
 	
-	@ResponseBody
-	@GetMapping("fboardList")
-	public List<FreeBoardReplyVO> fboardList(int free_board_id) {
-		List<FreeBoardReplyVO>pv = freeBoardService.selectReplyList(free_board_id);
-		return pv;
-	}
-	// 댓글 달기(나중에 Ajax로 바꿀)
-	@PostMapping("fboardReplyOk")
-	@ResponseBody
-	public void fboardReplyOk(FreeBoardReplyVO freeBoardReplyVO) {
-		log.info("fboardReplyOk호출 : {}", freeBoardReplyVO);
-		freeBoardReplyVO.setUserid(getPrincipal());
-		freeBoardService.insertFboardReply(freeBoardReplyVO);
-	}
-	// 댓글 달기(나중에 Ajax로 바꿀)
-	@PostMapping("fboard_updateReplyOk")
-	@ResponseBody
-	public void fboard_updateReplyOk(String content, int fboard_reply_id, int free_board_id) {
-		log.info("fboard_reply_id 넘어오나 : {}", fboard_reply_id);
-		log.info("content 넘어오나 : {}", content);
-		FreeBoardReplyVO freeBoardReplyVO = new FreeBoardReplyVO();
-		freeBoardReplyVO.setFree_board_id(free_board_id);
-		freeBoardReplyVO.setFboard_reply_id(fboard_reply_id);
-		freeBoardReplyVO.setFboard_reply_content(content);
-		freeBoardReplyVO.setUserid(getPrincipal());
-		log.info("freeBoardReplyVO 인자 : {}", freeBoardReplyVO);
-		freeBoardService.updateReply(freeBoardReplyVO);
-	}
-	// 댓글 달기(나중에 Ajax로 바꿀)
-	@PostMapping("fboard_deleteReplyOk")
-	@ResponseBody
-	public void fboard_deleteReplyOk(int fboard_reply_id) {
-		log.info("fboard_reply_id 넘어오나 : {}", fboard_reply_id);
-		freeBoardService.deleteReply(fboard_reply_id);
-	}
 	// 인증 정보를 얻어내는 method
 	private String getPrincipal() {
 		String username = "";
