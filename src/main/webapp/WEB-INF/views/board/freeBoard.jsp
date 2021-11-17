@@ -8,7 +8,6 @@
 <meta charset="UTF-8">
 <title>[자유게시판]</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/axicon/axicon.min.css" />
 <!-- Google fonts-->
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
@@ -177,7 +176,6 @@
 		$('#keyword').val(keyword);
 	}
 
-});
 </script>
 </body>
 </html>
