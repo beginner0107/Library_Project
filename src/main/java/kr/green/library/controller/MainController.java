@@ -67,6 +67,7 @@ public class MainController {
 		return "index";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/unified_search")
 	public String unified_search(@RequestParam Map<String, String> params, HttpServletRequest request, Model model,
 			@ModelAttribute CommVO commVO) {

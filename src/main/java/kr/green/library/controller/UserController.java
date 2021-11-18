@@ -128,7 +128,8 @@ public class UserController {
 		log.info("{}의 authOk 호출 : {}", this.getClass().getName(), memberVO );
 		// 서비스를 호출하여 이메일 인증처리를 한다.
 		MemberVO memberVO2 = memberService.emailConfirm(memberVO);
-		model.addAttribute("vo", memberVO2);
+		model.addAttribute("authvo", memberVO2);
+		model.addAttribute("user", getPrincipal());
 		return "user/authOk";
 	}
 	// 아이디 찾기
@@ -138,6 +139,7 @@ public class UserController {
 		MemberVO dbVO = memberService.selectByEmail(memberVO.getEmail());
 		if(dbVO!=null) {
 			model.addAttribute("userid", dbVO.getUserid());
+			model.addAttribute("user", getPrincipal());
 			return "user/found";
 		}else {
 			return "redirect:/user/forgotPwd";
@@ -151,6 +153,7 @@ public class UserController {
 		if(dbVO!=null) {
 			memberService.updatePassword(dbVO);
 			model.addAttribute("email", dbVO.getEmail());
+			model.addAttribute("user", getPrincipal());
 			return "user/found";
 		}else {
 			return "redirect:/user/forgotPwd";

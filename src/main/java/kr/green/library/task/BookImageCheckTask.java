@@ -26,29 +26,20 @@ public class BookImageCheckTask {
 	private BookImageDAO bookImageDAO;
 	
 private String getFolderYesterDay() {
-		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
 		Calendar cal = Calendar.getInstance();
-		
 		cal.add(Calendar.DATE, -1);
-		
 		String str = sdf.format(cal.getTime());
-		
 		return str.replace("-", File.separator);
 	}	
 	
 	@Scheduled(cron="0 0 1 * * *") // 매일 새벽 1시에 동작
 	public void checkFiles() throws Exception{	
-		
 		log.warn("File Check Task Run..........");
 		log.info("new Date : {}", new Date());
 		log.warn("========================================");		
-		
 		// DB에 저장된 파일 리스트
 		List<BookImageVO> fileList = bookImageDAO.checkFileList();		
-		
-		
 		// 비교 기준 파일 리스트(Path객체)
 		List<Path> checkFilePath = new ArrayList<Path>();
 			//원본 이미지
@@ -61,13 +52,9 @@ private String getFolderYesterDay() {
 			Path path = Paths.get("C:\\upload", vo.getUploadpath(), "s_" +  vo.getUuid() + "_" + vo.getFilename());
 			checkFilePath.add(path);
 		});
-		
-		
 		// 디렉토리 파일 리스트
 		File targetDir = Paths.get("C:\\upload", getFolderYesterDay()).toFile();
 		File[] targetFile = targetDir.listFiles();
-		
-		
 		// 삭제 대상 파일 리스트(분류)
 		List<File> removeFileList = new ArrayList<File>(Arrays.asList(targetFile));		
 		for(File file : targetFile){
@@ -76,16 +63,11 @@ private String getFolderYesterDay() {
 					removeFileList.remove(file);	
 			});
 		}
-		
-		
 		// 삭제 대상 파일 제거
 		log.warn("file Delete : ");
 		for(File file : removeFileList) {
 			log.info("File : {}",file);
 			file.delete();
 		}		
-		
-		log.warn("========================================");
-		
 	}
 }
