@@ -5,8 +5,6 @@
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
 <title>온라인도서관 - 도서상세보기</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/resources/assets/favicon.ico" />
@@ -230,7 +228,8 @@
 						if(userid != "anonymousUser" && userid == data[i].userid){
 						replyList += '<input type = "button" onclick="updateReply('+data[i].breply_id+')" value = "수정" style="text-align: right;"/>&nbsp';
 						replyList += '<input type = "button" onclick="deleteReplyOk('+data[i].breply_id+')" value = "삭제" style="text-align: right;"/>&nbsp';
-						replyList += '<input type = "button" value = "취소하기" onclick = "cancle('+data[i].breply_id+');" id = "cancle'+data[i].breply_id+'" name = "cancle'+data[i].breply_id+'" style="text-align: right; display: none;"/>';
+						replyList += '<input type = "button" value = "취소하기" onclick = "cancle('+data[i].breply_id+');" id = "cancle'+data[i].breply_id+'" name = "cancle'+data[i].breply_id+'
+						replyList += '" style="text-align: right; display: none;"/>';
 						}
 						replyList += '</div>';
 						replyList += '<textarea id = "breply_content'+data[i].breply_id+'" name = "breply_content'+data[i].breply_id+'" readonly = "readonly" style = "border: none; width : 100%; resize: none; background-color : #f8f9fa;">'
@@ -380,7 +379,6 @@
 	        	}
 	            ,
 	            error : function(request, status, error){
-	                console.log("왜 오류가 날까");
 	                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	            }
 	        });

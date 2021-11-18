@@ -22,6 +22,7 @@
 </head>
 <body>
 <c:import url = "/WEB-INF/views/include/top_menu.jsp"/>	
+<div style="text-align: center;">
 <c:if test="${userid!=null }">
 	아이디 : ${userid }<br>
 	${userid } 으로 로그인해주세요<br>
@@ -31,5 +32,6 @@
 	임시비밀번호가 ${email }로 발송되었습니다.<br>
 	<a href = "${pageContext.request.contextPath }/user/login">로그인 화면으로</a>
 </c:if>
+</div>
 </body>
 </html>

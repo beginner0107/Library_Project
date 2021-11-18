@@ -102,7 +102,7 @@ $(function() {
 										<div class="form-floating mb-3">
 											<input type="text" class="form-control" id="username"
 												name="username" placeholder="사용자 이름 입력" required/> <label for="username">이름</label>
-											 <span style="margin-left: 5px; font-size: 13px; text-align: center;">이름은 한글 3~4자리 입력해야합니다!</span>	
+											 <span style="margin-left: 5px; font-size: 13px; text-align: center;">이름은 한글 2~4자리 입력해야합니다!</span>	
 										</div>
 										<div class="form-floating mb-3">
 											<input type="text" class="form-control" id="email"
