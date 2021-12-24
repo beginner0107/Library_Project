@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <html lang="ko">
 <head>
@@ -22,6 +23,10 @@
 <link href="${pageContext.request.contextPath }/resources/css/styles2.css" rel="stylesheet" />
 <!-- Bootstrap icons-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+<script src="${pageContext.request.contextPath}/resources/js/comm.js"></script>
+<style type="text/css">
+a:link {text-decoration: none; color: blue;}
+</style>
 </head>
 <body>
 	<c:import url = "/WEB-INF/views/include/top_menu.jsp"/>	
@@ -42,29 +47,77 @@
 		<!-- Icons Grid-->
 		<section class="features-icons bg-light text-center">
 			<div class="container">
-				<div class="row">
+					<div class="row">
 					<div class="col-lg-4">
 						<div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-							<div class="features-icons-icon d-flex">
-								<i class="bi-window m-auto text-primary"></i>
-							</div>
-							<p class="lead mb-0"><a href = "${pageContext.request.contextPath }/unified_search">도서 검색</a></p>
+							<table>
+							<c:if test="${not empty notice }">
+								<tr>
+									<td colspan="2" align="center"><b>공지사항</b></td>
+								</tr>
+								<tr>
+									<td colspan="2" align="right"><a href = "${pageContext.request.contextPath }/notice">(+)</a></td>
+								</tr>
+								<c:forEach var = "vo" items="${notice }" varStatus="vs">
+								<tr>
+									<td align="left" >
+										<a href="#" onclick='SendPost("${pageContext.request.contextPath }/notice_detail",{"idx":${vo.notice_id }},"post")'><c:out value="${vo.notice_title }"></c:out></a>
+									</td>
+									<td>
+										<fmt:formatDate value="${vo.notice_regdate}" type="date" dateStyle="short"/>
+									</td>
+								</tr>
+								</c:forEach>
+							</c:if>
+							</table>
 						</div>
 					</div>
 					<div class="col-lg-4">
 						<div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-							<div class="features-icons-icon d-flex">
-								<i class="bi-layers m-auto text-primary"></i>
-							</div>
-							<p class="lead mb-0"><a href = "${pageContext.request.contextPath }/goodBook">사서 추천 도서</a></p>
+							<table>
+							<c:if test="${not empty good }">
+								<tr>
+									<td colspan="2" align="center"><b>사서 추천 도서</b></td>
+								</tr>
+								<tr>
+									<td colspan="2" align="right"><a href = "${pageContext.request.contextPath }/goodBook">(+)</a></td>
+								</tr>
+								<c:forEach var = "vo" items="${good }" varStatus="vs">
+								<tr>
+									<td align="left" >
+										<a href="#" onclick='SendPost("${pageContext.request.contextPath }/goodBook_detail",{"idx":${vo.good_id }},"post")'><c:out value="${vo.good_title }"></c:out></a>
+									</td>
+									<td>
+										<fmt:formatDate value="${vo.good_regdate}" type="date" dateStyle="short"/>
+									</td>
+								</tr>
+								</c:forEach>
+							</c:if>
+							</table>
 						</div>
 					</div>
 					<div class="col-lg-4">
 						<div class="features-icons-item mx-auto mb-0 mb-lg-3">
-							<div class="features-icons-icon d-flex">
-								<i class="bi-terminal m-auto text-primary"></i>
-							</div>
-							<p class="lead mb-0"><a href ="${pageContext.request.contextPath }/notice">공지사항</a></p>
+							<table>
+							<c:if test="${not empty book }">
+								<tr>
+									<td colspan="2" align="center"><b>신간도서</b></td>
+								</tr>
+								<tr>
+									<td colspan="2" align="right"><a href = "${pageContext.request.contextPath }/newBook">(+)</a></td>
+								</tr>
+								<c:forEach var = "vo" items="${book }" varStatus="vs">
+								<tr>
+									<td align="left" >
+										<a href="#" onclick='SendPost("${pageContext.request.contextPath }/book_detail",{"isbn":${vo.isbn }},"get")'><c:out value="${vo.title }"></c:out></a>
+									</td>
+									<td>
+										<fmt:formatDate value="${vo.regdate}" type="date" dateStyle="short"/>
+									</td>
+								</tr>
+								</c:forEach>
+							</c:if>
+							</table>
 						</div>
 					</div>
 				</div>

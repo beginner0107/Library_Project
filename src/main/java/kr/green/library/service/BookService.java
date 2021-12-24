@@ -38,7 +38,8 @@ public interface BookService {
 	void updateReturnCount(String isbn);
 	// 신규 도서 목록 보기
 	PagingVO<BookVO> selectNewBook(CommVO commVO);
-	
+	// 신간 도서 
+	List<BookVO> selectFive();
 	void updateReply(BookReplyVO bookReplyVO);
 	
 	void deleteReply(int breply_id);

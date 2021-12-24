@@ -32,4 +32,6 @@ public interface BookDAO {
 	List<BookVO> selectNewBook(HashMap<String, String> map);
 	// 신규 도서 개수 세기
 	int selectNewCount();
+	
+	List<BookVO> selectFive();
 }

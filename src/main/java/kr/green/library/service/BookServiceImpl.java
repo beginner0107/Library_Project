@@ -214,6 +214,11 @@ public class BookServiceImpl implements BookService {
 		return bookReplyDAO.getBookReplyList(isbn);
 	}
 
+	@Override
+	public List<BookVO> selectFive() {
+		return bookDAO.selectFive();
+	}
+
 	
 
 	

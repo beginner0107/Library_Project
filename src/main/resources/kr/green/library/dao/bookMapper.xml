@@ -116,4 +116,24 @@
 	<select id="selectNewCount" resultType="int">
  		select count(*) from book where regdate >= SYSDATE-30
  	</select>
+ 	<!-- 5가지 신규도서 -->
+ 	<select id="selectFive" resultType="BookVO">
+ 		select 
+ 			*
+ 		from
+	 		(select 
+	 			rownum rnum, R.*
+	 		from
+	 			(select * from book where regdate >= SYSDATE-30
+	 			 order by regdate desc) R
+	 		where
+	 			<![CDATA[
+	 				rownum <= 5
+	 			]]>
+			) Q
+		where
+ 			<![CDATA[
+ 			rnum >= 1
+ 			]]>
+ 	</select>
 </mapper>
