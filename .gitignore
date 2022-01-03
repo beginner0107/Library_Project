@@ -14,7 +14,11 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+
+## 파일 무시
 jdbc.properties
+root-context.xml
+servlet-context.xml
 
 # External tool builders
 .externalToolBuilders/
