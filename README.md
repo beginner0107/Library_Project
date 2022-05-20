@@ -1,6 +1,17 @@
 # 도서관리 프로젝트(2021.09~2021.11)
 - 국립중앙도서관 사이트를 벤치마킹하였습니다.<br>
 
+<h2>사용 기술</h2>
+
+- Spring Legacy
+- Mybatis
+- Spring Security
+- Spring Quartz
+- OracleDB
+- SummerNote
+- BootStrap
+- Jquery
+
 <h3>요구사항 정리</h3>
 1) 비회원<br>
 
@@ -44,3 +55,6 @@
 
 ![image](https://user-images.githubusercontent.com/81161819/169565146-5a4e5074-8860-43b9-bf7d-178611d27b2a.png)
 
+<h2>사이트 이미지가 저장되어 있는 첨부파일</h2>
+
+[도서관리 프로젝트(완).pdf](https://github.com/beginner0107/Library_Project/files/8741720/default.pdf)
