@@ -26,7 +26,7 @@
 - 회원 블랙 리스트 관리 : 회원의 등급을 관리할 수 있습니다.
 
 
-<h3>개념적 모델링</h3>
+<h2>개념적 모델링</h2>
 
 - 회원 테이블과 회원권한 테이블
 
@@ -39,4 +39,8 @@
 - 게시판 관련 테이블
 
 ![image](https://user-images.githubusercontent.com/81161819/169563316-17c61f87-722a-47aa-b217-4ad9f2443c2d.png)
+
+<h2>ERD</h2>
+
+![image](https://user-images.githubusercontent.com/81161819/169565146-5a4e5074-8860-43b9-bf7d-178611d27b2a.png)
 
